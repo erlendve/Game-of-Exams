@@ -1,0 +1,51 @@
+<template name="player">
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span3">
+				<div class="well sidebar-nav exercises-sidenav">
+					<ul class="nav nav-list">
+						<li class="nav-header">Exercises</li>
+						{{#each exercises}}
+						{{> exercise_sidenav}}
+						{{/each}}
+					</ul>
+				</div><!--/.well -->
+			</div><!--/span-->
+			<div class="well span9">
+				<div class="row-fluid">
+					<h2>Exam 2010</h2>
+					<div class="exercises">
+						{{#each exercises}}
+						{{> exercise_main}}
+						{{/each}}
+					</div>
+
+				</div><!--/row-->
+			</div><!--/span-->
+		</div><!--/row-->
+	</div><!--/.fluid-container-->
+</template>
+
+<template name="exercise_sidenav">
+	<li><a href="#{{_id}}" id="{{_id}}" class="exercise">{{number}}: {{title}}</a></li>
+</template>
+
+<template name="exercise_main">
+	<h3 class="title">{{number}}) {{title}} <span class="muted">({{points}} points)<span></h3>
+	<pre>{{text}}</pre>
+</template>
+
+<template name="examlist">
+	<div class="container">
+		{{#each courses}}
+		<h3>{{title}}</h3>
+		<ul>
+			{{# each exams}}
+			<li>
+				<a href="exam/{{_id}}" id="{{_id}}" class="exam">{{title}} {{year}}</a>
+			</li>
+			{{/each}}
+		</ul>
+		{{/each}}
+	</div>
+</template>
