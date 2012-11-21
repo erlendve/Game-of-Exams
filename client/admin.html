@@ -4,7 +4,7 @@
 	{{> admin_edit_exam edit.this}} <!-- Sends the exam object (edit.this as context to the template) -->
 	{{else}} <!-- / else if edit -->
 
-	{{#if currentUserLoaded}}
+	{{#unless loggingIn}}
 	{{#if isAdmin}}
 	{{> examlist_admin}}
 	{{else}}
@@ -14,7 +14,7 @@
 		This user does not have admin rights
 	</div>
 	{{/if}} <!-- /end ifAdmin if -->
-	{{/if}} <!-- /end currentUser if -->
+	{{/unless}} <!-- /end loggingIn if -->
 
 	{{/if}} <!-- /end if edit -->
 </template>
@@ -169,7 +169,12 @@
 			<button type="submit" class="btn btn-primary save_edit_exercise">Save</button>
 			<button type="button" class="btn cancel_edit_exercise">Cancel</button>
 		</div>
-		<pre class="editable">{{text}}</pre>
+		<div class="hl">
+<!-- The lines under here must be left aligned or else text will get spaces inserted :() -->
+{{#markdown}}
+{{text}}
+{{/markdown}}
+		</div>
 	</span>
 </template>
 

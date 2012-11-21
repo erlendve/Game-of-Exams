@@ -44,19 +44,19 @@ Accounts.ui.config({
 
 
 /////// Global handlebars helpers ///////
+Handlebars.registerHelper('markdown', function (options) {
+  var converter = new Showdown.converter();
+  return converter.makeHtml(options.fn(this));
+});
 
-// This is not used, and can be deleted
-Handlebars.registerHelper('ifeach', function(cursor, options) {
-  var ret = "";
-  if (cursor.count() !== 0) {
 
-    cursor.forEach( function(exam) {
-      ret += options.fn(exam);
-    });
-    return ret;
-  } else {
-    return options.inverse();
-  }
+Handlebars.registerHelper('md', function (options) {
+  var converter = new Showdown.converter();
+  var res = '';
+  var html =converter.makeHtml(options.fn(this));
+  var high = hljs.highlightAuto(html).value;
+  res += high;
+  return res;
 });
 
 Handlebars.registerHelper('exams', function(){
@@ -152,11 +152,11 @@ console.log('subpage: ' + Session.get('subpage'));
 }
 });
 
-  Router = new GoeRouter;
+Router = new GoeRouter;
 
-  Meteor.startup(function () {
-    Backbone.history.start({pushState: true});
-  });
+Meteor.startup(function () {
+  Backbone.history.start({pushState: true});
+});
 
 ///////// Helpers for routing ////////
 

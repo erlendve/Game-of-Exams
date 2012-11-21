@@ -78,6 +78,13 @@ div.save_exercise_edit button{
 	margin-right: 5px;
 }
 
+.hl p {
+	font-size: medium;
+}
+.hl code {
+	font-family: monospace;
+	font-size: medium;
+}
 
 /* Rules desktop screens */
 @media (min-width: 1200px) {

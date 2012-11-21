@@ -44,11 +44,17 @@
 </template>
 
 <template name="exercise_main">
-	<h3 class="title" id="{{_id}}">{{number}}) {{title}} <span class="muted">({{points}} points)<span></h3>
+	<div id="{{_id}}">
+		<br />
+		<br />
+		<h3 class="title">{{number}}) {{title}} <span class="muted">({{points}} points)<span></h3>
+		<div class="hl">
+			<!-- The lines under here must be left aligned or else text will get spaces inserted :() -->
 {{#markdown}}
-	{{text}}
-	{{/markdown}}
-
+{{text}}
+{{/markdown}}
+		</div>
+	</div>
 </template>
 
 <template name="examlist">

@@ -147,6 +147,7 @@ Template.admin_edit_exam.events({
   }
 });
 
+//////// admin_exercise ///////////
 Template.admin_exercise.events({
  'click .exercise_delete': function(e) {
     var ex = Exercises.findOne({_id: this._id});
@@ -170,6 +171,11 @@ Template.admin_exercise.events({
   }
 });
 
+Template.admin_exercise.rendered = function() {
+  $('.hl pre code').each(function(i, e) {hljs.highlightBlock(e)});
+}
+
+////////// admin_new_exercise//////////
 Template.admin_new_exercise.next_exercise_number = function() {
   return Exercises.find({set_id: this._id}).count() + 1;
 }
