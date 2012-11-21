@@ -65,6 +65,8 @@
 				</table>
 			</div> <!--/.span -->
 		</div>	<!--/.row -->
+		{{else}}
+		<div class="alert alert-info"> You are not registered as admin on any courses yet</div>
 		{{/each}} <!--/end courses loop -->
 	</div> <!--/.container -->
 
@@ -86,85 +88,108 @@
 		</form>
 	</div> 
 	<!--/end Add course modal -->
-
-	<!-- Add exam modal-->
-	<div id="modal_add_exam" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-			<h3 id="myModalLabel">Add new course</h3>
-		</div>
-		<div class="modal-body">
-			<form name="add_exam" id="form_add_exam" class="inline">
-				<label>Course title</label>
-				<input id="input_exam_title" type="text" placeholder="example: Eksamen vår 2012">
-			</div>
-			<div class="modal-footer">
-				<button id="cancel_new_exam" class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
-				<button id ="btn_submit_exam" type="submit" class="btn btn-primary">Save course </button>
-			</div>
-		</form>
-	</div> 
-	<!--/end Add course modal -->
 </template>
 
 
 <!-- This template generates the view to edit or add a new exam -->
 <template name="admin_edit_exam">
 	<div class="page-header">
-		<h1>Editing {{title}} {{year}}<small> changes are saved instantly</small></h1>
+		<h1><span class="text-error">Editing</span> {{title}} {{year}}<small> changes are saved instantly</small></h1>
 	</div>
 	<div class="container-fluid">
 		<div class="row-fluid">
+			{{#if title}}
 			<div class="span3">
 				<div class="well sidebar-nav">
 					<ul class="nav nav-list">
 						<li class="nav-header">Exercises</li>
 						{{#each exercises}}
 						{{> admin_sidenav}}
+						{{else}}
+						<span class="label">No exercises yet</span>
 						{{/each}}
 					</ul>
 				</div>
 			</div><!--/span-->
-			<div class="well span9">
-				<div class="row-fluid">
+			{{/if}}
+			<div class="span9">
+				<div class="well row-fluid">
 					{{#if title}}
 					<span id="{{_id}}" class="hover-show h2-edit">
 						<h2 class="my-inline">{{title}}</h2><h2 class="my-inline"> {{year}}</h2>
 						<a href="#" class="invisible exam-title-edit"><i class="icon-edit"></i> Edit</a>
 					</span>
-					{{else}}
-					<form name="new_exam" id="form_new_exam">
-						<label>Exam title</label>
-						<input name="title" type="text" id="new_exam_title" autofocus="true"value="Eksamen Høst">
-						<label>Year</label>
-						<input name="year"class ="input-small" type="number" id="new_exam_year" value="2012">
-						<label>Course</label>
-						<select name="courseId">
-							<option>No course</option>
-							{{#each courses}}
-							<option value="{{_id}}">{{title}}</option>
-							{{/each}}
-						</select><br />
-						<input type="submit" class="btn btn-primary" value="Save">
-					</form>
-					{{/if}}
 					<div class="exercises">
 						{{#each exercises}}
-						{{> admin_exercise}}
+						{{> admin_exercise}}		
 						{{/each}}
+						{{> admin_new_exercise}}
 					</div>
+					{{else}}
+					<form name="new_exam" id="form_new_exam">
+						<legend>Create new exam</legend>
+						<fieldset>
+							<label>Exam title</label>
+							<input name="title" type="text" id="new_exam_title" autofocus="true" placeholder="Example: Eksamen Høst">
+							<label>Year</label>
+							<input name="year"class ="input-small" type="number" id="new_exam_year" value="2012">
+							<label>Course</label>
+							<select name="courseId">
+								<option>No course</option>
+								{{#each courses}}
+								<option value="{{_id}}">{{title}}</option>
+								{{/each}}
+							</select><br />
+							<input type="submit" class="btn btn-primary" value="Save">
+						</fieldset>
+					</form>
+					{{/if}}
 				</div><!--/row-->
+				<p class="lead">The students <strong>must</strong> learn more. <a href="#form_new_exercise" class="show_add_new_exercise">Add a new exercise</a>
+				</p>
 			</div><!--/span-->
 		</div><!--/row-->
 	</div><!--/.fluid-container-->
 </template>
 
 <template name="admin_sidenav">
-	<li><a href="#{{_id}}" id="{{_id}}" class="exercise">{{number}}: {{title}}</a></li>
+	<li><a href="#{{_id}}" class="exercise">{{number}}: {{title}}</a></li>
 </template>
 
 <template name="admin_exercise">
-	<h3 class="title">{{number}}) {{title}} <span class="muted">({{points}} points)<span></h3>
-	<pre>{{text}}</pre>
+	<span id="{{_id}}" class="hover-show h3-edit extraspace">
+		<h3 class="my-inline edit">{{number}}) </h3>
+		<h3 class="my-inline replace_edit">{{title}} </h3>
+		<h3 class="my-inline replace_edit"><span class="muted">({{points}} points)<span></h3>
+		<div class="my-inline change_exercise_links">
+			<a href="#" class="invisible exercise-edit"><i class="icon-edit"></i> Edit</a>
+			<a href="#" class="invisible exercise_delete"><i class="icon-trash"></i> Delete</a>
+		</div>
+		<div class="save_exercise_edit none">
+			<button type="submit" class="btn btn-primary save_edit_exercise">Save</button>
+			<button type="button" class="btn cancel_edit_exercise">Cancel</button>
+		</div>
+		<pre class="editable">{{text}}</pre>
+	</span>
+</template>
+
+<template name="admin_new_exercise">
+	<form name="new_exercise" id ="form_new_exercise" style="display:none">
+		<legend>Create new exercise</legend>
+		<fieldset>
+			<label>Number</label>
+			<input name="number" type="number" autofocus="true"  class="input-mini" value="{{next_exercise_number}}">
+			<label>Exercise title</label>
+			<input name="title" type="text" id="new_exercise_title" placeholder="Example: Find five errors in this script" class="input-large">
+			<label>Points</label>
+			<input name="points" class ="input-small" type="number" id="new_exercise_points" value="5">
+			<label>Text (<a href="http://www.kreatives-chaos.com/markdown_help.html">Markdown syntax</a>)</label>
+			<textarea name="text" class="input-block-level" rows="10" id="new_exercise_text"></textarea>
+		</fieldset> 
+		<div class="form-actions">
+			<button type="submit" class="btn btn-primary">Save</button>
+			<button type="button" class="btn" id="cancel_new_ex">Cancel</button>
+		</div>
+	</form>
 </template>
 

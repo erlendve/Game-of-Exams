@@ -25,6 +25,7 @@
 <template name="page">
   <div class="container">
    {{> navbar}}
+   {{#if currentUser}}
 
 
    {{#if currentPage "examlist"}}
@@ -32,20 +33,19 @@
    {{/if}}
 
    <!-- if the user is logged in -->
-   {{#if currentUser}}
 
    {{#if currentPage "admin"}}
-   {{> admin foo}}
+   {{> admin}}
    {{/if}}
 
-   {{else}}
-   {{> not_logged_in}}
-   {{/if}}
 
    {{#if currentPage "exam"}}
    {{> player}}
    {{/if}}
 
+   {{else}}
+   {{> not_logged_in}}
+   {{/if}} <!-- /end if currentUser -->
    <hr>
    <footer>
      <p>&copy; Erlend Vestad 2012</p>
@@ -69,8 +69,8 @@
         <div class="nav-collapse collapse">
           <ul class="nav">
             <!-- The following if blocks will set the active element -->
-            <li {{#if currentPage "examlist"}} class="active" {{/if}}><a href="courses" id="courses">Courses</a></li>
-            <li {{#if currentPage "exam"}} class="active" {{/if}}><a href="/exam" id="exam">Exam</a></li>
+            <li {{#if currentPage "examlist"}} class="active" {{/if}}><a href="/courses" id="courses">All Exams</a></li>
+       <!--      <li {{#if currentPage "exam"}} class="active" {{/if}}><a href="/exam" id="exam">Exam</a></li> -->
             {{#if isAdmin}}
             <li {{#if currentPage "admin"}} class="active" {{/if}}><a href="/admin" id="admin">Admin view</a></li>
             {{/if}} <!--/end ifAdmin block -->

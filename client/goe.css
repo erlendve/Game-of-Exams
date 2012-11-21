@@ -1,10 +1,5 @@
 /* CSS declarations go here */
 
-body {
-	padding-top: 60px;
-	padding-bottom: 40px;
-}
-
 #alpha {
 	padding: 0 3px 2px;
 	font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
@@ -31,15 +26,16 @@ body {
 }
 
 /* The next sections are css to make edit input fields look like h2 or h3 elements*/
-.h3-edit, .h2-edit {
+.h3-edit, .h2-edit, .h1-edit{
 	display: block;
 	height: inherit;
 }
-.h3-edit input, .h2-edit input{
+
+.h3-edit input, .h2-edit input, .h1-edit input{
 	line-height: 40px;
 	height: 40px;
-	margin: 0;
-	padding: 0;
+	margin-bottom: inherit;
+	padding: inherit;
 	font-family: inherit;
 	font-weight: bold;
 	color: inherit;
@@ -56,10 +52,39 @@ body {
 	font-size: 30px;
 }
 
+/* not in use */
+hr.edithr {
+	background-color: #B94A48;
+	border-style: dashed;
+}
+
+span.extraspace h3 {
+	padding: 5px;
+	margin-bottom: 10px;
+}
+
+input.extramargin {
+	margin-bottom: 10px;
+	margin-right: 5px;
+	padding-left: 7px;
+}
+
+div.save_exercise_edit {
+	display: none;
+}
+
+div.save_exercise_edit button{
+	margin-bottom: 10px;
+	margin-right: 5px;
+}
 
 
 /* Rules desktop screens */
 @media (min-width: 1200px) {
+	body {
+		padding-top: 60px;
+		padding-bottom: 40px;
+	}
 	.add-new-content {
 		position: fixed;
 	}
@@ -68,4 +93,3 @@ body {
 @media (max-width: 979px) {
 
 }
-

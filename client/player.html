@@ -1,4 +1,11 @@
 <template name="player">
+	{{#if currentExam}}
+	{{#with currentExam}}
+	<div class="jumbotron subhead">
+		<div class="page-header">
+			<h1><span class="text-error">Solving</span> {{title}} {{year}}<small> for <span class="text-inverse">{{examTotalPoints}}</span>  fresh points</small></h1>
+		</div>
+	</div>
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<div class="span3">
@@ -13,7 +20,6 @@
 			</div><!--/span-->
 			<div class="well span9">
 				<div class="row-fluid">
-					<h2>Exam 2010</h2>
 					<div class="exercises">
 						{{#each exercises}}
 						{{> exercise_main}}
@@ -24,15 +30,25 @@
 			</div><!--/span-->
 		</div><!--/row-->
 	</div><!--/.fluid-container-->
+	{{/with}}
+	{{else}}
+	<div class="alert alert-error">
+		<p>No exam exists with this id, or you don't have access to it.
+		</p>
+	</div>
+	{{/if}}
 </template>
 
 <template name="exercise_sidenav">
-	<li><a href="#{{_id}}" id="{{_id}}" class="exercise">{{number}}: {{title}}</a></li>
+	<li><a href="#{{_id}}" class="exercise">{{number}}: {{title}}</a></li>
 </template>
 
 <template name="exercise_main">
-	<h3 class="title">{{number}}) {{title}} <span class="muted">({{points}} points)<span></h3>
-	<pre>{{text}}</pre>
+	<h3 class="title" id="{{_id}}">{{number}}) {{title}} <span class="muted">({{points}} points)<span></h3>
+{{#markdown}}
+	{{text}}
+	{{/markdown}}
+
 </template>
 
 <template name="examlist">

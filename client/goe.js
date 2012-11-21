@@ -69,7 +69,6 @@ Handlebars.registerHelper('courses', function(){
 
 //TODO make the exercises return only the exercises for a specific course
 Handlebars.registerHelper('exercises', function(){
-  console.log(this._id);
   return Exercises.find({set_id: this._id});
 });
 
@@ -79,6 +78,18 @@ Handlebars.registerHelper('isAdmin', function() {
 });
 
 
+Handlebars.registerHelper("debug", function(optionalValue) { 
+  console.log("Current Context");
+  console.log("====================");
+  console.log(this);
+
+  if (optionalValue) {
+    console.log("Value"); 
+    console.log("===================="); 
+    console.log(optionalValue); 
+  } 
+}
+);
 
 
 ////////// Javascript helpers ////////
@@ -107,6 +118,7 @@ var GoeRouter = Backbone.Router.extend({
     "":                                            "examlist",
     "main":                                        "examlist",
     "courses":                                     "examlist",
+    "exam":                                        "exam",
     "exam/:exam_id":                               "exam",
     "admin":                                       "admin", 
     "admin/:exam_id":                              "editExam"
@@ -115,23 +127,28 @@ var GoeRouter = Backbone.Router.extend({
   examlist: function () {
    console.log('routing to examlist');
    Session.set('currentPage', 'examlist');
+   // Session.set('subpage', undefined);
  },
 
  admin: function () {
   console.log('routing to admin');
   Session.set('currentPage', 'admin');
-  Session.set('currentAdmin', undefined);
+  // Session.set('subpage', undefined);
 },
 
 editExam: function(exam_id) {
   console.log('routing to admin, exam: ' + exam_id);
   Session.set('currentPage', 'admin');
-  Session.set('adminContext', exam_id);
+  Session.set('subpage', exam_id);
 },
 
 exam: function(exam_id) {
  console.log('Routing to exam with id: ' + exam_id);
  Session.set('currentPage', 'exam');
+ if (exam_id) {
+  Session.set('subpage', exam_id);
+}
+console.log('subpage: ' + Session.get('subpage'));
 }
 });
 
