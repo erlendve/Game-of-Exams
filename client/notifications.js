@@ -1,11 +1,12 @@
 //default options
 $.pnotify.defaults.delay = 7000;
 
-var notifyStandard = function (title, text, type) {
+var notifyStandard = function (title, text, type, icon) {
 	$.pnotify({
       title: title,
       text: text,
       type: type,
+      icon: icon
     });
 }
 

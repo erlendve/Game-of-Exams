@@ -86,6 +86,10 @@ div.save_exercise_edit button{
 	font-size: medium;
 }
 
+.exercise {
+	margin-bottom: 80px;
+}
+
 /* Rules desktop screens */
 @media (min-width: 1200px) {
 	body {

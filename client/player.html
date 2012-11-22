@@ -31,22 +31,15 @@
 		</div><!--/row-->
 	</div><!--/.fluid-container-->
 	{{/with}}
-	{{else}}
-	<div class="alert alert-error">
-		<p>No exam exists with this id, or you don't have access to it.
-		</p>
-	</div>
 	{{/if}}
 </template>
 
 <template name="exercise_sidenav">
-	<li><a href="#{{_id}}" class="exercise">{{number}}: {{title}}</a></li>
+	<li><a href="#{{_id}}" class="exercise-side">{{number}}: {{title}}</a></li>
 </template>
 
 <template name="exercise_main">
-	<div id="{{_id}}">
-		<br />
-		<br />
+	<div id="{{_id}}" class="exercise">
 		<h3 class="title">{{number}}) {{title}} <span class="muted">({{points}} points)<span></h3>
 		<div class="hl">
 			<!-- The lines under here must be left aligned or else text will get spaces inserted :() -->
@@ -54,6 +47,12 @@
 {{text}}
 {{/markdown}}
 		</div>
+		<br />
+		<form name="answer" id="form_answer{{_id}}">
+			<label class="lead">Answer exercise {{number}}:</label>
+			<textarea name="answertext" class="input-block-level" id="answer{{_id}}" rows="8">{{answer}}</textarea>
+			<button type="submit" class="btn btn-primary pull-right btn" id="btn_submit_answer">Submit answer</button>
+		</form>
 	</div>
 </template>
 
