@@ -23,34 +23,42 @@
 </body>
 
 <template name="page">
-  <div class="container">
-   {{> navbar}}
-   {{#if currentUser}}
+ {{> navbar}}
+ <!-- if the user is logged in -->
+ {{#if currentUser}}
 
 
-   {{#if currentPage "examlist"}}
-   {{> examlist}}
-   {{/if}}
-
-   <!-- if the user is logged in -->
-
-   {{#if currentPage "admin"}}
-   {{> admin}}
-   {{/if}}
+ {{#if currentPage "examlist"}}
+ {{> examlist}}
+ {{/if}}
 
 
-   {{#if currentPage "exam"}}
-   {{> player}}
-   {{/if}}
+ {{#if currentPage "admin"}}
+ {{> admin}}
+ {{/if}}
 
-   {{else}}
-   {{> not_logged_in}}
-   {{/if}} <!-- /end if currentUser -->
-   <hr>
-   <footer>
+
+ {{#if currentPage "exam"}}
+ {{> player}}
+ {{/if}}
+
+ {{#if currentPage "feed"}}
+ {{>  feed live}}
+ {{/if}}
+
+ {{#if currentPage "leaderboard"}}
+ {{> leaderboard}}
+ {{/if}}
+
+ {{else}}
+ {{> not_logged_in}}
+ {{/if}} <!-- /end if currentUser -->
+ <hr>
+ <footer class="footer">
+   <div class="container"> 
      <p>&copy; Erlend Vestad 2012</p>
-   </footer>
- </div>
+   </div>
+ </footer>
 </template>
 
 <template name="navbar">
@@ -64,13 +72,15 @@
         </a>
         <a class="brand" href="/main">Game of Exams <span id="alpha">{Alpha}</span></a>
           <p class="navbar-text pull-right">
-            Logged in as {{loginButtons align="right"}}
+            <a href="#" title="your total points" id="user_total_points" class="badge">{{myPoints}}</a> {{loginButtons align="right"}}
           </p>
         <div class="nav-collapse collapse">
           <ul class="nav">
             <!-- The following if blocks will set the active element -->
             <li {{#if currentPage "examlist"}} class="active" {{/if}}><a href="/courses" id="courses">All Exams</a></li>
        <!--      <li {{#if currentPage "exam"}} class="active" {{/if}}><a href="/exam" id="exam">Exam</a></li> -->
+           <li {{#if currentPage "leaderboard"}} class="active" {{/if}}><a href="/leaderboard/#{{currentUser.username}}" id="leaderboard">Leaderboard</a></li>
+            <li {{#if currentPage "feed"}} class="active" {{/if}}><a href="/feed" id="feed">Answer feed</a></li>
             {{#if isAdmin}}
             <li {{#if currentPage "admin"}} class="active" {{/if}}><a href="/admin" id="admin">Admin</a></li>
             {{/if}} <!--/end ifAdmin block -->
@@ -87,4 +97,63 @@
     <h4>You are not logged in</h4>
     This content is only available to logged in users!
   </div>
+</template>
+
+<template name="feed">
+  <div class="container">
+    <div class="jumbotron subhead">
+      <div class="page-header">
+        <h1><span class="text-error">Live</span> feed of all answers<small> every new answer will show up here:</small></h1>
+      </div>
+      {{# each live}}
+      <h3>Someone just solved <p class="text-info my-inline">{{findExercise.title}}</p> with the answer:</h3><br/>
+      <div class="hl">
+        <!-- The lines under here must be left aligned or else text will get spaces inserted :() -->
+{{#markdown}}
+{{answertext}}
+{{/markdown}}
+      </div>
+    {{/each}}
+    </div>
+  </div> <!-- /end container -->
+</template>
+
+<template name="leaderboard">
+  <header class="jumbotron subhead">
+    <div class="page-header">
+      <div class="container">
+        <h1>Leaderboard</h1>
+      </div>
+    </div>
+  </header> <!-- /end jumbotron -->
+  <div class="container">
+    <div class="row">
+      <div class="span8">
+        <div class="leaderboard">
+          <table class="table lead">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Username</th>
+                <th style="text-align:center">Points</th>
+                <th style="text-align:center">Exercises</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each playerPoints}}
+              <tr {{#if me}} class="info"{{/if}} id="{{username}}">
+                <td>{{rank}}</td>
+                <td>{{username}}</td>
+                <td style="text-align:center">{{points}}</td>
+                <td style="text-align:center">{{exercises_done}}</td>
+              </tr>
+              {{/each}}
+              {{scrollHack}}
+            </tbody>
+          </table>
+        </div> <!-- /end leaderboard -->
+      </div><!-- /end span -->
+    </div> <!-- /end row  -->
+    <a href="#Gurba" id ="scrollHelperHidden" class="hidden"></a>
+  </div> <!-- /end container  -->
 </template>

@@ -7,6 +7,10 @@
 	color: #D14
 }
 
+#user_total_points {
+	color:  black;
+}
+
 .hover-show:hover a{
 	visibility: visible;
 }
@@ -52,12 +56,6 @@
 	font-size: 30px;
 }
 
-/* not in use */
-hr.edithr {
-	background-color: #B94A48;
-	border-style: dashed;
-}
-
 span.extraspace h3 {
 	padding: 5px;
 	margin-bottom: 10px;
@@ -78,16 +76,29 @@ div.save_exercise_edit button{
 	margin-right: 5px;
 }
 
-.hl p {
-	font-size: medium;
+.hl code{
+	font-size: large;
 }
-.hl code {
-	font-family: monospace;
-	font-size: medium;
+.hl p {
+	font-size: large;
 }
 
-.exercise {
-	margin-bottom: 80px;
+.hl2 p, code{
+	font-size: large;
+}
+.exercises code {
+	font-family: monospace;
+}
+
+.answer-div {
+	margin: 40px 0px 70px 25px;
+	/*border-bottom: dotted black;*/
+	/*background-color: white;*/
+}
+
+.answer-div .lead{
+	border-bottom: dotted black;
+	/*border-color: #3A87AD;*/
 }
 
 /* Rules desktop screens */
@@ -103,4 +114,22 @@ div.save_exercise_edit button{
 /* Rules for tablets and smaller*/
 @media (max-width: 979px) {
 
+}
+
+.footer {
+	padding: 70px 0;
+	margin-top: 70px;
+	border-top: 1px solid #E5E5E5;
+	background-color: whiteSmoke;
+}
+
+.leaderboard {
+	position: relative;
+	margin: 15px 0;
+	padding: 39px 19px 14px;
+	background-color: white;
+	border: 1px solid #DDD;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
 }

@@ -12,6 +12,8 @@ Courses = new Meteor.Collection('courses');
 //The answers given by players
 Answers = new Meteor.Collection('answers');
 
+Players = new Meteor.Collection('players');
+
 function Exercise (ex_set, number, letter, title, text, points) {
 	this.set_id = ex_set; //the id of the exercise set this belongs to
 	this.number = number;

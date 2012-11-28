@@ -3,7 +3,7 @@
 	{{#with currentExam}}
 	<div class="jumbotron subhead">
 		<div class="page-header">
-			<h1><span class="text-error">Solving</span> {{title}} {{year}}<small> for <span class="text-inverse">{{examTotalPoints}}</span>  fresh points</small></h1>
+			<h1>{{title}} {{year}}<small> you have {{examCurrentPoints}} of {{examTotalPoints}} points</small></h1>
 		</div>
 	</div>
 	<div class="container-fluid">
@@ -40,20 +40,58 @@
 
 <template name="exercise_main">
 	<div id="{{_id}}" class="exercise">
-		<h3 class="title">{{number}}) {{title}} <span class="muted">({{points}} points)<span></h3>
+		<h3 class="title">{{number}}) {{title}} 
+			{{#if answer}}
+			(<span class="text-success">{{points}} points</span>)
+			<small> answered <i class="icon-thumbs-up"></i></small>
+			<!-- <i class="icon-ok"></i> -->
+			{{else}}
+			(<span class="text-error">{{points}} points</span>)
+			<small><i class="icon-thumbs-down"></i> not answered</small>
+			{{/if}}
+		</h3>
 		<div class="hl">
 			<!-- The lines under here must be left aligned or else text will get spaces inserted :() -->
 {{#markdown}}
 {{text}}
 {{/markdown}}
 		</div>
-		<br />
-		<form name="answer" id="form_answer{{_id}}">
-			<label class="lead">Answer exercise {{number}}:</label>
-			<textarea name="answertext" class="input-block-level" id="answer{{_id}}" rows="8">{{answer}}</textarea>
-			<button type="submit" class="btn btn-primary pull-right btn" id="btn_submit_answer">Submit answer</button>
-		</form>
+		<div class="answer-div">
+			{{#if answer}}
+			<p class="lead text-info">Your answer: </p>
+			<div class="hl hover-show">
+				<div class="hover-show">
+					<!-- <link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/default.min.css"> -->
+{{#markdown}}
+{{answer.answertext}}
+{{/markdown}}
+				</div>
+				<div style="height: 40px;">
+					{{#with answer}}
+					<a href="#" class="invisible btn btn-danger pull-right" id="btn_remove_answer">Delete answer</a>  
+					<!-- <a href="#" class="invisible btn btn-primary pull-right" id="btn_edit_answer" style="margin-right: 7px;">Edit answer</a> -->
+					{{/with}}
+				</div>
+			</div>
+			{{else}}
+			{{> form_answer}}
+			{{/if}} <!-- /end if answer -->
+		</div>
 	</div>
+</template>
+
+<template name="form_answer">
+	<hr>
+	<form name="answer" id="form_answer{{_id}}" style="padding: 10px;">
+		<label class="lead text-info">Your answer:</label>
+		<textarea name="answertext" class="input-block-level" id="answer{{_id}}" rows="8" placeholder="Answer in markdown syntax" wrap="hard"></textarea>
+		<button type="submit" class="btn btn-primary pull-right" id="btn_submit_answer">Submit answer</button>
+		<p class="my-inline">
+			Markdown syntax <a href="http://www.simpleeditions.com/59001/markdown-an-introduction" target="_blank">guide</a> <em>(use two spaces for newline)</em><br />
+			You might want to use a better <a href="http://dillinger.io/" target="_blank">editor</a> and copy-paste.
+		</p>
+	</form>
+	<hr>
 </template>
 
 <template name="examlist">

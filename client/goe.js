@@ -1,3 +1,42 @@
+Template.feed.live = function() {
+  //sort reverse hack
+  return Answers.find({}, {sort: {$natural:-1}}).fetch().reverse();
+}
+
+Template.feed.rendered = function() {
+  $('code').each(function(i, e) {hljs.highlightBlock(e)});
+};
+
+Template.leaderboard.rendered = function() {
+  if ($(window.location.hash).offset()) {
+    //TODO remove error being printed in console
+    $('html, body').stop().animate({
+      'scrollTop': $(window.location.hash).offset().top
+    }, 500, 'swing');
+  }
+};
+
+
+
+// Meteor.users.find().forEach(function(user){Players.insert({userId: user._id, username: user.username, points: 0, exercises_done: 0, achievements_done: 0});})  
+// Answers.find().forEach(function(ans) {Players.update({userId: ans.userId},{$inc: {points: ans.points, exercises_done: 1}})});
+
+Template.leaderboard.playerPoints = function() {
+  var players = Players.find({}, {sort: {points: -1}});
+  var counter = 1;
+  var rankedArr = [];
+  players.forEach(function(player) {
+    player['rank'] = counter++;
+    if (Meteor.userId() === player['userId'])
+      player['me'] = true;
+    else
+      player['me'] = false;
+    
+    rankedArr.push(player);
+  });
+  return rankedArr;
+}
+
 if (Meteor.isClient) {
 
 	Template.navbar.events({
@@ -20,10 +59,7 @@ function konamiactivate() {
   konami = new Konami()
   konami.code = function() {
     if (!Meteor.user()) {
-      console.log('konamicode alpha, superhack login as admin 1337 mode');
-      if (!Meteor.user()) {
-        Meteor.loginWithPassword('Administrator', '123456789');
-      }
+      alert('Konami code is awesome. One day this alert will be awesome too!');
     }
   }
 
@@ -72,11 +108,22 @@ Handlebars.registerHelper('exercises', function(){
   return Exercises.find({set_id: this._id});
 });
 
+Handlebars.registerHelper('findExercise', function(){
+  return Exercises.findOne({_id: this.exercise_id})
+});
+
 //TODO this is a temporary solution
 Handlebars.registerHelper('isAdmin', function() { 
   return isAdmin();
 });
 
+Handlebars.registerHelper('myPoints', function() {
+  var res = 0;
+  Answers.find({userId: Meteor.userId()}, {fields: {points: 1}}).forEach(function (ans) {
+    res += ans.points;
+  })
+  return res;
+});
 
 Handlebars.registerHelper("debug", function(optionalValue) { 
   console.log("Current Context");
@@ -121,34 +168,44 @@ var GoeRouter = Backbone.Router.extend({
     "exam":                                        "exam",
     "exam/:exam_id":                               "exam",
     "admin":                                       "admin", 
-    "admin/:exam_id":                              "editExam"
+    "admin/:exam_id":                              "editExam",
+    "feed":                                        "feed",
+    "leaderboard/:*":                       "leaderboard"
   },
 
   examlist: function () {
-   console.log('routing to examlist');
+   // console.log('routing to examlist');
    Session.set('currentPage', 'examlist');
    // Session.set('subpage', undefined);
  },
 
  admin: function () {
-  console.log('routing to admin');
+  // console.log('routing to admin');
   Session.set('currentPage', 'admin');
   // Session.set('subpage', undefined);
 },
 
 editExam: function(exam_id) {
-  console.log('routing to admin, exam: ' + exam_id);
+  // console.log('routing to admin, exam: ' + exam_id);
   Session.set('currentPage', 'admin');
   Session.set('subpage', exam_id);
 },
 
 exam: function(exam_id) {
- console.log('Routing to exam with id: ' + exam_id);
+ // console.log('Routing to exam with id: ' + exam_id);
  Session.set('currentPage', 'exam');
  if (exam_id) {
   Session.set('subpage', exam_id);
 }
 console.log('subpage: ' + Session.get('subpage'));
+},
+
+feed: function() {
+  Session.set('currentPage', 'feed');
+}, 
+
+leaderboard: function() {
+  Session.set('currentPage', 'leaderboard');
 }
 });
 
