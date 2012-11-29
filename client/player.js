@@ -32,10 +32,14 @@ Template.player.events({
 		var answertext = values[0].value;
 		var count = Answers.find().count() + 1;
 
-		console.log('answering ' + this.title + ' with ' + answertext);
-		if (!Meteor.userId()) {
+		var user = Meteor.user();
+		if (!user) {
 			alert('Please wait... and try again in a few seconds');
 			return false;
+		}
+		//TODO implement this when publishing Players collection?
+		if (!Players.findOne({userId: user._id})) {
+			Players.insert({userId: user._id, username: user.username, points: 0, exercises_done: 0, achievements_done: 0});
 		}
 		//TODO do this better so it does an insert if update fails
 		if (Answers.find({userId: Meteor.userId(), exercise_id: this._id}).count() > 0) {

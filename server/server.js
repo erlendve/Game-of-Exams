@@ -3,9 +3,13 @@ Accounts.onCreateUser(function(options, user) {
 		user.isAdmin = true;
 	else
 		user.isAdmin = false;
+	
 	return user;
+});
 
-	Players.insert({userId: user._id, username: user.username, exercises_done: 0, achievements_done: 0, points: 0});
+Accounts.validateNewUser(function (user) {
+	console.log(user);
+  	return user.username !== "Administrator";
 });
 
 ////////// Publish rules //////////

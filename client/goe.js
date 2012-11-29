@@ -11,7 +11,7 @@ Template.leaderboard.rendered = function() {
   if ($(window.location.hash).offset()) {
     //TODO remove error being printed in console
     $('html, body').stop().animate({
-      'scrollTop': $(window.location.hash).offset().top
+      'scrollTop': $(window.location.hash).prev().offset().top
     }, 500, 'swing');
   }
 };
@@ -35,7 +35,7 @@ Template.leaderboard.playerPoints = function() {
     rankedArr.push(player);
   });
   return rankedArr;
-}
+};
 
 if (Meteor.isClient) {
 
@@ -58,7 +58,7 @@ if (Meteor.isClient) {
 function konamiactivate() {
   konami = new Konami()
   konami.code = function() {
-    if (!Meteor.user()) {
+    if (Meteor.user()) {
       alert('Konami code is awesome. One day this alert will be awesome too!');
     }
   }
@@ -70,7 +70,7 @@ function konamiactivate() {
 ////////// Accounts UI settings //////////
 
 Accounts.ui.config({
-  passwordSignupFields: 'USERNAME_AND_OPTIONAL_EMAIL'
+  passwordSignupFields: 'USERNAME_AND_EMAIL'
 });
 
 
