@@ -50,6 +50,10 @@
  {{> leaderboard}}
  {{/if}}
 
+ {{#if currentPage "profile"}}
+ {{> profile}}
+ {{/if}}
+
  {{else}}
  {{> not_logged_in}}
  {{/if}} <!-- /end if currentUser -->
@@ -81,6 +85,7 @@
        <!--      <li {{#if currentPage "exam"}} class="active" {{/if}}><a href="/exam" id="exam">Exam</a></li> -->
            <li {{#if currentPage "leaderboard"}} class="active" {{/if}}><a href="/leaderboard/#{{currentUser.username}}" id="leaderboard">Leaderboard</a></li>
             <li {{#if currentPage "feed"}} class="active" {{/if}}><a href="/feed" id="feed">Answer feed</a></li>
+            <li {{#if currentPage "profile"}} class="active" {{/if}}><a href="/profile/{{currentUser.username}}" id="profile">My profile</a></li>
             {{#if isAdmin}}
             <li {{#if currentPage "admin"}} class="active" {{/if}}><a href="/admin" id="admin">Admin</a></li>
             {{/if}} <!--/end ifAdmin block -->
@@ -158,5 +163,81 @@
 </template>
 
 <template name="profile">
-  
+ <div class="jumbotron subhead">
+  <div class="page-header">
+    <div class="container">
+    <h1>Username: <span class="text-info">{{currentUser.username}}</span>
+    &nbsp&nbspTotal Points: <span class="text-info">{{myPoints}}</span></h1>
+  </div>
+  </div>
+  <div class="container">
+    {{#with achievements}}
+    <h2>Points Achievements</h2>
+    <img src="../{{15points.image}}">
+    {{#if 15points.done}}
+    <h3 class="my-inline">&nbsp&nbspGot 15 points!</h3>
+    {{else}}
+    <h3 class="muted my-inline">&nbsp&nbspGot 15 points!</h3>
+    {{/if}}
+
+    <br />
+    <br />
+    <img src="../{{50points.image}}">
+    {{#if 50points.done}}
+    <h3 class="my-inline">&nbsp&nbspGot 50 points!</h3>
+    {{else}}
+    <h3 class="muted my-inline">&nbsp&nbspGot 50 points!</h3>
+    {{/if}}
+
+    <br />
+    <br />
+    <hr>
+    <h2>Exam achievements</h2>
+    <img src="../{{one_exam.image}}">
+    {{#if one_exam.done}}
+    <h3 class="my-inline">&nbsp&nbspOne exam is easy!</h3>
+    {{else}}
+    <h3 class="muted my-inline">&nbsp&nbspOne exam is easy!</h3>
+    {{/if}}
+
+    <br />
+    <br />
+    <img src="../{{two_exam.image}}">
+    {{#if two_exam.done}}
+    <h3 class="my-inline">&nbsp&nbspThe real exam will be childsplay</h3>
+    {{else}}
+    <h3 class="muted my-inline">&nbsp&nbspThe real exam will be childsplay</h3>
+    {{/if}}
+
+    <br />
+    <br />
+    <img src="../{{three_exam.image}}">
+    {{#if three_exam.done}}
+    <h3 class="my-inline">&nbsp&nbspExams. I do them</h3>
+    {{else}}
+    <h3 class="muted my-inline">&nbsp&nbspExams. I do them</h3>
+    {{/if}}
+
+    <br />
+    <br />
+    <hr>
+    <h1>Other achievements</h1>
+    <img src="../{{corporate.image}}">
+    {{#if corporate.done}}
+    <h3 class="my-inline">&nbsp&nbspI spam my colleagues</h3>
+    {{else}}
+    <h3 class="muted my-inline">&nbsp&nbspI spam my colleagues</h3>
+    {{/if}}
+
+    <br />
+    <br />
+    <img src="../{{all_the_code.image}}">
+    {{#if all_the_code.done}}
+    <h3 class="my-inline">&nbsp&nbspDo all the exercises!</h3>
+    {{else}}
+    <h3 class="muted my-inline">&nbsp&nbspDo all the exercises!</h3>
+    {{/if}}
+
+    {{/with}}
+  </div>
 </template>

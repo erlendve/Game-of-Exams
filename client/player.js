@@ -48,6 +48,7 @@ Template.player.events({
 		} else {
 			Answers.insert({'userId': Meteor.userId(), 'set_id': this.set_id, 'exercise_id': this._id, 'answertext': answertext, 'points': this.points, 'created': moment().format()});
 			Players.update({userId: Meteor.userId()},{$inc: {points: this.points, exercises_done: 1}});
+			Players.update({userId: Meteor.userId()}, {$set: {achievements: null, achievements_done: 0}});
 			notifyStandard(this.points + ' points awarded', 'Congratulations! You got ' + this.points+ ' points for answering <strong>' + this.title + '</strong>', 'success', 'icon-thumbs-up');
 		}
 		return false;
@@ -98,6 +99,7 @@ Template.exercise_main.events({
 		e.preventDefault();
 		Answers.remove(this._id);
 		Players.update({userId: Meteor.userId()},{$inc: {points: -this.points, exercises_done: -1}});
+		Players.update({userId: Meteor.userId()}, {$set: {achievements: null, achievements_done: 0}});
 		notifyStandard(this.points + ' points removed', 'You deleted an answer on exercise <strong>' + Exercises.findOne(this.exercise_id).title + '</strong>', 'error', 'icon-trash');
 	},
 	'click #btn_edit_answer': function(e) {
