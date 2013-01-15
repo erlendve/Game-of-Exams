@@ -2,7 +2,7 @@
 	<meta charset="utf-8">
 	<title>Game of Exams {Alpha}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="A POC of an exam game">
+	<meta name="description" content="Get points, be awesome">
 	<meta name="author" content="Erlend Vestad">
 
 	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -19,44 +19,14 @@
     </head>
 
 <body>
+  <div class="container">
   {{> page}}
+</div>
 </body>
 
 <template name="page">
  {{> navbar}}
- <!-- if the user is logged in -->
- {{#if currentUser}}
-
-
- {{#if currentPage "examlist"}}
- {{> examlist}}
- {{/if}}
-
-
- {{#if currentPage "admin"}}
- {{> admin}}
- {{/if}}
-
-
- {{#if currentPage "exam"}}
- {{> player}}
- {{/if}}
-
- {{#if currentPage "feed"}}
- {{>  feed live}}
- {{/if}}
-
- {{#if currentPage "leaderboard"}}
- {{> leaderboard}}
- {{/if}}
-
- {{#if currentPage "profile"}}
- {{> profile}}
- {{/if}}
-
- {{else}}
- {{> not_logged_in}}
- {{/if}} <!-- /end if currentUser -->
+ {{{displayPage}}}
  <hr>
  <footer class="footer">
    <div class="container"> 
@@ -74,20 +44,20 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </a>
-        <a class="brand" href="/main">Game of Exams <span id="alpha">{Alpha}</span></a>
+        <a class="brand goe-navlink" href="/main">Game of Exams <span id="alpha">{Alpha}</span></a>
           <p class="navbar-text pull-right">
-            <a href="#" title="your total points" id="user_total_points" class="badge">{{myPoints}}</a> {{loginButtons align="right"}}
+            <a href="#" title="your total points" id="user_total_points" class="badge goe-navlink">{{myPoints}}</a> {{loginButtons align="right"}}
           </p>
         <div class="nav-collapse collapse">
           <ul class="nav">
             <!-- The following if blocks will set the active element -->
-            <li {{#if currentPage "examlist"}} class="active" {{/if}}><a href="/courses" id="courses">All Exams</a></li>
-       <!--      <li {{#if currentPage "exam"}} class="active" {{/if}}><a href="/exam" id="exam">Exam</a></li> -->
-           <li {{#if currentPage "leaderboard"}} class="active" {{/if}}><a href="/leaderboard/#{{currentUser.username}}" id="leaderboard">Leaderboard</a></li>
-            <li {{#if currentPage "feed"}} class="active" {{/if}}><a href="/feed" id="feed">Answer feed</a></li>
-            <li {{#if currentPage "profile"}} class="active" {{/if}}><a href="/profile/{{currentUser.username}}" id="profile">My profile</a></li>
+            <li {{#if currentPage "examlist"}} class="active" {{/if}}><a href="/courses" id="courses" class="goe-navlink">All Exams</a></li>
+       <!--      <li {{#if currentPage "player"}} class="active" {{/if}}><a href="/exam" class="goe-navlink" id="exam">Exam</a></li> -->
+           <li {{#if currentPage "leaderboard"}} class="active" {{/if}}><a href="/leaderboard/#{{currentUser.username}}" id="leaderboard" class="goe-navlink">Leaderboard</a></li>
+            <li {{#if currentPage "feed"}} class="active" {{/if}}><a href="/feed" class="goe-navlink" id="feed">Answer feed</a></li>
+            <li {{#if currentPage "profile"}} class="active" {{/if}}><a href="/profile/{{currentUser.username}}" class="goe-navlink" id="profile">My profile</a></li>
             {{#if isAdmin}}
-            <li {{#if currentPage "admin"}} class="active" {{/if}}><a href="/admin" id="admin">Admin</a></li>
+            <li {{#if currentPage "admin"}} class="active" {{/if}}><a href="/admin" class="goe-navlink" id="admin">Admin</a></li>
             {{/if}} <!--/end ifAdmin block -->
           </ul>
         </div><!--/.nav-collapse -->
@@ -163,13 +133,18 @@
 </template>
 
 <template name="profile">
- <div class="jumbotron subhead">
-  <div class="page-header">
-    <div class="container">
-    <h1>Username: <span class="text-info">{{currentUser.username}}</span>
-    &nbsp&nbspTotal Points: <span class="text-info">{{myPoints}}</span></h1>
+  {{#if getUser}}
+  {{#with getUser}}
+  <div class="jumbotron subhead">
+    <div class="page-header">
+      <div class="container">
+        <h1>Username: <span class="text-info">{{username}}</span>
+          &nbsp&nbspTotal Points: <span class="text-info">{{points}}</span>
+        </h1>
+      </div>
+    </div>
   </div>
-  </div>
+  {{/with}}
   <div class="container">
     {{#with achievements}}
     <h2>Points Achievements</h2>
@@ -233,11 +208,20 @@
     <br />
     <img src="../{{all_the_code.image}}">
     {{#if all_the_code.done}}
-    <h3 class="my-inline">&nbsp&nbspDo all the exercises!</h3>
+    <h3 class="my-inline">&nbsp&nbspDo ALL the exercises!</h3>
     {{else}}
-    <h3 class="muted my-inline">&nbsp&nbspDo all the exercises!</h3>
+    <h3 class="muted my-inline">&nbsp&nbspDo ALL the exercises!</h3>
     {{/if}}
 
     {{/with}}
+
+    {{else}}
+    <p>There is no profile with this username</p>
+    {{/if}} <!-- /end if getUser -->
   </div>
+</template>
+
+<template name="page_not_found">
+  <h2>Page not found (404 error)</h2>
+      <p>Path is not valid</p>
 </template>

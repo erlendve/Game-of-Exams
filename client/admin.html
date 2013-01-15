@@ -46,9 +46,9 @@
 				<table class="table table-hover">
 					{{#each exams}}
 					<tr class="hover-show">
-						<td><a href="exam/{{_id}}" id="{{_id}}">{{title}} {{year}}</a>
+						<td><a href="exam/{{_id}}" id="{{_id}}" class="goe-navlink">{{title}} {{year}}</a>
 						</td>
-						<td><a href="/admin/{{_id}}" class="invisible exam-edit"></t><i class="icon-edit"></i> Edit</a></td>
+						<td><a href="/admin/{{_id}}" class="invisible exam-edit goe-navlink"></t><i class="icon-edit"></i> Edit</a></td>
 						<td><a href="#" class="invisible exam_delete"><i class="icon-trash"></i> Delete</td>
 						
 						<td><a href="#" class="publish-exam-toggle">
@@ -60,7 +60,7 @@
 						</a></td>
 					</tr>
 					{{else}}
-					<p> No exams on this course. <a href="/edit/{{../title}}"> Add exam</a></p>
+					<p> No exams on this course. <a href="/edit/{{../title}} class="goe-navlink> Add exam</a></p>
 					{{/each}}
 				</table>
 			</div> <!--/.span -->

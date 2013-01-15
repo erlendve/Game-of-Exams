@@ -12,6 +12,7 @@ Courses = new Meteor.Collection('courses');
 //The answers given by players
 Answers = new Meteor.Collection('answers');
 
+//Data about users, specifically related to their scores, badges etc.
 Players = new Meteor.Collection('players');
 
 function Exercise (ex_set, number, letter, title, text, points) {
@@ -34,12 +35,6 @@ function Exercise_set(course, title, year) {
 // On server startup, create some exercises if the database is empty.
 if (Meteor.isServer) {
 	Meteor.startup(function () {
-		if (Courses.find().count() === 0) {
-			Exams.remove({});
-			Courses.remove({});
-			Exercises.remove({});
-			mockCollection();
-		}
 		console.log('Server starting');
 		console.log(Exercises.find().count() + ' exercises in database');
 		console.log(Exams.find().count() + ' exams in database');

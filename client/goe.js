@@ -1,15 +1,19 @@
 // ['100_ex_60_px_trans.png', '15_ex_60_px_trans.png', '50_ex_60_px_trans.png', 'all_the_code_ask_trans.png', 'all_the_code_trans.png', 'first_60_px_trans.png', 'python_1_60_px_trans.png', 'python_2_60_px_trans.png', 'python_3_60_px_trans.png']
 // ['100_ex_60_px.png', '15_ex_60_px.png', '50_ex_60_px.png', 'all_the_code.png', 'all_the_code_ask.png', 'first_60_px.png', 'python_1_60_px.png', 'python_2_60_px.png', 'python_3_60_px.png']
 Template.profile.achievements = function() {
-  var user = Meteor.userId(); 
+  var user = Meteor.users.findOne({username: Session.get('subpage')});
   var trans = {'15points': '15_ex_60_px_trans.png','50points': '50_ex_60_px_trans.png','corporate': 'all_the_code_ask_trans.png','all_the_code': 'all_the_code_trans.png','one_exam': 'python_1_60_px_trans.png','two_exam': 'python_2_60_px_trans.png','three_exam': 'python_3_60_px_trans.png'};
   var normal = {'100points': '100_ex_60_px.png','15points': '15_ex_60_px.png','50points': '50_ex_60_px.png','all_the_code': 'all_the_code.png','corporate': 'all_the_code_ask.png','first': 'first_60_px.png','one_exam': 'python_1_60_px.png','two_exam': 'python_2_60_px.png','three_exam': 'python_3_60_px.png'};
 
   var res = trans;
-  var player = Players.findOne({userId: user});
-  if (!player)
-    return null;
+  if (!user) {
+    for (key in res) {
+      res[key] = {image: trans[key], done: false};
+    }
+    return res;
+  }
 
+  var player = Players.findOne({userId: user._id});
   var ach = player.achievements;
   if (!ach) {
     var curr = []
@@ -48,16 +52,16 @@ Template.profile.achievements = function() {
 
     if (Answers.find({userId: user}).count() === 13)
       curr.push('all_the_code');
+
     Players.update({userId: user}, {$set: {achievements: curr, achievements_done: curr.length}});
   }
-  ach = Players.findOne({userId: user}).achievements;
+  ach = player.achievements;
 
   for (key in res) {
     res[key] = {image: trans[key], done: false};
   }
 
   for (i in ach) {
-    console.log(ach[i]);
     res[ach[i]] = {image: normal[ach[i]], done: true};
   }
   // console.log(ach);
@@ -67,8 +71,30 @@ Template.profile.achievements = function() {
   // for (key in res) {
   //   reslist.push(res[key]);
   // }
-
   return res;
+}
+
+Template.profile.getUser = function() {
+  var name = Session.get('subpage');
+  var user = Players.findOne({username: name});
+
+  if (user) 
+    return user;
+  else 
+    return false;
+}
+
+Template.page.events = {
+  //This is to prevent browser refresh, so the app does not have to load again.
+  'click .goe-navlink': function(event) {
+    // prevent default browser link click behaviour
+    event.preventDefault();
+    // get the path from the link        
+    var reg = /.+?\:\/\/.+?(\/.+?)(?:#|\?|$)/;
+    var pathname = reg.exec(event.currentTarget.href)[1];
+    // route the URL 
+    Router.navigate(pathname, true);
+  }
 }
 
 Template.feed.live = function() {
@@ -108,22 +134,16 @@ Template.leaderboard.playerPoints = function() {
   return rankedArr;
 };
 
-if (Meteor.isClient) {
+Template.navbar.events({
+  //humour?
+  'dblclick #alpha': function() {
+    konamiactivate();
+  }, 
 
-	Template.navbar.events({
-		'click #exams': function() {
-			console.log('exams');
-		}, 
-    //humour?
-    'dblclick #alpha': function() {
-      konamiactivate();
-    }, 
-    
-    'click #alpha': function(e) {
-      e.preventDefault();
-    }
-  });
-}
+  'click #alpha': function(e) {
+    e.preventDefault();
+  }
+});
 
 //Bullshit konami code
 function konamiactivate() {
@@ -167,7 +187,7 @@ Handlebars.registerHelper('md', function (options) {
 });
 
 Handlebars.registerHelper('exams', function(){
-  return Exams.find({courseId: this._id});
+  return Exams.find({courseId: this._id}, {sort: {year: -1}});
 });
 
 Handlebars.registerHelper('courses', function(){
@@ -243,29 +263,24 @@ var GoeRouter = Backbone.Router.extend({
     "feed":                                        "feed",
     "leaderboard/:*":                              "leaderboard",
     "profile/:username":                           "profile",
+    "backup":                                      "backup"
   },
 
   examlist: function () {
-   // console.log('routing to examlist');
    Session.set('currentPage', 'examlist');
-   // Session.set('subpage', undefined);
  },
 
  admin: function () {
-  // console.log('routing to admin');
   Session.set('currentPage', 'admin');
-  // Session.set('subpage', undefined);
 },
 
 editExam: function(exam_id) {
-  // console.log('routing to admin, exam: ' + exam_id);
   Session.set('currentPage', 'admin');
   Session.set('subpage', exam_id);
 },
 
 exam: function(exam_id) {
- // console.log('Routing to exam with id: ' + exam_id);
- Session.set('currentPage', 'exam');
+ Session.set('currentPage', 'player');
  if (exam_id) {
   Session.set('subpage', exam_id);
 }
@@ -281,7 +296,12 @@ leaderboard: function() {
 },
 
 profile: function(username) {
-  Session.set('currentPage', 'profile');
+  Session.set('currentPage', 'profile');''
+  Session.set('subpage', username);
+}, 
+
+backup: function() {
+  Session.set('currentPage', 'backup');
 }
 });
 
@@ -289,6 +309,7 @@ Router = new GoeRouter;
 
 Meteor.startup(function () {
   Backbone.history.start({pushState: true});
+  // Meteor.setInterval(function() {Session.set("now", moment().format())}, 1000);
 });
 
 ///////// Helpers for routing ////////
@@ -296,3 +317,14 @@ Meteor.startup(function () {
 Handlebars.registerHelper('currentPage', function(page){
   return Session.equals('currentPage', page);
 });
+
+Template.page.displayPage = function() {
+  var page = Session.get('currentPage');
+
+  // return Template[page]();
+  if (Template[page]) {
+    return Template[page]();
+  } else {
+    return Template['page_not_found']();
+  }
+}
