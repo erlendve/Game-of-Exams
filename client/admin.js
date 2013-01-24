@@ -132,7 +132,29 @@ Template.admin_edit_exam.events({
     }
 
     $('#form_new_exercise').hide('slow', function() {
-      var ex = new Exercise (that._id, parseInt(res['number']), res['letter'], res['title'], res['text'], parseInt(res['points']));
+      // var ex = new Exercise (that._id, parseInt(res['number']), res['letter'], res['title'], res['text'], parseInt(res['points']));
+      var ex = {
+        set_id: that._id,
+        number: parseInt(res['number']),
+        letter: res['letter'],
+        text: res['text'],
+        title: res['title'],
+        points: parseInt(res['points']),
+        createdAt: + (new Date),
+        owner: Meteor.userId(),
+        lang: res['lang'],
+      }
+
+      if (res['eval'] !== '') {
+        ex.eval = res['eval'];
+        if (res['eval2'] === '')
+          ex.eval2 = 'none';
+        else
+          ex.eval2 = res['eval2'];
+
+        ex.input = res['input'];
+      }
+
       Exercises.insert(ex, function(error, result) {
         if (result) {
           notifyStandard('Added ' + ex['title'], ex['title'] + ' was added to the exam <strong>' + that.title +'</strong>', 'success');
@@ -151,15 +173,15 @@ Template.admin_edit_exam.events({
 //////// admin_exercise ///////////
 Template.admin_exercise.events({
  'click .exercise_delete': function(e) {
-    var ex = Exercises.findOne({_id: this._id});
-    Exercises.remove(
-      {_id: this._id}, 
-      notifyCustom({title: 'Removed exercise ' + ex.title, text: 'The exercise <strong>' + ex.title + '</strong> has been removed from the database', type: 'error', icon: 'icon-trash'})
-      );
-    return false;
-  }, 
+  var ex = Exercises.findOne({_id: this._id});
+  Exercises.remove(
+    {_id: this._id}, 
+    notifyCustom({title: 'Removed exercise ' + ex.title, text: 'The exercise <strong>' + ex.title + '</strong> has been removed from the database', type: 'error', icon: 'icon-trash'})
+    );
+  return false;
+}, 
 
-  'click .exercise-edit': function(e) {
+'click .exercise-edit': function(e) {
     //TODO make it so that editing several at once is not possible
     e.preventDefault();
     var h3 = $("#" + this._id + ' h3');
@@ -255,7 +277,7 @@ function multiReplaceWithInput(dom_element, labels, input_syntax, focusNr , cont
       // editlinks.show();
       Session.set('currentPage', 'moo');
       Session.set('currentPage', 'admin');
-  });
+    });
 }
 
 function editExercise() {

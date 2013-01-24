@@ -180,16 +180,27 @@
 
 <template name="admin_new_exercise">
 	<form name="new_exercise" id ="form_new_exercise" style="display:none">
-		<legend>Create new exercise</legend>
+		<legend><span class="text text-error">Create new exercise</span></legend>
 		<fieldset>
-			<label>Number</label>
-			<input name="number" type="number" autofocus="true"  class="input-mini" value="{{next_exercise_number}}">
 			<label>Exercise title</label>
-			<input name="title" type="text" id="new_exercise_title" placeholder="Example: Find five errors in this script" class="input-large">
+			<input name="title" autofocus="true" type="text" id="new_exercise_title" placeholder="Example: Find five errors in this script" class="input-large">
+			<label>Number</label>
+			<input name="number" type="number" class="input-mini" value="{{next_exercise_number}}">
+			<label>Letter</label>
+			<input name="letter" class ="input-small" type="text" id="new_exercise_points" placeholder="empty if none">
 			<label>Points</label>
-			<input name="points" class ="input-small" type="number" id="new_exercise_points" value="5">
+			<input name="points" type="number" class="input-mini" value="5">
+			<label>Language</label>
+			<input name="lang" class ="input-small" type="text" value="java">
 			<label>Exercise text with <a href="http://softwaremaniacs.org/playground/showdown-highlight/" target="_blank">markdown syntax</a></label>
 			<textarea name="text" class="input-block-level" rows="10" id="new_exercise_text"></textarea>
+			<label>Input</label>
+			<input name="input" class ="input-large" type="text" placeholder="empty if none">
+			<label>Output should evaluate to:</label>
+			<textarea name="eval" class="input-block-level" rows="4" id="new_exercise_eval"></textarea>
+			<label>Or it can evaluato to:</label>
+			<textarea name="eval2" class="input-block-level" rows="4" id="new_exercise_eval2"></textarea>
+
 		</fieldset> 
 		<div class="form-actions">
 			<button type="submit" class="btn btn-primary">Save</button>

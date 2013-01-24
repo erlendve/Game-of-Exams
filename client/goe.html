@@ -1,38 +1,66 @@
 <head>
 	<meta charset="utf-8">
-	<title>Game of Exams {Alpha}</title>
+	<title>Game of Exams {Beta}</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content="Get points, be awesome">
 	<meta name="author" content="Erlend Vestad">
 
-	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-      <![endif]-->
+  <link rel="shortcut icon" href="../assets/ico/favicon.ico">
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+  <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
 
-    <!-- Fav and touch icons -->
-      <link rel="shortcut icon" href="../assets/ico/favicon.ico">
-      <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
-      <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
-    </head>
+  <!-- Google analytics for site devgoe.meteor.com -->
+  <script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-37876151-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+  </script>
+
+  <script type="text/javascript">
+  (function() {
+    window.require(["ace/ace"], function(a) {
+      a && a.config.init();
+      if (!window.ace)
+        window.ace = {};
+      for (var key in a) if (a.hasOwnProperty(key))
+        ace[key] = a[key];
+    });
+  })();
+  </script>
+</head>
+
 
 <body>
   <div class="container">
-  {{> page}}
-</div>
+    {{> page}}
+  </div>
+  <hr>
+  <footer class="footer">
+   <div class="container"> 
+     <p>&copy; 2013 <br />
+      Made by Erlend Vestad
+    </p>
+    <p>
+      Game of Exams uses <a href="http://ideone.com" target="_blank">ideone.com</a> &copy;
+      by <a href="http://sphere-research.com" target="_blank">Sphere Research Labs</a>, 
+      <a href="http://twitter.com/mdo" target="_blank">Bootstrap</a> & <a href="www.meteor.com" target="blank">Meteor.js</a> <br />
+      Graphic work by Henrik Waatland Jakobsen
+    </p>
+  </div>
+</footer>
 </body>
 
 <template name="page">
  {{> navbar}}
  {{{displayPage}}}
- <hr>
- <footer class="footer">
-   <div class="container"> 
-     <p>&copy; Erlend Vestad 2012</p>
-   </div>
- </footer>
 </template>
 
 <template name="navbar">
@@ -44,16 +72,20 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </a>
-        <a class="brand goe-navlink" href="/main">Game of Exams <span id="alpha">{Alpha}</span></a>
-          <p class="navbar-text pull-right">
-            <a href="#" title="your total points" id="user_total_points" class="badge goe-navlink">{{myPoints}}</a> {{loginButtons align="right"}}
-          </p>
+        <a class="brand goe-navlink" href="/main">Game of Exams <span id="alpha">{Beta}</span></a>
+        <p class="navbar-text pull-right">
+          <a href="#" title="your total points" id="user_total_points" class="badge badge-info goe-navlink">{{myPoints}} points</a>
+          {{loginButtons align="right"}}
+          <a href="http://en.gravatar.com/emails/" target="_blank" title="Change your avatar at gravatar.com">
+            <img src="{{my_gravatar 39}}"/ class="img-rounded">
+          </a>
+        </p>
         <div class="nav-collapse collapse">
           <ul class="nav">
             <!-- The following if blocks will set the active element -->
-            <li {{#if currentPage "examlist"}} class="active" {{/if}}><a href="/courses" id="courses" class="goe-navlink">All Exams</a></li>
-       <!--      <li {{#if currentPage "player"}} class="active" {{/if}}><a href="/exam" class="goe-navlink" id="exam">Exam</a></li> -->
-           <li {{#if currentPage "leaderboard"}} class="active" {{/if}}><a href="/leaderboard/#{{currentUser.username}}" id="leaderboard" class="goe-navlink">Leaderboard</a></li>
+            <li {{#if currentPage "examlist"}} class="active" {{/if}}><a href="/courses" id="courses" class="goe-navlink">Overview</a></li>
+            <!--      <li {{#if currentPage "player"}} class="active" {{/if}}><a href="/exam" class="goe-navlink" id="exam">Exam</a></li> -->
+            <li {{#if currentPage "leaderboard"}} class="active" {{/if}}><a href="/leaderboard/#{{currentUser.username}}" id="leaderboard" class="goe-navlink">Leaderboard</a></li>
             <li {{#if currentPage "feed"}} class="active" {{/if}}><a href="/feed" class="goe-navlink" id="feed">Answer feed</a></li>
             <li {{#if currentPage "profile"}} class="active" {{/if}}><a href="/profile/{{currentUser.username}}" class="goe-navlink" id="profile">My profile</a></li>
             {{#if isAdmin}}
@@ -88,7 +120,7 @@
 {{answertext}}
 {{/markdown}}
       </div>
-    {{/each}}
+      {{/each}}
     </div>
   </div> <!-- /end container -->
 </template>
@@ -118,7 +150,7 @@
               {{#each playerPoints}}
               <tr {{#if me}} class="info"{{/if}} id="{{username}}">
                 <td>{{rank}}</td>
-                <td>{{username}}</td>
+                <td><a href="/profile/{{username}}" class="goe-navlink">{{username}}</a></td>
                 <td style="text-align:center">{{points}}</td>
                 <td style="text-align:center">{{exercises_done}}</td>
               </tr>
@@ -223,5 +255,5 @@
 
 <template name="page_not_found">
   <h2>Page not found (404 error)</h2>
-      <p>Path is not valid</p>
+  <p>Path is not valid</p>
 </template>

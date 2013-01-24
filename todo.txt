@@ -3,3 +3,47 @@
 2: Fix Pines notify so it uses the minified version and make it a package instead of being in lib (should be loaded last). Now there is a hack that wraps pines in Meteor.isClient if block, so it loads after jQuery. the minified version is just commented for now. Change that also.
 
 3: Fjerne konamikode og hack for admin login (dblklikk alpha og så konami)
+
+
+
+Useful stuff:
+======================
+dump database: 
+
+---
+step 1: get url of db
+in terminal: meteor mongo --url goe.meteor.com
+returns: mongodb://client:19882025-e962-9db7-fd08-722b71900142@skybreak.member1.mongolayer.com:27017/goe_meteor_com
+
+where mongodb://client:PASSWORD@skybreak.member1.mongolayer.com:27017/goe_meteor_com
+
+PASSWORD is to be used at the -p option at step 2. It's valid for one minute
+
+---
+
+step 2: backup db to /backups/ (replace -p with the result labeled PASSWORD above)
+in terminal: mongodump -u client -h skybreak.member1.mongolayer.com:27017 -d goe_meteor_com -p 4c0de8ea-ed1c-e707-df40-7e73d2ffd957 -out backups
+
+---
+
+step 3: import db locally (meteor must be running)
+
+mongorestore -h 127.0.0.1:3002 --db meteor /Users/erlendve/Dropbox/Aws/goe/backups/goe_meteor_com/
+
+--- IMPORT DATABASE TO DEPLOYED SITE:
+step 1: get url of db
+in terminal: meteor mongo --url goe.meteor.com
+returns: mongodb://client:19882025-e962-9db7-fd08-722b71900142@skybreak.member1.mongolayer.com:27017/goe_meteor_com
+
+where mongodb://client:PASSWORD@skybreak.member1.mongolayer.com:27017/goe_meteor_com
+
+PASSWORD is to be used at the -p option at step 2. It's valid for one minute
+
+---
+
+step 2: import the data from your local copy /backups/ (replace -p with the result labeled PASSWORD above)
+mongorestore -u client -h skybreak.member1.mongolayer.com:27017 -d devgoe_meteor_com -p 8b2a8f22-b017-fd57-a817-ccaef76d7a8e /Users/erlendve/Dropbox/Aws/goe/backups/goe_meteor_com/
+
+IDEONE:
+user: gameofexams
+pass: ba5ag7rU

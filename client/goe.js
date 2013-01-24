@@ -99,7 +99,7 @@ Template.page.events = {
 
 Template.feed.live = function() {
   //sort reverse hack
-  return Answers.find({}, {sort: {$natural:-1}}).fetch().reverse();
+  return Answers.find({saved: true}, {sort: {$natural:-1}}).fetch().reverse();
 }
 
 Template.feed.rendered = function() {
@@ -211,7 +211,9 @@ Handlebars.registerHelper('isAdmin', function() {
 Handlebars.registerHelper('myPoints', function() {
   var res = 0;
   Answers.find({userId: Meteor.userId()}, {fields: {points: 1}}).forEach(function (ans) {
-    res += ans.points;
+    //TODO fix this hack later
+    if (ans.saved)
+      res += ans.pointsAtSave;
   })
   return res;
 });
@@ -226,8 +228,18 @@ Handlebars.registerHelper("debug", function(optionalValue) {
     console.log("===================="); 
     console.log(optionalValue); 
   } 
-}
-);
+});
+
+Handlebars.registerHelper('my_gravatar', function(size) {
+  var email = 'gravatar@gameofexams.com';
+  if (Meteor.user()) {
+    var emails = Meteor.user().emails;
+    if (emails)
+      email = emails[0].address;
+  }
+
+  return get_gravatar(email, size);
+});
 
 
 ////////// Javascript helpers ////////
@@ -265,44 +277,44 @@ var GoeRouter = Backbone.Router.extend({
     "profile/:username":                           "profile",
     "backup":                                      "backup"
   },
-
+  
   examlist: function () {
-   Session.set('currentPage', 'examlist');
- },
+    Session.set('currentPage', 'examlist');
+  },
 
- admin: function () {
-  Session.set('currentPage', 'admin');
-},
+  admin: function () {
+    Session.set('currentPage', 'admin');
+    Session.set('subpage', null);
+  },
 
-editExam: function(exam_id) {
-  Session.set('currentPage', 'admin');
-  Session.set('subpage', exam_id);
-},
+  editExam: function(exam_id) {
+    Session.set('currentPage', 'admin');
+    Session.set('subpage', exam_id);
+  },
 
-exam: function(exam_id) {
- Session.set('currentPage', 'player');
- if (exam_id) {
-  Session.set('subpage', exam_id);
-}
-console.log('subpage: ' + Session.get('subpage'));
-},
+  exam: function(exam_id) {
+    Session.set('currentPage', 'player');
+    if (exam_id) {
+      Session.set('subpage', exam_id);
+    }
+  },
 
-feed: function() {
-  Session.set('currentPage', 'feed');
-}, 
+  feed: function() {
+    Session.set('currentPage', 'feed');
+  }, 
 
-leaderboard: function() {
-  Session.set('currentPage', 'leaderboard');
-},
+  leaderboard: function() {
+    Session.set('currentPage', 'leaderboard');
+  },
 
-profile: function(username) {
-  Session.set('currentPage', 'profile');''
-  Session.set('subpage', username);
-}, 
+  profile: function(username) {
+    Session.set('currentPage', 'profile');''
+    Session.set('subpage', username);
+  }, 
 
-backup: function() {
-  Session.set('currentPage', 'backup');
-}
+  backup: function() {
+    Session.set('currentPage', 'backup');
+  }
 });
 
 Router = new GoeRouter;
