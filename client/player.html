@@ -14,7 +14,9 @@
 						<ul class="nav nav-list">
 							<li class="nav-header">Exercises</li>
 							{{#each exercises}}
-							{{> exercise_sidenav}}
+							<ul class"nav nav-list ex-sidebar affix">
+								{{> exercise_sidenav}}
+							</ul>
 							{{/each}}
 						</ul>
 					</div><!--/.well -->

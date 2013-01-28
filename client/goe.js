@@ -196,7 +196,7 @@ Handlebars.registerHelper('courses', function(){
 
 //TODO make the exercises return only the exercises for a specific course
 Handlebars.registerHelper('exercises', function(){
-  return Exercises.find({set_id: this._id});
+  return Exercises.find({set_id: this._id}, {sort: {number: 1}});
 });
 
 Handlebars.registerHelper('findExercise', function(){
@@ -308,7 +308,7 @@ var GoeRouter = Backbone.Router.extend({
   },
 
   profile: function(username) {
-    Session.set('currentPage', 'profile');''
+    Session.set('currentPage', 'profile');
     Session.set('subpage', username);
   }, 
 

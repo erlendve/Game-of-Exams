@@ -51,7 +51,7 @@
     <p>
       Game of Exams uses <a href="http://ideone.com" target="_blank">ideone.com</a> &copy;
       by <a href="http://sphere-research.com" target="_blank">Sphere Research Labs</a>, 
-      <a href="http://twitter.com/mdo" target="_blank">Bootstrap</a> & <a href="www.meteor.com" target="blank">Meteor.js</a> <br />
+      <a href="http://twitter.com/mdo" target="_blank">Bootstrap</a> & <a href="http://www.meteor.com" target="blank">Meteor.js</a> <br />
       Graphic work by Henrik Waatland Jakobsen
     </p>
   </div>
@@ -113,12 +113,12 @@
         <h1><span class="text-error">Live</span> feed of all answers<small> every new answer will show up here:</small></h1>
       </div>
       {{# each live}}
-      <h3>Someone just solved <p class="text-info my-inline">{{findExercise.title}}</p> with the answer:</h3><br/>
+      <h3>Someone just answered <p class="text-info my-inline">{{findExercise.title}}</p> with the answer:</h3><br/>
       <div class="hl">
         <!-- The lines under here must be left aligned or else text will get spaces inserted :() -->
-{{#markdown}}
-{{answertext}}
-{{/markdown}}
+<!-- {{#markdown}} -->
+<pre><code>{{answertext}}</code></pre>
+<!-- {{/markdown}} -->
       </div>
       {{/each}}
     </div>
@@ -165,6 +165,10 @@
 </template>
 
 <template name="profile">
+{{> under_construction}}
+</template>
+
+<template name="profile_old">
   {{#if getUser}}
   {{#with getUser}}
   <div class="jumbotron subhead">
@@ -246,7 +250,6 @@
     {{/if}}
 
     {{/with}}
-
     {{else}}
     <p>There is no profile with this username</p>
     {{/if}} <!-- /end if getUser -->
@@ -255,5 +258,10 @@
 
 <template name="page_not_found">
   <h2>Page not found (404 error)</h2>
-  <p>Path is not valid</p>
+  <p>Path is not valid. If this page was here yesterday it has been eaten by the zombies</p>
+</template>
+
+<template name="under_construction">
+  <h2>Under construction!</h2>
+  <p><i class="icon-warning-sign"></i> This page was broken during the last zombie attack.</p>
 </template>
