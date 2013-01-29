@@ -61,7 +61,9 @@ Template.player.events({
 });
 
 Template.player.rendered = function() {
+	$('body').attr('data-spy', 'scroll');
 	$('code').each(function(i, e) {hljs.highlightBlock(e)});
+	$('.bs-docs-sidenav').affix({offset: {top: $('header').outerHeight()}})
 
 	$('textarea').each(function (i, el) {
 		var $el,
@@ -182,42 +184,5 @@ Template.exercise_main.events({
 					notifyStandard(p + ' points awarded', 'Aww snap! Expected output is ' + Exercises.findOne(that.exercise_id).eval + '<br />You got: '+ that.result.output +  '</strong>', 'error', 'icon-thumbs-down');
 				}
 			});
-	},
-	// 'click .editor': function() {
-	// 	$('textarea').each(function (i, el) {
-	// 		var $el,
-	// 		$container,
-	// 		editor;
-
-	// 		$el = $(el);
-
-	// 		//
- //        	// Principle: inject an DOM element (sized and positioned) and hide the textarea
- //        	//
-
- //        	$container = $('<div/>').css({
- //        		position: 'relative',
- //        		width: $el.width(),
- //        		height: $el.height(),
- //        		border: "1px solid gray"
- //        	}).insertAfter(el);
-
- //        	$el.hide();
-
- //        	//
-	// 		// ACE magic
-	// 		//
-
-	// 		editor = ace.edit($container[0]);
-
-	// 		editor.setTheme("ace/theme/eclipse");
-	// 		editor.getSession().setMode("ace/mode/python");
-	// 		// Keep hidden textarea in sync
-
-	// 		editor.getSession().setValue($el.val());
-	// 		editor.getSession().on('change', function () {
-	// 			$el.val(editor.getSession().getValue());
-	// 		}); 
-	// 	});
-	// }
+	}
 });

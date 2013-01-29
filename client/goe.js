@@ -1,3 +1,14 @@
+//Google analytics
+var _gaq = _gaq || [];
+_gaq.push(['_setAccount', 'UA-37876151-1']);
+_gaq.push(['_trackPageview']);
+
+(function() {
+  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+})();
+
 // ['100_ex_60_px_trans.png', '15_ex_60_px_trans.png', '50_ex_60_px_trans.png', 'all_the_code_ask_trans.png', 'all_the_code_trans.png', 'first_60_px_trans.png', 'python_1_60_px_trans.png', 'python_2_60_px_trans.png', 'python_3_60_px_trans.png']
 // ['100_ex_60_px.png', '15_ex_60_px.png', '50_ex_60_px.png', 'all_the_code.png', 'all_the_code_ask.png', 'first_60_px.png', 'python_1_60_px.png', 'python_2_60_px.png', 'python_3_60_px.png']
 Template.profile.achievements = function() {
@@ -332,11 +343,26 @@ Handlebars.registerHelper('currentPage', function(page){
 
 Template.page.displayPage = function() {
   var page = Session.get('currentPage');
+  $('body').attr('data-spy', 'scroll');
 
-  // return Template[page]();
   if (Template[page]) {
-    return Template[page]();
-  } else {
-    return Template['page_not_found']();
+
+    //Some specific scripts that need to be added after window/document has loadeds
+    if (page === 'player') {
+        // Ace integration
+        (function() {
+          window.require(["ace/ace"], function(a) {
+            a && a.config.init();
+            if (!window.ace)
+              window.ace = {};
+            for (var key in a) if (a.hasOwnProperty(key))
+              ace[key] = a[key];
+          });
+        })();
+      }
+
+      return Template[page]();
+    } else {
+      return Template['page_not_found']();
+    }
   }
-}

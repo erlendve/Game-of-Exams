@@ -1,49 +1,47 @@
 <template name="player">
-	<div class="container">
-		{{#if currentExam}}
-		{{#with currentExam}}
-		<div class="jumbotron subhead">
-			<div class="page-header">
-				<h1>{{title}} {{year}}<small> you have {{examCurrentPoints}} of {{examTotalPoints}} points</small></h1>
-			</div>
+	{{#if currentExam}}
+	{{#with currentExam}}
+	<header class="jumbotron subhead">
+		<div class="container">
+			<h1>{{title}} <small>  You have {{examCurrentPoints}} of {{examTotalPoints}} points</small></h1>
 		</div>
-		<div class="container-fluid">
-			<div class="row-fluid">
-				<div class="span3">
-					<div class="well sidebar-nav exercises-sidenav">
-						<ul class="nav nav-list">
-							<li class="nav-header">Exercises</li>
-							{{#each exercises}}
-							<ul class"nav nav-list ex-sidebar affix">
-								{{> exercise_sidenav}}
-							</ul>
-							{{/each}}
-						</ul>
-					</div><!--/.well -->
-				</div><!--/span-->
-				<div class="well span9">
-					<div class="row-fluid">
-						<div class="exercises">
-							{{#each exercises}}
-							{{> exercise_main}}
-							{{/each}}
-						</div>
+	</header>
+	<div class="container">
+		<div class="row">
+			<div class="span3 bs-docs-sidebar">
+				<ul class="nav nav-list bs-docs-sidenav">
+					<li class="nav-header">Exercises</li>
+						{{#each exercises}}
+						{{> exercise_sidenav}}
+						{{/each}}
+				</ul>
+			</div><!--/span-->
+			<div class="span9">
+				<section class="exercises">
+					{{#each exercises}}
+					{{> exercise_main}}
+					{{/each}}
+				</section>
 
-					</div><!--/row-->
-				</div><!--/span-->
-			</div><!--/row-->
-		</div><!--/.fluid-container-->
+			</div><!--/.well -->
+		</div><!--/row-->
 		{{/with}}
+		{{else}}
+		<p>
+			Loading content...
+		</p>
 		{{/if}}
-	</div> <!-- /. container -->
+	</div>
 </template>
 
 <template name="exercise_sidenav">
-	<li><a href="#{{_id}}" class="exercise-side">{{number}}: {{title}}</a></li>
+	<li><a href="#{{_id}}" class="exercise-side">
+		<i class="icon-chevron-right"></i>
+		{{number}}. {{title}}</a></li>
 </template>
 
 <template name="exercise_main">
-	<div id="{{_id}}" class="exercise">
+	<div id="{{_id}}" class="well exercise">
 		<h3 class="title">{{number}}) {{title}} 
 			{{#if answer.saved}}
 			{{#if isRight}}

@@ -25,7 +25,7 @@
 		<div class="add-new-content span2 offset10">
 			<p class="lead">Add new content</p>
 			<a href="#" id="add_new_course" data-toggle="modal" data-target="#modal_add_course">New course</a><br />
-			<a href="/admin/newexam" class="add_new_exam">New exam</a>
+			<a href="/admin/newexam" class="add_new_exam goe-navlink">New exam</a>
 		</div>
 		<!-- /end add-new-content -->
 		
@@ -93,11 +93,15 @@
 
 <!-- This template generates the view to edit or add a new exam -->
 <template name="admin_edit_exam">
-	<div class="page-header">
-		<h1><span class="text-error">Editing</span> {{title}} {{year}}<small> changes are saved instantly</small></h1>
-	</div>
-	<div class="container-fluid">
-		<div class="row-fluid">
+	<header>
+		<div class="container">
+			<div class="page-header">
+				<h1><span class="text-error">Editing</span> {{title}}<small> changes are saved instantly</small></h1>
+			</div>
+		</div>
+	</header>
+	<div class="container">
+		<div class="row">
 			{{#if title}}
 			<div class="span3">
 				<div class="well sidebar-nav">
@@ -145,7 +149,7 @@
 					</form>
 					{{/if}}
 				</div><!--/row-->
-				<p class="lead">The students <strong>must</strong> learn more. <a href="#form_new_exercise" class="show_add_new_exercise">Add a new exercise</a>
+				<p class="lead">The students <strong>must</strong>learn more. <a href="#form_new_exercise" class="show_add_new_exercise">Add a new exercise</a>
 				</p>
 			</div><!--/span-->
 		</div><!--/row-->

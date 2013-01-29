@@ -1,48 +1,20 @@
 <head>
 	<meta charset="utf-8">
 	<title>Game of Exams {Beta}</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="description" content="Get points, be awesome">
-	<meta name="author" content="Erlend Vestad">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Get points, be awesome">
+  <meta name="author" content="Erlend Vestad">
 
   <link rel="shortcut icon" href="../assets/ico/favicon.ico">
   <link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
   <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
   <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
   <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
-
-  <!-- Google analytics for site devgoe.meteor.com -->
-  <script type="text/javascript">
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-37876151-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-  </script>
-
-  <script type="text/javascript">
-  (function() {
-    window.require(["ace/ace"], function(a) {
-      a && a.config.init();
-      if (!window.ace)
-        window.ace = {};
-      for (var key in a) if (a.hasOwnProperty(key))
-        ace[key] = a[key];
-    });
-  })();
-  </script>
 </head>
 
 
 <body>
-  <div class="container">
     {{> page}}
-  </div>
-  <hr>
   <footer class="footer">
    <div class="container"> 
      <p>&copy; 2013 <br />
@@ -75,7 +47,7 @@
         <a class="brand goe-navlink" href="/main">Game of Exams <span id="alpha">{Beta}</span></a>
         <p class="navbar-text pull-right">
           <a href="#" title="your total points" id="user_total_points" class="badge badge-info goe-navlink">{{myPoints}} points</a>
-          {{loginButtons align="right"}}
+           &nbsp{{loginButtons align="right"}}&nbsp
           <a href="http://en.gravatar.com/emails/" target="_blank" title="Change your avatar at gravatar.com">
             <img src="{{my_gravatar 39}}"/ class="img-rounded">
           </a>
@@ -108,7 +80,6 @@
 
 <template name="feed">
   <div class="container">
-    <div class="jumbotron subhead">
       <div class="page-header">
         <h1><span class="text-error">Live</span> feed of all answers<small> every new answer will show up here:</small></h1>
       </div>
@@ -121,7 +92,6 @@
 <!-- {{/markdown}} -->
       </div>
       {{/each}}
-    </div>
   </div> <!-- /end container -->
 </template>
 
@@ -257,11 +227,15 @@
 </template>
 
 <template name="page_not_found">
-  <h2>Page not found (404 error)</h2>
-  <p>Path is not valid. If this page was here yesterday it has been eaten by the zombies</p>
+  <div class="container">
+    <h2>Page not found (404 error)</h2>
+    <p>Path is not valid. If this page was here yesterday it has been eaten by the zombies</p>
+  </div>
 </template>
 
 <template name="under_construction">
-  <h2>Under construction!</h2>
-  <p><i class="icon-warning-sign"></i> This page was broken during the last zombie attack.</p>
+  <div class="container">
+    <h2>Under construction!</h2>
+    <p><i class="icon-warning-sign"></i> This page was broken during the last zombie attack.</p>
+  </div>
 </template>
