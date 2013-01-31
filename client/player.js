@@ -61,8 +61,8 @@ Template.player.events({
 });
 
 Template.player.rendered = function() {
-	$('body').attr('data-spy', 'scroll');
 	$('code').each(function(i, e) {hljs.highlightBlock(e)});
+	// $('.bs-docs-sidebar').scrollspy();
 	$('.bs-docs-sidenav').affix({offset: {top: $('header').outerHeight()}})
 
 	$('textarea').each(function (i, el) {

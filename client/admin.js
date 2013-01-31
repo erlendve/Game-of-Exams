@@ -159,7 +159,7 @@ Template.admin_edit_exam.events({
         if (result) {
           notifyStandard('Added ' + ex['title'], ex['title'] + ' was added to the exam <strong>' + that.title +'</strong>', 'success');
           //TODO does not update value of "next exercise" until reload
-          $('#form_new_exercise')[0].reset();
+          // $('#form_new_exercise')[0].reset();
         }
         if (error)
           notifyStandard('Could not add exercise', 'Something went wrong \n Error message: ' + error, 'error');

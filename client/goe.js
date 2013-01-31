@@ -344,6 +344,9 @@ Handlebars.registerHelper('currentPage', function(page){
 Template.page.displayPage = function() {
   var page = Session.get('currentPage');
   $('body').attr('data-spy', 'scroll');
+  // $('.bs-docs-sidebar').scrollspy();
+  // $('body').attr('data-target', '.bs-docs-sidebar');
+
 
   if (Template[page]) {
 

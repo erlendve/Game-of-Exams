@@ -70,18 +70,22 @@ Meteor.methods({
 		console.log(exerciseId);
 		var exercise = Exercises.findOne(exerciseId);
 		var ans = Answers.findOne(answerId);
-		var correct = exercise.eval.trim();
-		var ansres = ans.result.output.trim();
-		console.log('eval:');
-		console.log(exercise.eval);
-		console.log('res:');
-		console.log(ans.result.output);
 		var retval = false;
 		var p = 0;
-		console.log(ansres.localeCompare(correct));
-		if (ansres.localeCompare(correct) === 0) {
-			retval = true;
-			p =Math.round( exercise.points * multiplier * 10 ) / 10;
+		if (exercise.eval) {
+			var correct = exercise.eval.trim();
+			var ansres = ans.result.output.trim();
+			console.log('eval:');
+			console.log(exercise.eval);
+			console.log('res:');
+			console.log(ans.result.output);
+
+
+			console.log(ansres.localeCompare(correct));
+			if (ansres.localeCompare(correct) === 0) {
+				retval = true;
+				p =Math.round( exercise.points * multiplier * 10 ) / 10;
+			}
 		}
 		Answers.update(answerId, {$set: {saved: true, pointsAtSave: p}},
 			function(error, result) {
