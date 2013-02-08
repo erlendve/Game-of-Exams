@@ -15,6 +15,8 @@ Answers = new Meteor.Collection('answers');
 //Data about users, specifically related to their scores, badges etc.
 Players = new Meteor.Collection('players');
 
+Languages = new Meteor.Collection('languages');
+
 ///////// Allow & deny rules ////////
 Answers.allow({
 	insert: function (userId, doc) {
@@ -71,36 +73,4 @@ if (Meteor.isServer) {
         Players.allow(green);
         Answers.allow(green);
     })();
-}
-
-// function Exercise (ex_set, number, letter, title, text, points) {
-// 	this.set_id = ex_set; //the id of the exercise set this belongs to
-// 	this.number = number;
-// 	this.letter = letter;
-// 	this.text = text;
-// 	this.title = title;
-// 	this.points = points;
-// }
-
-function Exercise_set(course, title, year) {
-	this.courseId = course; //The id of the course this set belongs to
-	this.title = title;
-	this.year = year;
-    this.createdAt = +(new Date);
-	this.exercises = []; //The exercises id's that is a part of this set
-	this.published = false;
-}
-
-// On server startup, create some exercises if the database is empty.
-if (Meteor.isServer) {
-	Meteor.startup(function () {
-		// console.log('Server starting');
-		// console.log(Exercises.find().count() + ' exercises in database');
-		// console.log(Exams.find().count() + ' exams in database');
-		// Exams.find().forEach( function(exam) {
-		// 	console.log(exam);
-		// });
-		// console.log(Courses.find().count() + ' courses in database');
-		// console.log(Meteor.users.find().fetch());
-	});
 }

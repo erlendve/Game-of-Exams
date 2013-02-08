@@ -1,0 +1,87 @@
+<head>
+	<meta charset="utf-8">
+	<title>Game of Exams {Beta}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Get points, be awesome">
+  <meta name="author" content="Erlend Vestad">
+</head>
+
+
+<body>
+  {{> page}}
+  <footer class="footer">
+   <div class="container"> 
+     <p>&copy; 2013 <br />
+      Made by Erlend Vestad
+    </p>
+    <p>
+      Game of Exams uses <a href="http://ideone.com" target="_blank">ideone.com</a> &copy;
+      by <a href="http://sphere-research.com" target="_blank">Sphere Research Labs</a>, 
+      <a href="http://twitter.github.com/bootstrap/" target="_blank">Bootstrap</a> & <a href="http://www.meteor.com" target="blank">Meteor.js</a> <br />
+      Graphic work by Henrik Waatland Jakobsen
+    </p>
+  </div>
+</footer>
+</body>
+
+<template name="page">
+ {{> navbar}}
+ {{{displayPage}}}
+</template>
+
+<template name="navbar">
+  <div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+        <a class="brand goe-navlink" href="/main">Game of Exams <span id="alpha">{Beta}</span></a>
+        <p class="navbar-text pull-right">
+          <a href="#" title="your total points" id="user_total_points" class="badge badge-info goe-navlink">{{myPoints}} points</a>
+           &nbsp{{loginButtons align="right"}}&nbsp
+          <a href="http://en.gravatar.com/emails/" target="_blank" title="Change your avatar at gravatar.com">
+            <img src="{{my_gravatar 39}}"/ class="img-rounded">
+          </a>
+        </p>
+        <div class="nav-collapse collapse">
+          <ul class="nav">
+            <!-- The following if blocks will set the active element -->
+            <li {{#if currentPage "examlist"}} class="active" {{/if}}><a href="/courses" id="courses" class="goe-navlink">Overview</a></li>
+            <!--      <li {{#if currentPage "player"}} class="active" {{/if}}><a href="/exam" class="goe-navlink" id="exam">Exam</a></li> -->
+            <li {{#if currentPage "leaderboard"}} class="active" {{/if}}><a href="/leaderboard/#{{currentUser.username}}" id="leaderboard" class="goe-navlink">Leaderboard</a></li>
+            <li {{#if currentPage "feed"}} class="active" {{/if}}><a href="/feed" class="goe-navlink" id="feed">Answer feed</a></li>
+            <li {{#if currentPage "profile"}} class="active" {{/if}}><a href="/profile/{{currentUser.username}}" class="goe-navlink" id="profile">My profile</a></li>
+            {{#if isAdmin}}
+            <li {{#if currentPage "admin"}} class="active" {{/if}}><a href="/admin" class="goe-navlink" id="admin">Admin</a></li>
+            {{/if}} <!--/end ifAdmin block -->
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+  </div>
+</template>
+
+<template name="not_logged_in">
+  <div class="alert alert-error alert-block">
+    <button type="button" class="close" data-dismiss="alert">×</button>
+    <h4>You are not logged in</h4>
+    This content is only available to logged in users!
+  </div>
+</template>
+
+<template name="page_not_found">
+  <div class="container">
+    <h2>Page not found (404 error)</h2>
+    <p>Path is not valid. If this page was here yesterday it has been eaten by the zombies</p>
+  </div>
+</template>
+
+<template name="under_construction">
+  <div class="container">
+    <h2>Under construction!</h2>
+    <p><i class="icon-warning-sign"></i> This page was broken during the last zombie attack.</p>
+  </div>
+</template>

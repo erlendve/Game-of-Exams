@@ -1,0 +1,91 @@
+<template name="profile">
+{{> under_construction}}
+</template>
+
+<template name="profile_old">
+  {{#if getUser}}
+  {{#with getUser}}
+  <div class="jumbotron subhead">
+    <div class="page-header">
+      <div class="container">
+        <h1>Username: <span class="text-info">{{username}}</span>
+          &nbsp&nbspTotal Points: <span class="text-info">{{points}}</span>
+        </h1>
+      </div>
+    </div>
+  </div>
+  {{/with}}
+  <div class="container">
+    {{#with achievements}}
+    <h2>Points Achievements</h2>
+    <img src="../{{15points.image}}">
+    {{#if 15points.done}}
+    <h3 class="my-inline">&nbsp&nbspGot 15 points!</h3>
+    {{else}}
+    <h3 class="muted my-inline">&nbsp&nbspGot 15 points!</h3>
+    {{/if}}
+
+    <br />
+    <br />
+    <img src="../{{50points.image}}">
+    {{#if 50points.done}}
+    <h3 class="my-inline">&nbsp&nbspGot 50 points!</h3>
+    {{else}}
+    <h3 class="muted my-inline">&nbsp&nbspGot 50 points!</h3>
+    {{/if}}
+
+    <br />
+    <br />
+    <hr>
+    <h2>Exam achievements</h2>
+    <img src="../{{one_exam.image}}">
+    {{#if one_exam.done}}
+    <h3 class="my-inline">&nbsp&nbspOne exam is easy!</h3>
+    {{else}}
+    <h3 class="muted my-inline">&nbsp&nbspOne exam is easy!</h3>
+    {{/if}}
+
+    <br />
+    <br />
+    <img src="../{{two_exam.image}}">
+    {{#if two_exam.done}}
+    <h3 class="my-inline">&nbsp&nbspThe real exam will be childsplay</h3>
+    {{else}}
+    <h3 class="muted my-inline">&nbsp&nbspThe real exam will be childsplay</h3>
+    {{/if}}
+
+    <br />
+    <br />
+    <img src="../{{three_exam.image}}">
+    {{#if three_exam.done}}
+    <h3 class="my-inline">&nbsp&nbspExams. I do them</h3>
+    {{else}}
+    <h3 class="muted my-inline">&nbsp&nbspExams. I do them</h3>
+    {{/if}}
+
+    <br />
+    <br />
+    <hr>
+    <h1>Other achievements</h1>
+    <img src="../{{corporate.image}}">
+    {{#if corporate.done}}
+    <h3 class="my-inline">&nbsp&nbspI spam my colleagues</h3>
+    {{else}}
+    <h3 class="muted my-inline">&nbsp&nbspI spam my colleagues</h3>
+    {{/if}}
+
+    <br />
+    <br />
+    <img src="../{{all_the_code.image}}">
+    {{#if all_the_code.done}}
+    <h3 class="my-inline">&nbsp&nbspDo ALL the exercises!</h3>
+    {{else}}
+    <h3 class="muted my-inline">&nbsp&nbspDo ALL the exercises!</h3>
+    {{/if}}
+
+    {{/with}}
+    {{else}}
+    <p>There is no profile with this username</p>
+    {{/if}} <!-- /end if getUser -->
+  </div>
+</template>

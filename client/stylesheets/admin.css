@@ -1,0 +1,79 @@
+.add-new-content {
+	margin-bottom: 15px;
+	padding: 10px;
+	border: 1px solid #ddd;
+	-webkit-border-radius: 6px;
+	-moz-border-radius: 6px;
+	border-radius: 6px;
+	-webkit-box-shadow: 0 1px 2px rgba(0,0,0,.075);
+	-moz-box-shadow: 0 1px 2px rgba(0,0,0,.075);
+	box-shadow: 0 1px 2px rgba(0,0,0,.075);
+}
+
+.course-box a {
+	margin-left: 5px;
+}
+
+.course-box h3 {
+	margin-right: 15px;
+}
+
+/* The next sections are css to make edit input fields look like h2 or h3 elements*/
+.h3-edit, .h2-edit, .h1-edit{
+	display: block;
+	height: inherit;
+}
+
+.h3-edit input, .h2-edit input, .h1-edit input{
+	line-height: 40px;
+	height: 40px;
+	margin-bottom: inherit;
+	padding: inherit;
+	font-family: inherit;
+	font-weight: bold;
+	color: inherit;
+	border: none;
+	text-rendering: optimizelegibility;
+	box-shadow: none;
+}
+
+
+.h3-edit input{
+	font-size: 24px;
+}
+
+.h2-edit input {
+	font-size: 30px;
+}
+
+.h1-edit input {
+	font-size: 38.5px;
+}
+
+span.extraspace h3 {
+	padding: 5px;
+	margin-bottom: 10px;
+}
+
+input.extramargin {
+	margin-bottom: 10px;
+	margin-right: 5px;
+	padding-left: 7px;
+}
+
+div.save_exercise_edit {
+	display: none;
+}
+
+div.save_exercise_edit button{
+	margin-bottom: 10px;
+	margin-right: 5px;
+}
+
+/* Rules desktop screens */
+@media (min-width: 1200px) {
+	.add-new-content {
+		position: fixed;
+		margin-top: 50px;
+	}
+}

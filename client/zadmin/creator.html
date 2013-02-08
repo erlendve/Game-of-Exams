@@ -1,0 +1,36 @@
+<template name="creator">
+	{{#if _id}}
+	{{#with currentExercise}}
+	<div class="span4">
+		<form name="new_exercise" id ="form_new_exercise">
+			<fieldset>
+				<legend>{{title}}</legend>
+				<div class="inline-block">
+					<label>Number</label>
+					<input name="number" type="number" class="input-mini" value="{{number}}">
+				</div>
+				<div class="inline-block">
+					<label>Letter</label>
+					<input name="letter" class ="input-small" type="text" id="new_exercise_points" placeholder="empty if none">
+				</div>
+				<div class="inline-block">
+					<label>Points</label>
+					<input name="points" type="number" class="input-mini" value="5">
+				</div>
+				<label>Exercise text</label>
+				<textarea rows="10" name="text" placeholder="Exercise text in markdown format" class="input-block-level"></textarea>
+				<span class="help-block">Example block-level help text here.</span>
+				<label class="checkbox">
+					<input type="checkbox"> Check me out
+				</label>
+				<button type="submit" class="btn">Submit</button>
+			</fieldset>
+		</form>
+	</div>
+	<div class="span8">
+	</div>
+	{{/with}}
+	{{else}}
+	<p class="text lead text-warning">Exercise set is not saved. You need to save the set to use the exercise creator</p>
+	{{/if}}
+</template>

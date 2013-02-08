@@ -1,0 +1,9 @@
+{
+  "meteor": {
+    "tag": "master"
+  },
+  "packages": {
+    "bafa": {},
+    "ace": {}
+  }
+}

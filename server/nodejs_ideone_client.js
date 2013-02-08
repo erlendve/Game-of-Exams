@@ -1,11 +1,12 @@
 Meteor.startup(function() {
-    var require = __meteor_bootstrap__.require;
-    var path = require('path');
-    var base = path.resolve('.');
-    var isBundle = path.existsSync(base + '/bundle');
-    var modulePath = base + (isBundle ? '/bundle/static' : '/public') + '/node_modules';
 
-    var rpc = require(modulePath + '/jsonrpc');
+	var require = __meteor_bootstrap__.require;
+	var path = require('path');
+	var base = path.resolve('.');
+	var isBundle = path.existsSync(base + '/bundle');
+	var modulePath = base + (isBundle ? '/bundle/static' : '/public') + '/node_modules';
+
+	var rpc = require(modulePath + '/jsonrpc');
 
 	var JsonRpcWrapper = function(){
 		this.client = rpc.getClient(80, 'ideone.com');
@@ -14,16 +15,40 @@ Meteor.startup(function() {
 			this.client.call(method, params, callback, null, this.path);
 		}
 	}
-	// var user = 'gameofexams';
-	// var pass = 'ba5ag7rU';
+
 
 	// ideone client
 	var ideone = new JsonRpcWrapper();
+
 
 	// test
 	// ideone.call('testFunction', [user, pass], function(error, result) {
 	// 	console.log('ideone.com testFunction: ' + result['error']);
 	// });
+
+	//helper method to set languages in Language collection
+	var languagesResult = null;
+	var updateLanguagesCollection =  function() {
+		if (languagesResult)
+			Languages.insert({'ideone_lang': languagesResult});
+		else
+			Meteor.setTimeout(updateLanguagesCollection, 1000);
+	};
+
+	//set languages in the Language collection
+	if (!languagesResult) {
+		if (Languages.find().count() === 0) {
+			ideone.call('getLanguages', ['gameofexams', 'ba5ag7rU'], function(error, result) {
+				if (error) {
+					throw new Meteor.Error(520, 'Could not get languages from ideone.com', error);
+				}		
+				if (result) {
+					languagesResult = result.languages;
+				}
+			});
+			updateLanguagesCollection();
+		}
+	}
 
 	function NewSubmission(user, pass, source, lang, input, answerId) {
 		var that = this;
@@ -43,7 +68,7 @@ Meteor.startup(function() {
 				Answers.update({_id: answerId}, {$set : {'result': that.submissionResult}});
 			}
 		}
-		
+
 		this.wait = function(){
 			ideone.call('getSubmissionStatus', [that.user, that.pass, that.link], function(error, result){
 				console.log(result);

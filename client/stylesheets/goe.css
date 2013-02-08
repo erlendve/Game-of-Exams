@@ -1,0 +1,64 @@
+#alpha {
+	padding: 0 3px 2px;
+	font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+	font-size: 12px;
+	color: #D14;
+	/*color: #bf4e4e*/
+}
+
+#user_total_points {
+	/*color:  black;*/
+}
+
+.hover-show:hover a{
+	visibility: visible;
+}
+
+.my-inline {
+	display: inline;
+}
+
+.course-title-span {
+	margin-left: 0;
+}
+
+.hl code{
+	font-size: large;
+}
+.hl p {
+	font-size: large;
+}
+
+.hl2 p, code{
+	font-size: large;
+}
+.exercises code {
+	font-family: monospace;
+}
+
+.exercises {
+	margin-top: 10px;
+}
+
+.answer-div {
+	margin: 40px 0px 70px 25px;
+	/*border-bottom: dotted black;*/
+	/*background-color: white;*/
+}
+
+.answer-div .lead{
+	border-bottom: dotted black;
+	/*border-color: #3A87AD;*/
+}
+
+/* Large desktop */
+@media (min-width: 1200px) { }
+ 
+/* Portrait tablet to landscape and desktop */
+@media (min-width: 768px) and (max-width: 979px) { }
+ 
+/* Landscape phone to portrait tablet */
+@media (max-width: 767px) { }
+ 
+/* Landscape phones and down */
+@media (max-width: 480px) { }

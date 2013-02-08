@@ -1,0 +1,37 @@
+<template name="leaderboard">
+  {{debug}}
+  <header class="jumbotron subhead">
+      <div class="container">
+        <h1>Leaderboard</h1>
+    </div>
+  </header> <!-- /end jumbotron -->
+  <div class="container">
+    <div class="row">
+      <div class="span8">
+        <div class="leaderboard">
+          <table class="table lead">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Username</th>
+                <th style="text-align:center">Points</th>
+                <th style="text-align:center">Exercises</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each playerPoints}}
+              <tr {{#if me}} class="info"{{/if}} id="{{username}}">
+                <td>{{rank}}</td>
+                <td><a href="/profile/{{username}}" class="goe-navlink">{{username}}</a></td>
+                <td style="text-align:center">{{points}}</td>
+                <td style="text-align:center">{{exercises_done}}</td>
+              </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </div> <!-- /end leaderboard -->
+      </div><!-- /end span -->
+    </div> <!-- /end row  -->
+    <a href="#Gurba" id ="scrollHelperHidden" class="hidden"></a>
+  </div> <!-- /end container  -->
+</template>

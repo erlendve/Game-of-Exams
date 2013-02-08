@@ -14,7 +14,10 @@ Accounts.validateNewUser(function (user) {
 	return user.username !== "Administrator";
 });
 
-////////// Publish rules //////////
+///////// Server startup code ////////
+Meteor.startup(function() {
+});
+
 
 ///////// Server helper methods ////////
 Meteor.methods({

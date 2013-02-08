@@ -22,6 +22,9 @@ Template.player.helpers({
 				i += ans.pointsAtSave;
 		});
 		return i;
+	},
+	'exercises': function () {
+		return Exercises.find({set_id: this._id}, {sort: {number: 1}});
 	}
 });
 
