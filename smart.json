@@ -3,7 +3,14 @@
     "tag": "master"
   },
   "packages": {
-    "bafa": {},
-    "ace": {}
+    "bafa": {
+      "git": "git://github.com/erlendve/BAFA.git"
+    },
+    "ace": {
+      "git": "git://github.com/erlendve/meteor-ace.git"
+    },
+    "x-editable-bootstrap": {
+    	"git": "git://github.com/erlendve/meteor-x-editable-bootstrap.git"
+    }
   }
 }

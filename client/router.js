@@ -66,21 +66,6 @@ Template.page.displayPage = function() {
 
 
   if (Template[page]) {
-
-    //Some specific scripts that need to be added after window/document has loadeds
-    if (page === 'player' || 'admin') {
-        // Ace integration
-        (function() {
-          window.require(["ace/ace"], function(a) {
-            a && a.config.init();
-            if (!window.ace)
-              window.ace = {};
-            for (var key in a) if (a.hasOwnProperty(key))
-              ace[key] = a[key];
-          });
-        })();
-      }
-
       return Template[page]();
     } else {
       return Template['page_not_found']();

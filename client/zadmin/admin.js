@@ -127,9 +127,9 @@ Template.admin.events({
 //Used to route to the edit exam view
 Template.admin.edit = function () {
   //if user is editing a set right now, return that set
-  var editing = Session.get('editingSet');
-  if (editing)
-    return editing;
+  // var editing = Session.get('editingSet');
+  // if (editing)
+  //   return editing;
 
   var id = Session.get('subpage');
   //set values for which categories can be edited
@@ -173,15 +173,15 @@ Template.admin_set.events({
     });
     return false;
   },
-  'click #set-description-edit': function() {
-    var current = this;
-    var el = $("#set-description-edit");
-    replaceWithInput(el, this, function(setId, newtitle) {
-      current.description = newtitle;
-      Session.set('editingSet', current);
-    });
-    return false;
-  },
+  // 'click #set-description-edit': function() {
+  //   var current = this;
+  //   var el = $("#set-description-edit");
+  //   replaceWithInput(el, this, function(setId, newtitle) {
+  //     current.description = newtitle;
+  //     Session.set('editingSet', current);
+  //   });
+  //   return false;
+  // },
   'submit #set-form': function() {
     var values = $('#set-form').serializeArray();
     var res = {};
@@ -232,7 +232,15 @@ Template.admin_set.rendered = function () {
   var opt = this.find('option[value="' + lang + '"]');
   if (opt) {
     $(opt).attr("selected","selected");
-  }
+  } 
+
+  //X-editable
+  $('#set-description-edit').editable({
+   type: 'text',
+   pk: 1,
+   url: '/post',
+   title: 'Enter username'
+ });
 }
 
 //////// Javascript helper functions ////////

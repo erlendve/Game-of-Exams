@@ -6,19 +6,34 @@
   },
   "dependencies": {
     "basePackages": {
-      "bafa": {},
-      "ace": {}
+      "bafa": {
+        "git": "git://github.com/erlendve/BAFA.git",
+        "branch": "master"
+      },
+      "ace": {
+        "git": "git://github.com/erlendve/meteor-ace.git",
+        "branch": "master"
+      },
+      "x-editable-bootstrap": {
+        "git": "git://github.com/erlendve/meteor-x-editable-bootstrap.git",
+        "branch": "master"
+      }
     },
     "packages": {
       "bafa": {
-        "git": "https://github.com/jackp/BAFA.git",
-        "tag": "v0.3.0",
-        "commit": "cf8c9b0be42b21cb0203c6d08926529c4e00b0c6"
+        "git": "git://github.com/erlendve/BAFA.git",
+        "branch": "master",
+        "commit": "631b506ebddaf29ac37dc244431b0a87ab68fc69"
       },
       "ace": {
-        "git": "https://github.com/Jay-Oh-eN/meteor-ace.git",
-        "tag": "v1.0.0",
-        "commit": "01eb5802a48d6c44f038132c75bb92138569b000"
+        "git": "git://github.com/erlendve/meteor-ace.git",
+        "branch": "master",
+        "commit": "863942ec668872b36ef1696b399fbaf54240e9c8"
+      },
+      "x-editable-bootstrap": {
+        "git": "git://github.com/erlendve/meteor-x-editable-bootstrap.git",
+        "branch": "master",
+        "commit": "7b31fc565fd840d4658b5be5603eec156672c3b9"
       }
     }
   }

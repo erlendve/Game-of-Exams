@@ -1,9 +1,9 @@
 <template name="admin">
+	{{#unless loggingIn}}
 	{{#if edit}}
 	{{> admin_set edit.this}} <!-- Sends the exam object (edit.this as context to the template) -->
 	{{else}} <!-- / else if edit -->
 
-	{{#unless loggingIn}}
 	{{#if isAdmin}}
 	{{> admin_courses}}
 	{{else}}
@@ -13,9 +13,9 @@
 		This user does not have admin rights
 	</div>
 	{{/if}} <!-- /end ifAdmin if -->
-	{{/unless}} <!-- /end loggingIn if -->
 
 	{{/if}} <!-- /end if edit -->
+	{{/unless}} <!-- /end loggingIn if -->
 </template>
 
 <template name="admin_courses">
@@ -123,7 +123,6 @@
 </template>
 
 <template name="admin_set">
-	{{debug}}
 	<header class="jumbotron subhead">
 		<div class="container">
 			<h1>{{title}} <small>  You have {{examCurrentPoints}} of {{examTotalPoints}} points</small></h1>

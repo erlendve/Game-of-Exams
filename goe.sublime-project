@@ -1,0 +1,19 @@
+{
+	"folders":
+	[
+		{
+			"path": "/Users/erlendve/Dropbox/Aws/goe",
+			"name": "Goe main",
+			"folder_exclude_patterns": ["client"],
+			"file_exclude_patterns": ["smart.lock", "README.MD", ".gitignore", "goe.sublime-workspace"]
+		},
+		{
+			"path": "/Users/erlendve/Dropbox/Aws/goe/client",
+			"name": "Client"
+		},
+        {
+            "path": "/Users/erlendve/Dropbox/Aws/my-packages/",
+            "name": "My packages"
+        }
+	]
+}

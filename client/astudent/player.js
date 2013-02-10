@@ -95,7 +95,7 @@ Template.player.rendered = function() {
 		editor = ace.edit($container[0]);
 
 		editor.setTheme("ace/theme/eclipse");
-		editor.getSession().setMode("ace/mode/python");
+		editor.getSession().setMode("ace/mode/java");
 		// Keep hidden textarea in sync
 
 		editor.getSession().setValue($el.val());
