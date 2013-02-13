@@ -27,13 +27,13 @@ h3 code {
 -------------------------------------------------- */
 
 body > .navbar {
-  font-size: 13px;
+  /*font-size: 13px;*/
 }
 
-body > .navbar .brand > .logo {
+body > .navbar .brand {
   /*color: #bf4e4e;*/
   /*color: #d91448;*/
-  /*color: white;*/
+  color: white;
 }
 /* Change the docs' brand */
 body > .navbar .brand {
@@ -251,7 +251,7 @@ only screen and (     -o-min-device-pixel-ratio: 2/1) {
 ------------------------- */
 .subhead {
   text-align: left;
-  border-bottom: 1px solid #ddd;
+  /*border-bottom: 1px solid #ddd;*/
 }
 .subhead h1 {
   font-size: 60px;

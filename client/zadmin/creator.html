@@ -1,36 +1,58 @@
 <template name="creator">
-	{{#if _id}}
+	{{#if currentExercise}}
 	{{#with currentExercise}}
-	<div class="span4">
-		<form name="new_exercise" id ="form_new_exercise">
-			<fieldset>
-				<legend>{{title}}</legend>
-				<div class="inline-block">
-					<label>Number</label>
-					<input name="number" type="number" class="input-mini" value="{{number}}">
-				</div>
-				<div class="inline-block">
-					<label>Letter</label>
-					<input name="letter" class ="input-small" type="text" id="new_exercise_points" placeholder="empty if none">
-				</div>
-				<div class="inline-block">
-					<label>Points</label>
-					<input name="points" type="number" class="input-mini" value="5">
-				</div>
-				<label>Exercise text</label>
-				<textarea rows="10" name="text" placeholder="Exercise text in markdown format" class="input-block-level"></textarea>
-				<span class="help-block">Example block-level help text here.</span>
-				<label class="checkbox">
-					<input type="checkbox"> Check me out
-				</label>
-				<button type="submit" class="btn">Submit</button>
-			</fieldset>
-		</form>
-	</div>
-	<div class="span8">
+	<div class="creator">
+		<ul class="nav nav-pills">
+			{{#each getExercises}}
+			<li {{isActive}}><a href="#" class="exercise-nav">{{number}}) {{title}}</a></li>
+			{{/each}}
+			<li><a href="#" id="new-exercise">New exercise</a></li>
+		</ul>
+		<div class="span4">
+			<form name="new_exercise" id ="form_new_exercise">
+				<fieldset>
+					<legend><span id="title">{{title}}</span></legend>
+					<div class="inline-block">
+						<label>Number</label>
+						<input name="number" type="number" class="input-mini" value="{{number}}">
+					</div>
+					<div class="inline-block">
+						<label>Letter</label>
+						<input name="letter" class ="input-small" type="text" id="new_exercise_points" placeholder="empty if none">
+					</div>
+					<div class="inline-block">
+						<label>Points</label>
+						<input name="points" type="number" class="input-mini" value="5">
+					</div>
+					<label>Exercise text</label>
+					<div id="livemarkdown">{{#md}}{{text}}{{/md}}</div>
+					<span class="help-block">Example block-level help text here.</span>
+					<textarea name="text" id="textarea-code-text" class="hidden">{{text}}</textarea>
+					<textarea name="before" id="textarea-code-before" class="hidden">{{before}}</textarea>
+					<textarea name="after" id="textarea-code-after" class="hidden">{{after}}</textarea>
+					<textarea name="tests" id="textarea-code-tests" class="hidden">{{tests}}</textarea>
+					<button type="submit" class="btn btn-primary">Submit</button>
+					<button type="button" class="btn btn-alert">Delete</button>
+				</fieldset>
+			</form>
+		</div>
+		<div class="span8">
+			<ul class="nav nav-tabs" id="myTab">
+				<li class="active"><a href="#edit-code-text" id="code-text">Exercise text</a></li>
+				<li><a href="#edit-code-before" id="code-before">Code before</a></li>
+				<li><a href="#edit-code-after" id="code-after">Code after</a></li>
+				<li><a href="#edit-code-tests" id="code-tests">Tests</a></li>
+			</ul>
+
+			<div class="tab-content">
+				<div class="tab-pane active editor" id="edit-code-text">Text</div>
+				<div class="tab-pane editor" id="edit-code-before">Code before</div>
+				<div class="tab-pane editor" id="edit-code-after">Code after</div>
+				<div class="tab-pane editor" id="edit-code-tests">MongoDB</div>
+			</div>
+			<div class="placeEditor"></div>
+		</div>
 	</div>
 	{{/with}}
-	{{else}}
-	<p class="text lead text-warning">Exercise set is not saved. You need to save the set to use the exercise creator</p>
 	{{/if}}
 </template>

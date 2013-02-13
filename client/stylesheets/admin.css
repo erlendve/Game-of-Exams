@@ -18,56 +18,10 @@
 	margin-right: 15px;
 }
 
-/* The next sections are css to make edit input fields look like h2 or h3 elements*/
+/* Display as block to enable showing of hovered options*/
 .h3-edit, .h2-edit, .h1-edit{
 	display: block;
 	height: inherit;
-}
-
-.h3-edit input, .h2-edit input, .h1-edit input{
-	line-height: 40px;
-	height: 40px;
-	margin-bottom: inherit;
-	padding: inherit;
-	font-family: inherit;
-	font-weight: bold;
-	color: inherit;
-	border: none;
-	text-rendering: optimizelegibility;
-	box-shadow: none;
-}
-
-
-.h3-edit input{
-	font-size: 24px;
-}
-
-.h2-edit input {
-	font-size: 30px;
-}
-
-.h1-edit input {
-	font-size: 38.5px;
-}
-
-span.extraspace h3 {
-	padding: 5px;
-	margin-bottom: 10px;
-}
-
-input.extramargin {
-	margin-bottom: 10px;
-	margin-right: 5px;
-	padding-left: 7px;
-}
-
-div.save_exercise_edit {
-	display: none;
-}
-
-div.save_exercise_edit button{
-	margin-bottom: 10px;
-	margin-right: 5px;
 }
 
 /* Rules desktop screens */
@@ -76,4 +30,34 @@ div.save_exercise_edit button{
 		position: fixed;
 		margin-top: 50px;
 	}
+}
+
+/*Fixes x-editable popover when it is used on a hover*/
+h1 .popover{
+	font-size: 24px;
+	font-weight: 300;
+	line-height: 1.25;
+	letter-spacing: 0;
+}
+
+
+.editron {
+	position: absolute;
+	padding: 40px 0;
+	top: 40 px;
+	z-index: -1;
+}
+
+.editron h1 {
+	font-size: 80px;
+	font-weight: bold;
+	letter-spacing: -1px;
+	line-height: 1;
+
+}
+.editron p {
+	font-size: 24px;
+	font-weight: 300;
+	line-height: 1.25;
+	margin-bottom: 30px;
 }

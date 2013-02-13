@@ -22,13 +22,12 @@ var GoeRouter = Backbone.Router.extend({
   admin: function () {
     Session.set('currentPage', 'admin');
     Session.set('subpage', null);
-    Session.set('editingSet', null);
   },
 
   editSet: function(id) {
     Session.set('currentPage', 'admin');
-    Session.set('editingSet', null);
     Session.set('subpage', id);
+    Session.set('currentExercise', null);
   },
 
   exam: function(exam_id) {

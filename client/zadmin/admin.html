@@ -1,7 +1,10 @@
 <template name="admin">
 	{{#unless loggingIn}}
 	{{#if edit}}
-	{{> admin_set edit.this}} <!-- Sends the exam object (edit.this as context to the template) -->
+	{{#with edit}}
+	{{> admin_set}} <!-- Sends the exam object (edit.this as context to the template) -->
+	{{/with}}
+
 	{{else}} <!-- / else if edit -->
 
 	{{#if isAdmin}}
@@ -123,62 +126,32 @@
 </template>
 
 <template name="admin_set">
-	<header class="jumbotron subhead">
+	<header class="jumbotron subhead animated" id="savedSetHeader">
 		<div class="container">
-			<h1>{{title}} <small>  You have {{examCurrentPoints}} of {{examTotalPoints}} points</small></h1>
+			<h1>{{title}} <small> With {{examTotalPoints}} points total</small><button type="button" class="btn btn-primary pull-right" id="btn-edit-set">Edit</button></h1>
 			<p>
+				{{description}}
+			</p>
+		</div>
+	</header>
+	<header class="editron subhead">
+		<div class="container">
+			<h1><span id="set-title-edit">{{title}} </span><small> 
+				With {{examTotalPoints}} points total</small>
+			</h1>
+			<p>
+				<span id="set-description-edit">
+					{{description}}
+				</span>
+			</p>
+			<button type="button" class="btn btn-primary pull-right" id="btn-save-set">Save</button>
 		</div>
 	</header>
 	<div class="container">
 		<div class="row">
-			<div class="span4">
-				<div class="h1-edit">
-					<h1 id ="set-title-edit">{{title}} <i class="icon-pencil"></i></h1>
-				</div>
-				<p id="set-description-edit">{{description}} <i class="icon-pencil"></i></p>
-			</div> <!-- end class span7 -->
-			<div class="span4">
-				<form id="set-form" class="form-horizontal" name="set-form">
-					<div class="control-group">
-						<label class="control-label">Category</label>
-						<div class="controls">
-							<select name="category">
-								<option value="none" selected>None</option>
-								{{#getCourse}}
-								{{#key_value categories}}
-								<option value="{{key}}">{{key}}</option>
-								{{/key_value}}
-
-								{{/getCourse}} <!-- end with getCategories -->
-							</select>
-						</div> 
-					</div>
-					<div class="control-group">
-						<label class="control-label">Language</label>
-						<div class="controls">
-							<select name="language">
-								<option value="0">Choose one</option>
-								{{#supportedLanguages}}
-								{{#key_value all}}
-								<option value="{{key}}">{{value}}</option>
-								{{/key_value}}
-								{{/supportedLanguages}}
-							</select>
-						</div>
-					</div>
-				</form>
-			</div> <!-- end class span -->
-			<div class="span3 offset1">
-				<p>Owner: {{getUsername owner}}</p>
-				<p>Created: {{formatTimestamp createdAt}}</p>
-				<button type="button" class="btn btn">! Preview</button>
-				<button type="submit" form="set-form" class="btn btn-primary">Save</button>
-			</div>
-			<div class="row">
-				<div class="span9">
-					{{> creator this}}
-				</div>
-			</div>
-		</div> <!-- end class row -->
+			{{#if _id}}
+			{{> creator}}
+			{{/if}}
+		</div>
 	</div> <!-- end class container  -->
 </template>

@@ -1,16 +1,16 @@
 /////// Global handlebars helpers ///////
-Handlebars.registerHelper('markdown', function (options) {
-  var converter = new Showdown.converter();
-  return converter.makeHtml(options.fn(this));
-});
+// Handlebars.registerHelper('markdown', function (options) {
+//   var converter = new Showdown.converter();
+//   return converter.makeHtml(options.fn(this));
+// });
 
 
 Handlebars.registerHelper('md', function (options) {
   var converter = new Showdown.converter();
   var res = '';
   var html =converter.makeHtml(options.fn(this));
-  var high = hljs.highlightAuto(html).value;
-  res += high;
+  // var high = hljs.highlightAuto(html).value;
+  // res += high;
   return res;
 });
 

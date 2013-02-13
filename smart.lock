@@ -23,7 +23,7 @@
       "bafa": {
         "git": "git://github.com/erlendve/BAFA.git",
         "branch": "master",
-        "commit": "631b506ebddaf29ac37dc244431b0a87ab68fc69"
+        "commit": "56a66828ee7fabfa907a3f7fedac0d859f8fcbd9"
       },
       "ace": {
         "git": "git://github.com/erlendve/meteor-ace.git",
@@ -33,7 +33,7 @@
       "x-editable-bootstrap": {
         "git": "git://github.com/erlendve/meteor-x-editable-bootstrap.git",
         "branch": "master",
-        "commit": "7b31fc565fd840d4658b5be5603eec156672c3b9"
+        "commit": "b04dac30bc81cd2fc19f2ca27a88d81d0d3e70ee"
       }
     }
   }

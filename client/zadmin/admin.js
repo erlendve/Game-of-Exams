@@ -13,8 +13,12 @@ Template.admin.events({
 
   'click .course-edit': function(e) {
   	e.preventDefault();
-  	var h3 = $("#" + this._id + ' h3');
-  	replaceWithInput(h3, this, courseEditTitle);
+    // $('#' + this._id + ' h3').editable({
+    //   title: 'New course title',
+    //   placement: 'top',
+    //   toggle: 'manual',
+    // });
+    // $('#' + this._id + ' h3').editable('toggle');
   },
 
   'click .exam_delete': function(e) {
@@ -126,62 +130,130 @@ Template.admin.events({
 
 //Used to route to the edit exam view
 Template.admin.edit = function () {
-  //if user is editing a set right now, return that set
-  // var editing = Session.get('editingSet');
-  // if (editing)
-  //   return editing;
-
   var id = Session.get('subpage');
-  //set values for which categories can be edited
-  if (id) {
-   var set = Exams.findOne(id);
-   if (set)
-    return set;
-
+  var set = Exams.findOne(id);
   var course = Courses.findOne(id);
-  if (course)
+  if (set) {
+    // console.log('existing set ' + set.title);
+    return set;
+  }
+  if(course) {
+    console.log('new exam on course ' + course.title);
     return {
-     courseId: course._id, 
-     published: false, 
-     title: 'Rename me', 
-     createdAt: +(new Date()),
-     owner: Meteor.userId(),
-     description: 'Add set description'
-   }
- } else {
-   return false;
- }
+      courseId: course._id, 
+      published: false, 
+      title: 'Rename me',
+      exercises: [],
+      createdAt: +(new Date()),
+      owner: Meteor.userId(),
+      description: 'Add set description',
+      language: 'java7',
+      category: 'main'
+    }
+  }
+  return false;
+ //  var id = Session.get('subpage');
+ //  //set values for which categories can be edited
+ //  if (id) {
+ //   var set = Exams.findOne(id);
+ //   if (set)
+ //    return set;
+
+ //  var course = Courses.findOne(id);
+ //  if (course)
+ //      //if a set with the title 'Rename me' already exists, return that one
+ //    var set = Exams.findOne({courseId: course._id, title: 'Rename me'});
+ //    if (set)
+ //      return set;
+
+ //    var newId = Exams.insert({
+ //      courseId: course._id, 
+ //      published: false, 
+ //      title: 'Rename me', 
+ //      createdAt: +(new Date()),
+ //      owner: Meteor.userId(),
+ //      description: 'Add set description',
+ //      language: 'java7',
+ //      category: 'main'
+ //    });
+ //    Session.set('subpage', newId);
+ //  } else {
+ //   return false;
+ // }
 };
 
 /////// Template admin_set //////
-Template.admin_set.getCourse = function (fn) {
-  //TODO Make this function return the categories a moderator is allowed to edit
-  var course = Courses.findOne(this.courseId);
-  if (course) {
-    return fn.fn(course);
+Template.admin_set.helpers({
+  'examTotalPoints': function() {
+    var i = 0;
+    Exercises.find({set_id: this._id}).forEach( function(exam) {
+      i += exam.points;
+    });
+    return i;
   }
-  return false;
-};
+});
 
 Template.admin_set.events({
-  'click #set-title-edit': function() {
-    var current = this;
-    var h1 = $("#set-title-edit");
-    replaceWithInput(h1, this, function(setId, newtitle) {
-      current.title = newtitle;
-      Session.set('editingSet', current);
-    });
-    return false;
+  'click #btn-edit-set': function() {
+    $('#savedSetHeader').addClass('fadeOutUp');
+    Meteor.setTimeout(function() {
+      $('.editron').css({'z-index': 1});
+    }, 1000);
   },
-  // 'click #set-description-edit': function() {
-  //   var current = this;
-  //   var el = $("#set-description-edit");
-  //   replaceWithInput(el, this, function(setId, newtitle) {
-  //     current.description = newtitle;
-  //     Session.set('editingSet', current);
-  //   });
-  //   return false;
-  // },
+  'click #btn-save-set': function() {
+    var title = $('#set-title-edit').text().trim();
+    var description = $('#set-description-edit').text().trim();
+    
+    //non-thourough validation
+    if (title === 'Rename me') {
+      alert("Please edit the set a title to something other than 'Rename me'");
+      return;
+    }
+
+    if (description === 'Add set description') {
+      alert("Please edit the set description to something other than 'Add set description'");
+      return;
+    }
+
+    //visual effects
+    $('.editron').css({'z-index': -1});
+    $('#savedSetHeader').removeClass('fadeOutUp').addClass('fadeIn');
+    
+    var self = this;
+    // if set exists update, else new insert
+    if (this._id) {
+      Exams.update(this._id, {$set: {title: title, description: description}}, 
+        notifyCustom({title: 'Section ' + self.title + ' has changed', text: '<strong>Title: </strong>' + title + ' <br /><strong>Description:</strong> ' + description, type: "info", icon: "icon-edit"})
+        );
+    } else {
+      var newEntry = this;
+      newEntry.title = title;
+      newEntry.description = description;
+      var id = Exams.insert(newEntry, function(error, result) {
+        notifyCustom({title: 'Section ' + title + ' saved', text: '<strong>Title: </strong>' + title + ' <br /><strong>Description:</strong> ' + description, type: "success", icon: "icon-plus-sign"})
+        var setRes = result;
+        Exercises.insert({
+          set_id: result,
+          number: 1,
+          letter: '',
+          text: '',
+          title: 'Rename me',
+          points: 5,
+          createdAt: + (new Date),
+          owner: Meteor.userId(),
+          lang: this.lang,
+          published: false
+        }, function(error, result) {
+          if (result) {
+            Session.set('currentExercise', result);
+            Exams.update(setRes, {$push: {exercises: result}});
+          }
+        });
+      });
+      Router.navigate('/admin/' + id, true);
+      Session.set('subpage', id);
+    }
+  },
   'submit #set-form': function() {
     var values = $('#set-form').serializeArray();
     var res = {};
@@ -218,29 +290,29 @@ Template.admin_set.events({
 });
 
 Template.admin_set.rendered = function () {
-  var lang = '';
-  if (this.data.lang)
-    lang = this.data.lang;
-  else {
-    var course = Courses.findOne(this.data.courseId);
-    if (course) {
-      lang = course.lang;
-    } 
+  //Make sure the editron is positioned under the jumbotron
+  var outer = $('#savedSetHeader').offset().top;
+  var margin = $('#savedSetHeader .container').css('margin-left');
+  margin = margin.substring(0, margin.length - 2);
+  $('.editron').css({
+    'top': outer,
+    'left': margin*2 + 'px',
+    'margin-left': '-' + margin + 'px'
+  })
+
+  if (!this.data._id) {
+    $('#btn-edit-set').click();
   }
+  //X-editable on set  
+  $('#set-title-edit').editable({
+    placement: 'bottom',
+    title: "Enter set title"
+  });
 
-
-  var opt = this.find('option[value="' + lang + '"]');
-  if (opt) {
-    $(opt).attr("selected","selected");
-  } 
-
-  //X-editable
   $('#set-description-edit').editable({
-   type: 'text',
-   pk: 1,
-   url: '/post',
-   title: 'Enter username'
- });
+    mode: 'inline',
+    title: 'Enter set description'
+  });
 }
 
 //////// Javascript helper functions ////////
@@ -258,22 +330,3 @@ function courseEditTitle(course, newtitle) {
     );
  }
 };
-
-
-// replace element with an input field that will send it's value to the callback function "onEnter"
-function replaceWithInput(dom_element, context, onEnter) {
-	var input = '<input id="input-replace" class="input-xxlarge" type="text">';
-	var ye = dom_element.replaceWith(input);
-	var input = $('#input-replace').focus().val(dom_element.text());
-  //pressing enter will submit the value in input
-  input.on('keypress', context, function(event) {
-  	if (event.which == 13) {
-  		event.preventDefault();
-  		onEnter(event.data, input.val());
-  	}
-  });
-  //if input looses focus, hides input and shows original dom_element
-  input.on('blur', function (event) {
-  	input.replaceWith(dom_element);
-  })
-}
