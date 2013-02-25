@@ -24,50 +24,76 @@ Meteor.methods({
 	isAdmin: function () {
 		return Meteor.user().isAdmin;
 	}, 
-	'submitAnswer': function(source, setId, exerciseId) {
+	'submitAnswer': function(source, setId, exerciseId, exists) {
+		console.log(exists);
+		console.log(exerciseId);
 		if (!this.userId)
 			throw new Meteor.Error(403, 'You must be logged in');
 
 		if (!Exams.findOne(setId))
 			throw new Meteor.Error(400, 'The exercise set does not exist', setId + ' does not exist in the database');
 
-		var exercise = Exercises.findOne(exerciseId);
-		if (! exercise)
-			throw new Meteor.Error(400, 'The exercise does not exist', exerciseId + ' does not exist in the database');
-
+		if (!exists) {
+			var exercise = Exercises.findOne(exerciseId);
+			if (! exercise)
+				throw new Meteor.Error(400, 'The exercise does not exist', exerciseId + ' does not exist in the database');
+		}
 		//TODO fix so lang get's code from exercise.lang and some table info
 		var lang = 55;
-		var input = exercise.input;
+		var input = "";
 		
 		//find lang from exercise, and evaluate true/false, and points
 		//Insert answer to database
-		var answerId = Answers.insert({
-			'userId': this.userId,
-			'set_id': setId,
-			'exercise_id': exerciseId,
-			'answertext': source,
-			'points': exercise.points,
-			'pointsAtSave': 0,
-			'createdAt': +(new Date),
-			'saved': false,
-			'result': null,
-			'error': null
-		}, function (error, result) {	
-			if (error)
-				return false;
-			if (result) {
-				var res = Meteor.call('submitAndEvaluate', source, result, lang, input, function(error, result) {
-					if (error) {
-						console.log(error)
-					}
-					if (result) {
-						console.log(result)
-					}
-				});
-			}
-		});
 
-		return answerId;
+		if (!exists) {
+			answerId = Answers.insert({
+				'userId': this.userId,
+				'set_id': setId,
+				'exercise_id': exerciseId,
+				'answertext': source,
+				'points': exercise.points,
+				'pointsAtSave': 0,
+				'createdAt': +(new Date),
+				'saved': false,
+				'result': null,
+				'error': null,
+				'loading': true
+			}, function (error, result) {	
+				if (error)
+					return false;
+				if (result) {
+					var res = Meteor.call('submitAndEvaluate', source, result, lang, input, function(error, result) {
+						if (error) {
+							console.log(error)
+						}
+						if (result) {
+							console.log(result)
+						}
+					});
+				}
+			});
+		} else {
+			//exercisId is actually the id of the answer
+			console.log('updated answer');
+			answerId = Answers.update(exerciseId, {$set: {answertext: source, loading: true}}, function (error, result) {	
+				if (error) {
+					console.log('update failed');
+					return new Meteor.Error(500, "Database did not accept updated answer");
+				} else {
+					console.log('update success');
+					console.log('Submitting updated answer ' + result);
+					var res = Meteor.call('submitAndEvaluate', source, exerciseId, lang, input, function(error, result) {
+						if (error) {
+							console.log(error)
+						}
+						if (result) {
+							console.log(result)
+						}
+					});
+				}
+			});
+			return answerId;
+		}
 	},
 	'saveAnswer': function(answerId, exerciseId, multiplier) { //TODO change mulitplier stuff
 		console.log(exerciseId);

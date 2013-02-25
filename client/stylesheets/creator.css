@@ -11,6 +11,10 @@
 	position: 'relative';
 	display: block;
 	width: 100%;
-	height: 600px;
+	height: 450px;
 	border: 1px solid black;
+}
+
+.hiddentextarea {
+	display: none;
 }

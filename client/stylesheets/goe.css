@@ -48,6 +48,7 @@
 
 .answer-div .lead{
 	border-bottom: dotted black;
+	cursor: default;
 	/*border-color: #3A87AD;*/
 }
 

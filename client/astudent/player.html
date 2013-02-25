@@ -10,11 +10,11 @@
 	<div class="container">
 		<div class="row">
 			<div class="span3 bs-docs-sidebar">
-				<ul class="nav nav-list bs-docs-sidenav">
+				<ul class="nav nav-list bs-docs-sidenav animate bounceInRight">
 					<li class="nav-header">Exercises</li>
-						{{#each exercises}}
-						{{> exercise_sidenav}}
-						{{/each}}
+					{{#each exercises}}
+					{{> exercise_sidenav}}
+					{{/each}}
 				</ul>
 			</div><!--/span-->
 			<div class="span9">
@@ -28,96 +28,146 @@
 		</div><!--/row-->
 		{{/with}}
 		{{else}}
-		<p>
-			Loading content...
-		</p>
+		<div class="container pagetop">
+			<p class="lead">
+				<i class="icon-spinner icon-2x icon-spin"></i>
+				Loading content... (if it takes more than 5 seconds try to refresh site)
+			</p>
+		</div>
 		{{/if}}
 	</div>
 </template>
 
 <template name="exercise_sidenav">
-	<li><a href="#{{_id}}" class="exercise-side">
-		<i class="icon-chevron-right"></i>
-		{{number}}. {{title}}</a></li>
+	<li id="li_{{_id}}">
+		<a href="#{{_id}}" class="exercise-side">
+			<i class="icon-chevron-right"></i>
+			{{#lettered letter}}&nbsp&nbsp{{letter}}{{else}}{{number}}{{letter}}{{/lettered}}) {{title}}
+		</a>
+	</li>
 </template>
 
 <template name="exercise_main">
-	<div id="{{_id}}" class="well exercise">
-		<h3 class="title">{{number}}) {{title}} 
-			{{#if answer.saved}}
-			{{#if isRight}}
-			(<span class="text-success">{{points}} points</span>)
-			<small> answered <i class="icon-thumbs-up"></i></small>
-			{{else}}
-			(<span class="text-error">{{points}} points</span>)
-			<small> Wrong answer <i class="icon-thumbs-up"></i></small>
-			{{/if}}
-			<!-- <i class="icon-ok"></i> -->
-			{{else}}
-			(<span class="text-error">{{points}} points</span>)
-			<small><i class="icon-thumbs-down"></i> not answered</small>
-			{{/if}}
-		</h3>
-		<div class="hl">
-			<!-- The lines under here must be left aligned or else text will get spaces inserted :() -->
-{{#markdown}}
-{{text}}
-{{/markdown}}
-		</div>
-		<div class="answer-div">
-			{{#if answer}}
-			{{#with answer}}
-			<p class="lead text-info">
-				Your answer: </span>{{#unless saved}}<span class="muted">(not submitted)</span>{{/unless}}
-			</p>
-			<div class="hl hover-show">
-				<div class="hover-show">
-					<!-- <link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/default.min.css"> -->
+</div>
+<div id="{{_id}}" class="well exercise">
+	<h3 class="title">{{number}}{{letter}}) {{title}} 
+		{{#if answer.saved}}
+		{{#if isRight}}
+		(<span class="text-success">{{points}} points</span>)
+		<small> answered <i class="icon-thumbs-up"></i></small>
+		{{else}}
+		(<span class="text-error">{{points}} points</span>)
+		<small> Wrong answer <i class="icon-thumbs-down"></i></small>
+		{{/if}}
+		<!-- <i class="icon-ok"></i> -->
+		{{else}}
+		(<span class="text-error">{{points}} points</span>)
+		<small><i class="icon-thumbs-down"></i> not answered</small>
+		{{/if}}
+	</h3>
+	<div class="hl">{{#markdown}}{{text}}{{/markdown}}
+	</div>
+	<div class="answer-div">
+		{{#ifwith answer}}
+		{{#if saved}}
+		<pre><code>{{{answertext}}}</code></pre>
+		<button type="button" class="btn-edit-answer btn btn-inverse pull-right"><i class="icon-edit"></i> Edit</button>
+		{{else}}
+		{{> form_answer}}
+		{{#if loading}}
+		<i class="icon-spinner icon-2x icon-spin"></i>
+		{{status}}
+		{{else}}
+		{{#ifwith result}}
+		{{> result}}
+		{{/ifwith}}
+		{{/if}}
+		{{/if}} <!-- end if saved -->
 
-					<pre><code>{{{answertext}}}</code></pre>
-				</div>
-				{{#unless saved}}
-				<div>
-					{{#if result}}
-					{{#with processResult}}
-					<div>
-						<p>
-							Result: </span><span class="label label-{{label}}">{{type}}</span>
-						</p>
-						<p>
-							<pre><code class="no-highlight">{{{out}}}</code></pre>
-						</p>
-					</div>
-					{{/with}}
-					<button type="button" class="btn btn-primary pull-right" id="btn_save_answer">Submit answer</button>
-					<button type="button" class="btn btn-inverse pull-right" id="btn_edit_answer" style ="margin-right: 10px">Edit code </button>
-					{{else}}
-					Processing code:
-					<div class="progress progress-striped active">
-						<div class="bar" style="width: 100%;"></div>
-					</div>
-					{{/if}}
-				</div>
-				{{else}} <!-- /else unless saved-->
-				<a href="#" class="btn btn-danger pull-right" id="btn_remove_answer">Delete answer</a>
-				{{/unless}} <!-- /end unless saved -->
+		{{else}} <!-- else ifwith answer -->
+
+		{{> form_answer}}
+		{{/ifwith}} <!-- end ifwith answer -->
+	</div>
+</div>
+</template>
+
+<template name="result">
+	<h3 class="animated fadeInLeft">{{langName}} result:</h3>
+
+	{{#if cmpinfo}}
+	<pre class="animated wobble badge-warning"><i class="icon-warning-sign"> </i>Compilation error:<code class="no-highlight">{{cmpinfo}}</code></pre>
+	{{/if}}
+	{{#if output}}
+	<pre class="animated fadeIn">Output:<code class="no-highlight">{{output}}</code></pre>
+	{{/if}}
+
+</template>
+<template name="old_answer">
+	<div class="answer-div">
+		{{#if answer}}
+		{{#with answer}}
+		<p class="lead text-info">
+			Your answer: </span>{{#unless saved}}<span class="muted">(not submitted)</span>{{/unless}}
+		</p>
+		<div class="hl hover-show">
+			<div class="hover-show">
+				<!-- <link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/default.min.css"> -->
+
+				<pre><code>{{{answertext}}}</code></pre>
 			</div>
-			{{/with}} <!-- /end with answer -->
-			{{else}}
-			{{> form_answer}}
-			{{/if}} <!-- /end if answer -->
+			{{#unless saved}}
+			<div>
+				{{#if result}}
+				{{#with processResult}}
+				<div>
+					<p>
+						Result: </span><span class="label label-{{label}}">{{type}}</span>
+					</p>
+					<p>
+						<pre><code class="no-highlight">{{{out}}}</code></pre>
+					</p>
+				</div>
+				{{/with}}
+				<button type="button" class="btn btn-primary pull-right" id="btn_save_answer">Submit answer</button>
+				<button type="button" class="btn btn-inverse pull-right" id="btn_edit_answer" style ="margin-right: 10px">Edit code </button>
+				{{else}}
+				Processing code:
+				<div class="progress progress-striped active">
+					<div class="bar" style="width: 100%;"></div>
+				</div>
+				{{/if}}
+			</div>
+			{{else}} <!-- /else unless saved-->
+			<a href="#" class="btn btn-danger pull-right" id="btn_remove_answer">Delete answer</a>
+			{{/unless}} <!-- /end unless saved -->
 		</div>
+		{{/with}} <!-- /end with answer -->
+		{{else}}
+		{{> form_answer}}
+		{{/if}} <!-- /end if answer -->
 	</div>
 </template>
 
 <template name="form_answer">
-	<form name="answer" id="form_answer{{_id}}" style="padding: 10px;">
+	<form name="answer" id="form_answer_{{_id}}">
 		<label class="lead text-info"> Create answer:</label>
 		{{#if currentUser}}
-		
-		<textarea name="answertext" class="input-block-level editor" id="answer{{_id}}" rows="8" placeholder="Click for editor" wrap="hard"></textarea>
 
-		<button type="submit" class="btn btn-primary pull-right" id="btn_submit_answer" style="margin-top: 10px">Run program</button>
+		<button type="button" class="btn-inverse editorbutton" data-toggle="collapse" data-target="#collapse{{_id}}">
+			Editor
+		</button>
+
+		<div id="collapse{{_id}}" class="collapse in">
+			<div id="editor{{_id}}" class="clickforeditor">{{answertext}}</div>
+			<p class="buttonpanel">
+				<button type="submit" class="btn btn-primary pull-right" id="btn-submit-answer"><i class="icon-upload-alt"></i> Submit</button>
+				<button type="submit" class="btn btn-danger pull-right" id="btn-reset-answer"><i class="icon-refresh"></i> Reset</button>
+				<button type="submit" class="btn btn-success pull-right" id="btn-run-answer"><i class="icon-play"></i> Run</button>
+			</p>
+		</div>
+		<textarea name="answertext" class="hiddentextarea" id="answer{{_id}}" wrap="hard">{{answertext}}</textarea>
+
 		{{else}}
 		{{> not_logged_in}}
 		{{/if}}

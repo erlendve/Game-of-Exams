@@ -65,9 +65,10 @@ Handlebars.registerHelper('my_gravatar', function(size) {
 });
 
 Handlebars.registerHelper('ifwith', function(conditional, options) {
-  console.log(conditional);
   if(conditional) {
     return options.fn(conditional);
+  } else {
+    return options.inverse(this);
   }
 });
 

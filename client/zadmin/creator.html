@@ -18,37 +18,41 @@
 					</div>
 					<div class="inline-block">
 						<label>Letter</label>
-						<input name="letter" class ="input-small" type="text" id="new_exercise_points" placeholder="empty if none">
+						<input name="letter" class ="input-small" type="text" id="new_exercise_points" value="{{letter}}"placeholder="empty if none">
 					</div>
 					<div class="inline-block">
 						<label>Points</label>
 						<input name="points" type="number" class="input-mini" value="5">
 					</div>
-					<label>Exercise text</label>
-					<div id="livemarkdown">{{#md}}{{text}}{{/md}}</div>
-					<span class="help-block">Example block-level help text here.</span>
 					<textarea name="text" id="textarea-code-text" class="hidden">{{text}}</textarea>
 					<textarea name="before" id="textarea-code-before" class="hidden">{{before}}</textarea>
 					<textarea name="after" id="textarea-code-after" class="hidden">{{after}}</textarea>
 					<textarea name="tests" id="textarea-code-tests" class="hidden">{{tests}}</textarea>
+					<textarea name="solution" id="textarea-code-solution" class="hidden">{{solution}}</textarea>
+					<textarea name="pre" id="textarea-code-pre" class="hidden">{{pre}}</textarea>
 					<button type="submit" class="btn btn-primary">Submit</button>
 					<button type="button" class="btn btn-alert">Delete</button>
 				</fieldset>
 			</form>
 		</div>
 		<div class="span8">
-			<ul class="nav nav-tabs" id="myTab">
+			<div id="livemarkdown">{{#md}}{{text}}{{/md}}</div>
+			<ul class="nav nav-tabs" id="editorTabPane">
 				<li class="active"><a href="#edit-code-text" id="code-text">Exercise text</a></li>
 				<li><a href="#edit-code-before" id="code-before">Code before</a></li>
+				<li><a href="#edit-code-pre" id="code-pre">Prefilled code</a></li>
 				<li><a href="#edit-code-after" id="code-after">Code after</a></li>
 				<li><a href="#edit-code-tests" id="code-tests">Tests</a></li>
+				<li><a href="#edit-code-solution" id="code-solution">Solution</a></li>
 			</ul>
 
 			<div class="tab-content">
 				<div class="tab-pane active editor" id="edit-code-text">Text</div>
 				<div class="tab-pane editor" id="edit-code-before">Code before</div>
+				<div class="tab-pane editor" id="edit-code-pre">Prefilled code</div>
 				<div class="tab-pane editor" id="edit-code-after">Code after</div>
-				<div class="tab-pane editor" id="edit-code-tests">MongoDB</div>
+				<div class="tab-pane editor" id="edit-code-tests">Tests</div>
+				<div class="tab-pane editor" id="edit-code-solution">Solution</div>
 			</div>
 			<div class="placeEditor"></div>
 		</div>

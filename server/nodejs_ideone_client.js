@@ -59,13 +59,23 @@ Meteor.startup(function() {
 		this.user = user;
 		this.pass = pass;
 		this.submissionResult = null;
+		this.status = -1;
 
 
 		this.updateAnswer = function() {
+			var statustext = 'done - the program has finished';
 			if (!that.submissionResult) {
+				if (that.status < 0) {
+					statustext = 'waiting for compilation - the paste awaits compilation in the queue';
+				} else if (that.status == 1) {
+					statustext = 'compilation - the program is being compiled';
+				} else if (that.status == 3) {
+					statustext = 'running - the program is being executed';
+				}
+				Answers.update({_id: answerId}, {$set : {status: statustext, 'loading': true}});
 				Meteor.setTimeout(that.updateAnswer, 1000);
 			} else {
-				Answers.update({_id: answerId}, {$set : {'result': that.submissionResult}});
+				Answers.update({_id: answerId}, {$set : {'result': that.submissionResult, status: 'done', 'loading': false}});
 			}
 		}
 
@@ -73,6 +83,7 @@ Meteor.startup(function() {
 			ideone.call('getSubmissionStatus', [that.user, that.pass, that.link], function(error, result){
 				console.log(result);
 				if(result['status'] != 0){
+					that.status = result['status'];
 					setTimeout(that.wait, 1000);
 				} else {
 					that.details();

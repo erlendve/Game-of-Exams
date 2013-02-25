@@ -58,7 +58,7 @@ Template.creator.helpers({
 	},
 
 	'getExercises': function () {
-		return Exercises.find({set_id: this.set_id}, {sort: {number: 1}});
+		return Exercises.find({set_id: this.set_id}, {sort: {number: 1, letter: 1}});
 	},
 	'isActive': function(options) {
 		if (Session.get('currentExercise') === this._id)
@@ -104,8 +104,17 @@ var editArea = function (which, el) {
 };
 
 Template.creator.events({
+	// 'click #editorTabPane li': function(e) {
+	// 	e.preventDefault;
+	// 	console.log(e.currentTarget);
+	// 	var tabName = e.currentTarget.id.substr(5);
+	// 	$('#code-' + tabName).tab('show');
+	// 	editArea('#edit-code-' + tabName, $('#textarea-code-' + tabName));
+	// 	return false;
+	// },
 	'click #code-text': function(e) {
 		e.preventDefault();
+		console.log(e.currentTarget);
 		$('#code-text').tab('show');
 		editArea('#edit-code-text', $('#textarea-code-text'));
 	},
@@ -123,6 +132,14 @@ Template.creator.events({
 		e.preventDefault();
 		$('#code-tests').tab('show');
 		editArea('#edit-code-tests', $('#textarea-code-tests'));
+	},'click #code-solution': function(e) {
+		e.preventDefault();
+		$('#code-solution').tab('show');
+		editArea('#edit-code-solution', $('#textarea-code-solution'));
+	},'click #code-pre': function(e) {
+		e.preventDefault();
+		$('#code-pre').tab('show');
+		editArea('#edit-code-pre', $('#textarea-code-pre'));
 	},
 	'click .exercise-nav': function(e) {
 		e.preventDefault();
@@ -150,6 +167,10 @@ Template.creator.events({
 		});
 	},
 	'submit #form_new_exercise': function(e) {
+		var currentTab = $('#editorTabPane .active');
+		if (currentTab.length !== 0) {
+			Session.set('currentTab', currentTab[0].firstChild.id);
+		}
 		e.preventDefault();
 		var that = this;
 		var values = $('#form_new_exercise').serializeArray();
@@ -163,7 +184,6 @@ Template.creator.events({
 			alert("Title of exercise can not be 'Rename me'");
 			return;
 		}
-		console.log(res);
 
 		var ex = {
 			number: parseInt(res['number']),
@@ -190,10 +210,29 @@ Template.creator.events({
 });
 
 Template.creator.rendered =  function() {
-	editArea('#edit-code-text', $('#textarea-code-text'));
+	var curEx = Session.get('currentExercise');
+	var curTab = Session.get('currentTab');
+	console.log(curEx);
+	console.log(curTab);
+
+	//click first exercise if no one exists
+	if ($('.nav-pills .active').length == 0) {
+		$('.nav-pills a').first()[0].click();
+	}
+
+	// open the current tab, or open exercise-text if no previous
+	if (curTab) {
+		$('#' +curTab)[0].click();
+	} else {
+		$('#code-text')[0].click();
+	}
+
+	//X-editable exercise title
 	$('#title').editable({
 		mode: 'inline'
 	});
+
+	//live markdown of exercise text
 	var converter = new Showdown.converter();
 	var live = converter.makeHtml($('#textarea-code-text').val());
 	$('#livemarkdown').html(live);

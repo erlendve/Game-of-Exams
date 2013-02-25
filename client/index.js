@@ -19,6 +19,8 @@ Template.page.events = {
     var pathname = reg.exec(event.currentTarget.href)[1];
     // route the URL 
     Router.navigate(pathname, true);
+    //scroll to top the page
+    $(document).scrollTop(0);
   }
 }
 
@@ -42,5 +44,5 @@ function konamiactivate() {
     }
   }
 
-  konami.load()
+  konami.load();
 }

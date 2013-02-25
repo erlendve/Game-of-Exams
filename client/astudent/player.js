@@ -24,42 +24,7 @@ Template.player.helpers({
 		return i;
 	},
 	'exercises': function () {
-		return Exercises.find({set_id: this._id}, {sort: {number: 1}});
-	}
-});
-
-Template.player.events({
-	'submit': function(e) {
-		e.preventDefault();
-		var form = $('#form_answer' + this._id);
-		var values = form.serializeArray();
-		var answertext = values[0].value;
-		// var count = Answers.find().count() + 1;
-
-		var user = Meteor.user();
-		if (!user) {
-			alert('Please wait... and try again in a few seconds');
-			return false;
-		}
-		//TODO implement this when publishing Players collection?
-		if (!Players.findOne({userId: user._id})) {
-			Players.insert({userId: user._id, username: user.username, points: 0, exercises_done: 0, achievements_done: 0});
-		}
-		//TODO do this better so it does an insert if update fails
-		if (Answers.find({userId: Meteor.userId(), exercise_id: this._id}).count() > 0) {
-			Answers.update({'userId': Meteor.userId(), 'exercise_id': this._id}, {$set : {'answertext': answertext, 'edited': moment().format()}});
-			// Players.update({userId: Meteor.userId()},{$inc: {points: ans.points, exercises_done: 1}});
-		} else {
-			// Answers.insert({'userId': Meteor.userId(), 'set_id': this.set_id, 'exercise_id': this._id, 'answertext': answertext, 'points': this.points, 'created': moment().format()});
-			// Players.update({userId: Meteor.userId()},{$inc: {points: this.points, exercises_done: 1}});
-			// Players.update({userId: Meteor.userId()}, {$set: {achievements: null, achievements_done: 0}});
-			// notifyStandard(this.points + ' points awarded', 'Congratulations! You got ' + this.points+ ' points for answering <strong>' + this.title + '</strong>', 'success', 'icon-thumbs-up');
-			Meteor.call('submitAnswer', answertext, this.set_id, this._id, 
-				function(error, result) {
-					// console.log('result:' + result);
-				});
-		}
-		return false;
+		return Exercises.find({set_id: this._id}, {sort: {number: 1, letter: 1}});
 	}
 });
 
@@ -67,43 +32,221 @@ Template.player.rendered = function() {
 	$('code').each(function(i, e) {hljs.highlightBlock(e)});
 	// $('.bs-docs-sidebar').scrollspy();
 	$('.bs-docs-sidenav').affix({offset: {top: $('header').outerHeight()}})
+	
+	//if currentExercise is set show the collapse and render editor, if no exercise is current. Render first as current
+	// var cur = Session.get('currentExercise');
+	// if (cur) {
+		// $('#' + cur + ' .collapse').addClass('in');
+		// $('#' + cur + ' .clickforeditor').click();
+	// }
 
-	$('textarea').each(function (i, el) {
-		var $el,
-		$container,
-		editor;
+	$('.exercise').waypoint({
+		context: window,
+		continuous: false,
+		enabled: true,
+		horizontal: false,
+		offset: 100,
+		triggerOnce: false,
+		'handler': function(direction) {
+			if (direction == 'down') {
 
-		$el = $(el);
+				$('.active').removeClass('active');
+				$('#li_' + this.id).addClass('active');
+				// var next = $(this).waypoint('next');
+				// if (next[0] && !$(next[0]).find('.collapse').hasClass('in')) {
+				// 	var nextId = next[0].id;
+				// 	var el = $(next[0]).find('.collapse');
+				// 	el.on('show', function() {
+				// 		$(this).find('.clickforeditor').click();
 
-		//
-        // Principle: inject an DOM element (sized and positioned) and hide the textarea
-        //
-
-        $container = $('<div/>').css({
-        	position: 'relative',
-        	width: $el.width(),
-        	height: $el.height(),
-        	border: "1px solid gray"
-        }).insertAfter(el);
-
-        $el.hide();
-
-        //
-		// ACE magic
-		//
-
-		editor = ace.edit($container[0]);
-
-		editor.setTheme("ace/theme/chaos");
-		editor.getSession().setMode("ace/mode/java");
-		// Keep hidden textarea in sync
-
-		editor.getSession().setValue($el.val());
-		editor.getSession().on('change', function () {
-			$el.val(editor.getSession().getValue());
-		}); 
+				// 	});
+				// 	el.on('shown', function() {
+				// 		$.waypoints('refresh');
+				// 	});
+				// 	el.collapse({
+				// 		show: true
+				// 	});
+				// }
+			} else {
+				var prev = $(this).waypoint('prev');
+				if (prev[0]) {
+					var prevId = prev[0].id;
+					$('.active').removeClass('active');
+					$('#li_' + prevId).addClass('active');
+				}
+			}
+		}
 	});
+
+	//show all when player has rendered
+	$('.clickforeditor').click()
+	// $('.collapse').collapse({show: true});
+
+	// var el = $('.exercise .collapse').first();
+	// el.on('show', function() {
+	// 	$(this).find('.clickforeditor').click();
+
+	// });
+	// el.on('shown', function() {
+	// 	$.waypoints('refresh');
+	// });
+	// el.collapse({
+	// 	show: true
+	// });
+	// $('.exercise').waypoint(function() {
+	// 	console.log('Element bottom hit window top');
+	// }, {
+	// 	offset: function() {
+	// 		return -$(this).height();
+	// 	}
+	// });
+
+	// $('li').first().addClass('active');
+	// var list = $.waypoints('above');
+	// console.log(list);
+
+	// returns a jQuery object suitable for setting scrollTop to
+  // scroll the page, either directly for via animate()
+  // var scroller = function() {
+  // 	return $("html, body").stop();
+  // };
+
+//   var sections = [];
+//   _.each($('.exercise'), function (elt) {
+//   	var classes = (elt.getAttribute('class') || '').split(/\s+/);
+//     // if (_.indexOf(classes, "nosection") === -1)
+//     sections.push(elt);
+// });
+
+  // for (var i = 0; i < sections.length; i++) {
+  // 	var classes = (sections[i].getAttribute('class') || '').split(/\s+/);
+  //   // if (_.indexOf(classes, "nosection") !== -1)
+  //     // continue;
+  //     sections[i].prev = sections[i-1] || sections[i];
+  //     sections[i].next = sections[i+1] || sections[i];
+  //     $(sections[i]).waypoint({offset: 30});
+  // }
+  // var section = document.location.hash.substr(1) || sections[0].id;
+  // Session.set('section', section);
+//   if (section) {
+//     // WebKit will scroll down to the #id in the URL asynchronously
+//     // after the page is rendered, but Firefox won't.
+//     Meteor.setTimeout(function() {
+//     	var elem = $('#'+section);
+//     	if (elem.length)
+//     		scroller().scrollTop(elem.offset().top -95);
+//     }, 0);
+// }
+
+// var ignore_waypoints = false;
+// $('body').delegate('h1, h2, h3', 'waypoint.reached', function (evt, dir) {
+// 	if (!ignore_waypoints) {
+// 		var active = (dir === "up") ? this.prev : this;
+// 		Session.set("section", active.id);
+// 	}
+// });
+
+// window.onhashchange = function () {
+// 	scrollToSection(location.hash);
+// };
+
+// var scrollToSection = function (section) {
+// 	console.log('scrolling yo');
+// 	ignore_waypoints = true;
+// 	// console.log(section);
+// 	Session.set("section", section.substr(1));
+// 	scroller().animate({
+// 		scrollTop: $(section).offset().top - 95
+// 	}, 500, 'swing', function () {
+// 		// window.location.hash = section;
+// 		ignore_waypoints = false;
+// 	});
+// };
+
+// $('.bs-docs-sidebar, .exercises').delegate("a[href^='#']", 'click', function (e) {
+// 	e.preventDefault();
+// 	console.log('delegate');
+// 	var sel = $(this).attr('href');
+// 	$('.active').removeClass('active');
+// 	$('#li_' + sel.substr(1)).addClass('active');
+// 	scrollToSection(sel);
+// 	var reg = /.+?\:\/\/.+?(\/.+?)(?:#|\?|$)/;
+//     var pathname = reg.exec(e.currentTarget.href)[1];
+//     console.log(pathname + sel);
+// 	Router.navigate(pathname + sel, true);
+// });
+
+	// $('textarea').each(function (i, el) {
+	// 	var $el,
+	// 	$container,
+	// 	editor;
+
+	// 	$el = $(el);
+
+	// 	//
+ //        // Principle: inject an DOM element (sized and positioned) and hide the textarea
+ //        //
+
+ //        $container = $('<div/>').css({
+ //        	position: 'relative',
+ //        	width: $el.width(),
+ //        	height: $el.height(),
+ //        	border: "1px solid gray"
+ //        }).insertAfter(el);
+
+ //        $el.hide();
+
+ //        //
+	// 	// ACE magic
+	// 	//
+
+	// 	editor = ace.edit($container[0]);
+
+	// 	editor.setTheme("ace/theme/chaos");
+	// 	editor.getSession().setMode("ace/mode/java");
+	// 	// Keep hidden textarea in sync
+
+	// 	editor.getSession().setValue($el.val());
+	// 	editor.getSession().on('change', function () {
+	// 		$el.val(editor.getSession().getValue());
+	// 	}); 
+	// });
+$.waypoints('refresh');
 }
+
+Template.player.preserve({
+	'.exercise': function (node) { 
+		var cur = Session.get('currentExercise');
+		if (cur && cur == node.id) {
+			return;
+		}
+		return node.id; 
+	}
+});
+
+//////// Exercise sidenav ////////
+Template.exercise_sidenav.events({
+	'click .exercise-side': function(e) {
+		if (!$('#' + this._id + ' .collapse').hasClass('in'))
+			$('#' + this._id + ' .collapse').collapse('show');
+
+
+		e.preventDefault();
+		Router.navigate('exam/' + this.set_id + '#' + this._id, false)
+		Router.scrollToSection('#' + this._id, -95, true);
+	}
+});
+
+//Check if the sidebar is showing an exercise with letters, if letters are b and below, return true 
+Template.exercise_sidenav.helpers({
+	'lettered': function(conditional, options) {
+		if (this.letter === "" || this.letter === 'a') {
+			return options.inverse(this);
+		} else {
+			return options.fn(this);
+		}
+	}
+});
 
 ///////// Exercise_main ////////
 Template.exercise_main.helpers({
@@ -188,4 +331,90 @@ Template.exercise_main.events({
 				}
 			});
 	}
+});
+
+///////// form_answer /////////
+Template.form_answer.helpers({
+	'current': function(options) {
+		var cur = Session.get('currentExercise');
+		if (cur && cur === this.exercise_id || cur == this._id) {
+			return options.fn(this);
+		} else {
+			return options.inverse(this);
+		}
+	}
+});
+
+Template.form_answer.rendered = function() {
+	// var cur = Session.get('currentExercise');
+	// if (cur && cur === this.exercise_id || cur == this._id) {
+	// 	console.log(this._id);
+	// }
+};
+
+Template.form_answer.events({
+	'submit': function(e) {
+		// $.waypoints('disable');
+		e.preventDefault();
+		var form = $('#form_answer_' + this._id);
+		var values = form.serializeArray();
+		var answertext = values[0].value;
+
+		//if it is an existing answer with answer context
+		if(this.answertext) {
+			Session.set('currentExercise', this.exercise_id);
+			Meteor.call('submitAnswer', answertext, this.set_id, this._id, true,
+				function(error, result) {
+					// console.log('error:' + error);
+					// console.log('result:' + result);
+				});
+
+			//else it is a new answer with exercise context
+		} else {
+			Session.set('currentExercise', this._id);
+			Meteor.call('submitAnswer', answertext, this.set_id, this._id, false,
+				function(error, result) {
+			// console.log('error:' + error);
+			// console.log('result:' + result);
+		});
+		}
+
+// var user = Meteor.user();
+// //TODO implement this when publishing Players collection?
+// if (!Players.findOne({userId: user._id})) {
+	// 	Players.insert({userId: user._id, username: user.username, points: 0, exercises_done: 0, achievements_done: 0});
+	// }
+	// //TODO do this better so it does an insert if update fails
+	// if (Answers.find({userId: Meteor.userId(), exercise_id: this._id}).count() > 0) {
+		// 	Answers.update({'userId': Meteor.userId(), 'exercise_id': this._id}, {$set : {'answertext': answertext, 'edited': moment().format()}});
+		// 	// Players.update({userId: Meteor.userId()},{$inc: {points: ans.points, exercises_done: 1}});
+		// } else {
+			// 	// Answers.insert({'userId': Meteor.userId(), 'set_id': this.set_id, 'exercise_id': this._id, 'answertext': answertext, 'points': this.points, 'created': moment().format()});
+			// 	// Players.update({userId: Meteor.userId()},{$inc: {points: this.points, exercises_done: 1}});
+			// 	// Players.update({userId: Meteor.userId()}, {$set: {achievements: null, achievements_done: 0}});
+			// 	// notifyStandard(this.points + ' points awarded', 'Congratulations! You got ' + this.points+ ' points for answering <strong>' + this.title + '</strong>', 'success', 'icon-thumbs-up');
+			// 	Meteor.call('submitAnswer', answertext, this.set_id, this._id, 
+				// 		function(error, result) {
+					// 			// console.log('result:' + result);
+					// 		});
+// }
+// return false;
+},
+'click .clickforeditor': function(e) {
+	var $el,
+	$ed,
+	$container,
+	editor;
+
+	//hidden textarea
+	$el = $('#answer' + this._id);
+	//where the editor will be placed
+	$ed = $("#editor" + this._id).removeClass('clickforeditor').addClass("editor");
+	editor = ace.edit("editor" + this._id);
+	editor.setTheme("ace/theme/monokai");
+	editor.getSession().setMode("ace/mode/java");
+	editor.getSession().on('change', function () {
+		$el.val(editor.getSession().getValue());
+	}); 
+}
 });

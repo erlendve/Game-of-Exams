@@ -1,6 +1,6 @@
 {
   "meteor": {
-    "tag": "master"
+    "tag": "v0.5.4"
   },
   "packages": {
     "bafa": {
