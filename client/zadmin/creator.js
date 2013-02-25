@@ -66,6 +66,7 @@ Template.creator.helpers({
 	}
 });
 
+var GLOBALEDITOR;
 var editArea = function (which, el) {
 	var $el,
 	$container,
@@ -100,50 +101,67 @@ var editArea = function (which, el) {
 	// Keep hidden textarea in sync
 	editor.getSession().on('change', function () {
 		$el.val(editor.getSession().getValue());
-	}); 
+	});
+
+
+	var curTab = Session.get('currentTab');
+	if (curTab) {
+		editor.focus();
+		editor.gotoLine(curTab.row, curTab.col);
+	} else {
+		editor.focus();
+		editor.gotoLine(editor.session.getLength()+1);
+	}
+
+	GLOBALEDITOR = editor;
 };
 
 Template.creator.events({
-	// 'click #editorTabPane li': function(e) {
-	// 	e.preventDefault;
+	'click #editorTabPane a': function(e) {
+		e.preventDefault;
+		var tabName = e.currentTarget.id.substr(5);
+		$('#code-' + tabName).tab('show');
+		editArea('#edit-code-' + tabName, $('#textarea-code-' + tabName));
+		return false;
+	},
+	// 'click #code-text': function(e) {
+	// 	e.preventDefault();
 	// 	console.log(e.currentTarget);
-	// 	var tabName = e.currentTarget.id.substr(5);
-	// 	$('#code-' + tabName).tab('show');
-	// 	editArea('#edit-code-' + tabName, $('#textarea-code-' + tabName));
-	// 	return false;
+	// 	$('#code-text').tab('show');
+	// 	editArea('#edit-code-text', $('#textarea-code-text'));
 	// },
-	'click #code-text': function(e) {
-		e.preventDefault();
-		console.log(e.currentTarget);
-		$('#code-text').tab('show');
-		editArea('#edit-code-text', $('#textarea-code-text'));
-	},
-	'click #code-before': function(e) {
-		e.preventDefault();
-		$('#code-before').tab('show');
-		editArea('#edit-code-before', $('#textarea-code-before'));
-	},
-	'click #code-after': function(e) {
-		e.preventDefault();
-		$('#code-after').tab('show');
-		editArea('#edit-code-after', $('#textarea-code-after'));
-	},
-	'click #code-tests': function(e) {
-		e.preventDefault();
-		$('#code-tests').tab('show');
-		editArea('#edit-code-tests', $('#textarea-code-tests'));
-	},'click #code-solution': function(e) {
-		e.preventDefault();
-		$('#code-solution').tab('show');
-		editArea('#edit-code-solution', $('#textarea-code-solution'));
-	},'click #code-pre': function(e) {
-		e.preventDefault();
-		$('#code-pre').tab('show');
-		editArea('#edit-code-pre', $('#textarea-code-pre'));
-	},
+	// 'click #code-before': function(e) {
+	// 	e.preventDefault();
+	// 	$('#code-before').tab('show');
+	// 	editArea('#edit-code-before', $('#textarea-code-before'));
+	// },
+	// 'click #code-after': function(e) {
+	// 	e.preventDefault();
+	// 	$('#code-after').tab('show');
+	// 	editArea('#edit-code-after', $('#textarea-code-after'));
+	// },
+	// 'click #code-tests': function(e) {
+	// 	e.preventDefault();
+	// 	$('#code-tests').tab('show');
+	// 	editArea('#edit-code-tests', $('#textarea-code-tests'));
+	// },'click #code-solution': function(e) {
+	// 	e.preventDefault();
+	// 	$('#code-solution').tab('show');
+	// 	editArea('#edit-code-solution', $('#textarea-code-solution'));
+	// },'click #code-pre': function(e) {
+	// 	e.preventDefault();
+	// 	$('#code-pre').tab('show');
+	// 	editArea('#edit-code-pre', $('#textarea-code-pre'));
+	// },
 	'click .exercise-nav': function(e) {
 		e.preventDefault();
 		Session.set('currentExercise', this._id);
+		var curTab = Session.get('currentTab');
+		if (curTab) {
+			$('#' +curTab.tab)[0].click();
+		} else {
+			$('#code-text')[0].click();
+		}
 	},
 	'click #new-exercise': function(e) {
 		var that = this;
@@ -166,11 +184,23 @@ Template.creator.events({
 			}
 		});
 	},
-	'submit #form_new_exercise': function(e) {
-		var currentTab = $('#editorTabPane .active');
-		if (currentTab.length !== 0) {
-			Session.set('currentTab', currentTab[0].firstChild.id);
+	'click #submit-exercise': function(e) {
+		if (GLOBALEDITOR) {
+			var cursor = GLOBALEDITOR.selection.getCursor();
+			var tab = $('#editorTabPane .active');
+			if (tab.length !== 0) {
+				Session.set('currentTab', {
+					tab: tab[0].firstChild.id,
+					row: cursor.row+1,
+					col: cursor.column
+				});
+			};
 		}
+	},
+	'click #submit-exercise-cancel': function(e) {
+		alert('cancel does currently not work, click some other exercise to reset');
+	},
+	'submit #form_new_exercise': function(e) {
 		e.preventDefault();
 		var that = this;
 		var values = $('#form_new_exercise').serializeArray();
@@ -199,30 +229,22 @@ Template.creator.events({
         	tests: res['tests']
         }
 
-        Exercises.update(that._id, {$set: ex}, function(error, result) {
-        	if (result) {
-        		notifyStandard('Added ' + ex['title'], ex['title'] + ' was added to the exam <strong>' + that.title +'</strong>', 'success');
-        	}
-        	if (error)
-        		notifyStandard('Could not add exercise', 'Something went wrong \n Error message: ' + error, 'error');
+        Exercises.update(that._id, {$set: ex}, function() {
+        	notifyStandard('Edited ' + ex['title'], ex['title'] + 'has changed', 'success');
         });
     }
 });
 
 Template.creator.rendered =  function() {
-	var curEx = Session.get('currentExercise');
-	var curTab = Session.get('currentTab');
-	console.log(curEx);
-	console.log(curTab);
-
 	//click first exercise if no one exists
 	if ($('.nav-pills .active').length == 0) {
 		$('.nav-pills a').first()[0].click();
 	}
 
+	var curTab = Session.get('currentTab');
 	// open the current tab, or open exercise-text if no previous
 	if (curTab) {
-		$('#' +curTab)[0].click();
+		$('#' +curTab.tab)[0].click();
 	} else {
 		$('#code-text')[0].click();
 	}
