@@ -1,0 +1,42 @@
+Scrolling til samme oppgave ved delete av svar:
+Når man deleter en oppgave scroller den til neste. Dette er irriterende
+
+Grensesnitt oppg1 og 3 submitting av et decent langt svar gir feilmelding:
+
+XMLHttpRequest cannot load https://ddp--6353--50f8016c6373c0fa140002d5.meteor.com/sockjs/667/j_158s1e/xhr. Origin http://beta.gameofexams.com is not allowed by Access-Control-Allow-Origin.
+
+"class Main {
+↵    public static void main (String [] args) {
+↵        
+↵    }
+↵}
+↵
+↵class Bok {
+↵    String forfatter;
+↵    String tittel;
+↵    int utgivelsesår;
+↵    
+↵    Bok (String f, String t, int u) {
+↵        forfatter = f;
+↵        tittel = t;
+↵        utgivelsesår = u;
+↵    }
+↵}
+↵
+↵interface EnBok {
+↵    void settInn(String nokkel);
+↵    Bok taUt(String nokkel);
+↵}"
+
+XMLHttpRequest cannot load https://ddp--0712--50f8016c6373c0fa140002d5.meteor.com/sockjs/456/ethvn92x/xhr. Origin http://beta.gameofexams.com is not allowed by Access-Control-Allow-Origin.
+XMLHttpRequest cannot load https://ddp--0200--50f8016c6373c0fa140002d5.meteor.com/sockjs/936/3xcpf9en/xhr. Origin http://beta.gameofexams.com is not allowed by Access-Control-Allow-Origin.
+XMLHttpRequest cannot load https://ddp--5471--50f8016c6373c0fa140002d5.meteor.com/sockjs/648/bya_oiv1/xhr. Origin http://beta.gameofexams.com is not allowed by Access-Control-Allow-Origin.
+XMLHttpRequest cannot load https://ddp--7034--50f8016c6373c0fa140002d5.meteor.com/sockjs/info. Origin http://beta.gameofexams.com is not allowed by Access-Control-Allow-Origin.
+XMLHttpRequest cannot load https://ddp--8085--50f8016c6373c0fa140002d5.meteor.com/sockjs/info. Origin http://beta.gameofexams.com is not allowed by Access-Control-Allow-Origin.
+
+Endre oppgaveteksten på Grensesnitt, så det gir mer mening!
+F.eks implementer BokHylle istedenfor Bok interface
+
+Bra bok om Java:
+Java: How to program 8th edition. Dayton.
+Kul oppgave om "How to build your own computer"

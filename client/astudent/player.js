@@ -334,17 +334,6 @@ Template.exercise_main.events({
 });
 
 ///////// form_answer /////////
-Template.form_answer.helpers({
-	'current': function(options) {
-		var cur = Session.get('currentExercise');
-		if (cur && cur === this.exercise_id || cur == this._id) {
-			return options.fn(this);
-		} else {
-			return options.inverse(this);
-		}
-	}
-});
-
 Template.form_answer.rendered = function() {
 	// var cur = Session.get('currentExercise');
 	// if (cur && cur === this.exercise_id || cur == this._id) {
@@ -359,11 +348,12 @@ Template.form_answer.events({
 		var form = $('#form_answer_' + this._id);
 		var values = form.serializeArray();
 		var answertext = values[0].value;
+		var runTests = false;
 
 		//if it is an existing answer with answer context
 		if(this.answertext) {
 			Session.set('currentExercise', this.exercise_id);
-			Meteor.call('submitAnswer', answertext, this.set_id, this._id, true,
+			Meteor.call('submitAnswer', answertext, this.set_id, this._id, true, runTests,
 				function(error, result) {
 					// console.log('error:' + error);
 					// console.log('result:' + result);
@@ -372,7 +362,7 @@ Template.form_answer.events({
 			//else it is a new answer with exercise context
 		} else {
 			Session.set('currentExercise', this._id);
-			Meteor.call('submitAnswer', answertext, this.set_id, this._id, false,
+			Meteor.call('submitAnswer', answertext, this.set_id, this._id, false, runTests,
 				function(error, result) {
 			// console.log('error:' + error);
 			// console.log('result:' + result);

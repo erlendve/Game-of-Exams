@@ -71,6 +71,8 @@ Meteor.startup(function() {
 					statustext = 'compilation - the program is being compiled';
 				} else if (that.status == 3) {
 					statustext = 'running - the program is being executed';
+				} else {
+					statustext = "There was an error when executing your program at ideone.com"
 				}
 				Answers.update({_id: answerId}, {$set : {status: statustext, 'loading': true}});
 				Meteor.setTimeout(that.updateAnswer, 1000);

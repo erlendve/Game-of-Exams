@@ -70,8 +70,9 @@
 	<div class="answer-div">
 		{{#ifwith answer}}
 		{{#if saved}}
+		<p class="lead text-info">Your answer</p>
 		<pre><code>{{{answertext}}}</code></pre>
-		<button type="button" class="btn-edit-answer btn btn-inverse pull-right"><i class="icon-edit"></i> Edit</button>
+		{{! <button type="button" class="btn-edit-answer btn btn-inverse pull-right"><i class="icon-edit"></i> Edit</button>}}
 		{{else}}
 		{{> form_answer}}
 		{{#if loading}}
@@ -94,59 +95,18 @@
 
 <template name="result">
 	<h3 class="animated fadeInLeft">{{langName}} result:</h3>
-
+	{{debug}}
 	{{#if cmpinfo}}
-	<pre class="animated wobble badge-warning"><i class="icon-warning-sign"> </i>Compilation error:<code class="no-highlight">{{cmpinfo}}</code></pre>
+	<pre class="animated shake"><i class="icon-warning-sign"> </i>Compilation error:<code class="no-highlight">{{cmpinfo}}</code></pre>
 	{{/if}}
 	{{#if output}}
-	<pre class="animated fadeIn">Output:<code class="no-highlight">{{output}}</code></pre>
+	<pre class="animated pulse">Output:<code class="no-highlight">{{output}}</code></pre>
 	{{/if}}
-
-</template>
-<template name="old_answer">
-	<div class="answer-div">
-		{{#if answer}}
-		{{#with answer}}
-		<p class="lead text-info">
-			Your answer: </span>{{#unless saved}}<span class="muted">(not submitted)</span>{{/unless}}
-		</p>
-		<div class="hl hover-show">
-			<div class="hover-show">
-				<!-- <link rel="stylesheet" href="http://yandex.st/highlightjs/7.3/styles/default.min.css"> -->
-
-				<pre><code>{{{answertext}}}</code></pre>
-			</div>
-			{{#unless saved}}
-			<div>
-				{{#if result}}
-				{{#with processResult}}
-				<div>
-					<p>
-						Result: </span><span class="label label-{{label}}">{{type}}</span>
-					</p>
-					<p>
-						<pre><code class="no-highlight">{{{out}}}</code></pre>
-					</p>
-				</div>
-				{{/with}}
-				<button type="button" class="btn btn-primary pull-right" id="btn_save_answer">Submit answer</button>
-				<button type="button" class="btn btn-inverse pull-right" id="btn_edit_answer" style ="margin-right: 10px">Edit code </button>
-				{{else}}
-				Processing code:
-				<div class="progress progress-striped active">
-					<div class="bar" style="width: 100%;"></div>
-				</div>
-				{{/if}}
-			</div>
-			{{else}} <!-- /else unless saved-->
-			<a href="#" class="btn btn-danger pull-right" id="btn_remove_answer">Delete answer</a>
-			{{/unless}} <!-- /end unless saved -->
-		</div>
-		{{/with}} <!-- /end with answer -->
-		{{else}}
-		{{> form_answer}}
-		{{/if}} <!-- /end if answer -->
-	</div>
+	{{#if stderr}}
+	<pre class="animated wobble"><i class="icon-remove-sign icon-2x"> </i>Runtime error:<code class="no-highlight">{{stderr}}</code></pre>
+	{{/if}}
+	{{#if signal}}
+	{{/if}}
 </template>
 
 <template name="form_answer">
@@ -161,8 +121,8 @@
 		<div id="collapse{{_id}}" class="collapse in">
 			<div id="editor{{_id}}" class="clickforeditor">{{answertext}}</div>
 			<p class="buttonpanel">
-				<button type="submit" class="btn btn-primary pull-right" id="btn-submit-answer"><i class="icon-upload-alt"></i> Submit</button>
-				<button type="submit" class="btn btn-danger pull-right" id="btn-reset-answer"><i class="icon-refresh"></i> Reset</button>
+				{{!<button type="submit" class="btn btn-primary pull-right" id="btn-submit-answer"><i class="icon-upload-alt"></i> Submit</button>}}
+				{{!<button type="submit" class="btn btn-danger pull-right" id="btn-reset-answer"><i class="icon-refresh"></i> Reset</button>!}}
 				<button type="submit" class="btn btn-success pull-right" id="btn-run-answer"><i class="icon-play"></i> Run</button>
 			</p>
 		</div>

@@ -24,7 +24,7 @@ Meteor.methods({
 	isAdmin: function () {
 		return Meteor.user().isAdmin;
 	}, 
-	'submitAnswer': function(source, setId, exerciseId, exists) {
+	'submitAnswer': function(source, setId, exerciseId, exists, runTests) {
 		console.log(exists);
 		console.log(exerciseId);
 		if (!this.userId)
