@@ -230,7 +230,7 @@ Template.creator.events({
         }
 
         Exercises.update(that._id, {$set: ex}, function() {
-        	notifyStandard('Edited ' + ex['title'], ex['title'] + 'has changed', 'success');
+        	notifyStandard('Edited ' + ex['title'], ex['title'] + ' has changed', 'success');
         });
     }
 });

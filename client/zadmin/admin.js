@@ -313,6 +313,8 @@ Template.admin_set.rendered = function () {
     mode: 'inline',
     title: 'Enter set description'
   });
+
+  // var cur = Session.get('currentExercise');
 }
 
 //////// Javascript helper functions ////////

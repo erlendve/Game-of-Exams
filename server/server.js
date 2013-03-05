@@ -25,8 +25,6 @@ Meteor.methods({
 		return Meteor.user().isAdmin;
 	}, 
 	'submitAnswer': function(source, setId, exerciseId, exists, runTests) {
-		console.log(exists);
-		console.log(exerciseId);
 		if (!this.userId)
 			throw new Meteor.Error(403, 'You must be logged in');
 
@@ -62,34 +60,19 @@ Meteor.methods({
 				if (error)
 					return false;
 				if (result) {
-					var res = Meteor.call('submitAndEvaluate', source, result, lang, input, function(error, result) {
-						if (error) {
-							console.log(error)
-						}
-						if (result) {
-							console.log(result)
-						}
-					});
+					console.log('create new answer');
+					var res = Meteor.call('submitAndEvaluate', source, result, lang, input);
 				}
 			});
 		} else {
 			//exercisId is actually the id of the answer
-			console.log('updated answer');
 			answerId = Answers.update(exerciseId, {$set: {answertext: source, loading: true}}, function (error, result) {	
 				if (error) {
 					console.log('update failed');
 					return new Meteor.Error(500, "Database did not accept updated answer");
 				} else {
-					console.log('update success');
-					console.log('Submitting updated answer ' + result);
-					var res = Meteor.call('submitAndEvaluate', source, exerciseId, lang, input, function(error, result) {
-						if (error) {
-							console.log(error)
-						}
-						if (result) {
-							console.log(result)
-						}
-					});
+					console.log('update existing answer');
+					Meteor.call('submitAndEvaluate', source, exerciseId, lang, input);
 				}
 			});
 			return answerId;

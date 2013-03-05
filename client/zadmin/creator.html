@@ -4,7 +4,7 @@
 	<div class="creator">
 		<ul class="nav nav-pills">
 			{{#each getExercises}}
-			<li {{isActive}}><a href="#" class="exercise-nav">{{number}}) {{title}}</a></li>
+			<li {{isActive}}><a href="#" class="exercise-nav">{{number}}{{letter}}) {{title}}</a></li>
 			{{/each}}
 			<li><a href="#" id="new-exercise">New exercise</a></li>
 		</ul>
@@ -22,7 +22,7 @@
 					</div>
 					<div class="inline-block">
 						<label>Points</label>
-						<input name="points" type="number" class="input-mini" value="5">
+						<input name="points" type="number" class="input-mini" value="{{points}}">
 					</div>
 					<textarea name="text" id="textarea-code-text" class="hidden">{{text}}</textarea>
 					<textarea name="before" id="textarea-code-before" class="hidden">{{before}}</textarea>

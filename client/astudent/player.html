@@ -1,10 +1,10 @@
 <template name="player">
-	{{alldone}}
 	{{#if currentExam}}
 	{{#with currentExam}}
 	<header class="jumbotron subhead">
 		<div class="container">
 			<h1>{{title}} <small>  You have {{examCurrentPoints}} of {{examTotalPoints}} points</small></h1>
+			<p>{{description}}</p>
 		</div>
 	</header>
 	<div class="container">
@@ -72,7 +72,7 @@
 		{{#if saved}}
 		<p class="lead text-info">Your answer</p>
 		<pre><code>{{{answertext}}}</code></pre>
-		{{! <button type="button" class="btn-edit-answer btn btn-inverse pull-right"><i class="icon-edit"></i> Edit</button>}}
+		<button type="button" class="btn-edit-answer btn btn-inverse pull-right"><i class="icon-edit"></i> Edit</button>
 		{{else}}
 		{{> form_answer}}
 		{{#if loading}}
@@ -94,19 +94,20 @@
 </template>
 
 <template name="result">
-	<h3 class="animated fadeInLeft">{{langName}} result:</h3>
-	{{debug}}
-	{{#if cmpinfo}}
-	<pre class="animated shake"><i class="icon-warning-sign"> </i>Compilation error:<code class="no-highlight">{{cmpinfo}}</code></pre>
-	{{/if}}
-	{{#if output}}
-	<pre class="animated pulse">Output:<code class="no-highlight">{{output}}</code></pre>
-	{{/if}}
-	{{#if stderr}}
-	<pre class="animated wobble"><i class="icon-remove-sign icon-2x"> </i>Runtime error:<code class="no-highlight">{{stderr}}</code></pre>
-	{{/if}}
-	{{#if signal}}
-	{{/if}}
+	<div class="answer-result">
+		<h3 class="animated fadeInLeft">{{langName}} result:</h3>
+		{{#if cmpinfo}}
+		<pre class="animated shake"><i class="icon-warning-sign"> </i>Compilation error:<code class="no-highlight">{{cmpinfo}}</code></pre>
+		{{/if}}
+		{{#if output}}
+		<pre class="animated pulse">Output:<code class="no-highlight">{{output}}</code></pre>
+		{{/if}}
+		{{#if stderr}}
+		<pre class="animated wobble"><i class="icon-remove-sign icon-2x"> </i>Runtime error:<code class="no-highlight">{{stderr}}</code></pre>
+		{{/if}}
+		{{#if signal}}
+		{{/if}}
+	</div>
 </template>
 
 <template name="form_answer">
@@ -121,7 +122,7 @@
 		<div id="collapse{{_id}}" class="collapse in">
 			<div id="editor{{_id}}" class="clickforeditor">{{answertext}}</div>
 			<p class="buttonpanel">
-				{{!<button type="submit" class="btn btn-primary pull-right" id="btn-submit-answer"><i class="icon-upload-alt"></i> Submit</button>}}
+				<button type="submit" class="btn btn-primary pull-right" id="btn-submit-answer-"><i class="icon-upload-alt"></i> Test</button>
 				{{!<button type="submit" class="btn btn-danger pull-right" id="btn-reset-answer"><i class="icon-refresh"></i> Reset</button>!}}
 				<button type="submit" class="btn btn-success pull-right" id="btn-run-answer"><i class="icon-play"></i> Run</button>
 			</p>

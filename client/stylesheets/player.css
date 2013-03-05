@@ -18,3 +18,7 @@
 .buttonpanel button {
 	margin: 5px; 
 }
+
+.answer-result code{
+	word-break: normal;
+}

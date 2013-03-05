@@ -60,9 +60,11 @@ Meteor.startup(function() {
 		this.pass = pass;
 		this.submissionResult = null;
 		this.status = -1;
+		this.timeoutCounter = 0;
 
 
 		this.updateAnswer = function() {
+			that.timeoutCounter = that.timeoutCounter+1;
 			var statustext = 'done - the program has finished';
 			if (!that.submissionResult) {
 				if (that.status < 0) {
@@ -74,8 +76,13 @@ Meteor.startup(function() {
 				} else {
 					statustext = "There was an error when executing your program at ideone.com"
 				}
-				Answers.update({_id: answerId}, {$set : {status: statustext, 'loading': true}});
-				Meteor.setTimeout(that.updateAnswer, 1000);
+				
+				if  (that.timeoutCounter < 16) {
+					Answers.update({_id: answerId}, {$set : {status: statustext, 'loading': true}});
+					Meteor.setTimeout(that.updateAnswer, 1000);
+				} else {
+					Answers.update({_id: answerId}, {$set : {status: 'Could not connect to ideone.com', 'loading': true}});
+				}
 			} else {
 				Answers.update({_id: answerId}, {$set : {'result': that.submissionResult, status: 'done', 'loading': false}});
 			}
@@ -83,7 +90,6 @@ Meteor.startup(function() {
 
 		this.wait = function(){
 			ideone.call('getSubmissionStatus', [that.user, that.pass, that.link], function(error, result){
-				console.log(result);
 				if(result['status'] != 0){
 					that.status = result['status'];
 					setTimeout(that.wait, 1000);
@@ -95,8 +101,13 @@ Meteor.startup(function() {
 
 		this.details = function(){
 			ideone.call('getSubmissionDetails', [that.user, that.pass, that.link, false, false, true, true, true], function(error, result){
-				console.log(result);
-				that.submissionResult = result;
+				if (result) {
+					console.log(result);
+					that.submissionResult = result;
+				} else {
+					console.log('ERROR getting SubmissionDetails at ideone.com:');
+					console.log(error);
+				}
 			});
 		}
 

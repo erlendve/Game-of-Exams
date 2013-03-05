@@ -309,10 +309,11 @@ Template.exercise_main.events({
 		Players.update({userId: Meteor.userId()}, {$set: {achievements: null, achievements_done: 0}});
 		notifyStandard(this.pointsAtSave + ' points removed', 'You deleted an answer on exercise <strong>' + Exercises.findOne(this.exercise_id).title + '</strong>', 'error', 'icon-trash');
 	},
-	'click #btn_edit_answer': function(e) {
+	'click .btn-edit-answer': function(e) {
 		e.preventDefault();
-		console.log('edit answer');
-
+		Answers.update(this._id, {$set: {saved: false}});
+		var ex = Exercises.findOne(this.exercise_id);
+		notifyStandard('Editing answer', 'You are editing answer on <strong>' + ex.title + '</strong><br /> You need to submit again to save your answer', 'info', 'icon-edit');
 	},
 	'click #btn_save_answer': function(e) {
 		e.preventDefault();
@@ -342,31 +343,23 @@ Template.form_answer.rendered = function() {
 };
 
 Template.form_answer.events({
-	'submit': function(e) {
-		// $.waypoints('disable');
-		e.preventDefault();
+	'click .btn-success': function(e) {
+		// $.waypoints('disable')
+		$(e.currentTarget).attr('disabled', true);
 		var form = $('#form_answer_' + this._id);
 		var values = form.serializeArray();
 		var answertext = values[0].value;
 		var runTests = false;
 
 		//if it is an existing answer with answer context
-		if(this.answertext) {
+		if(this.exercise_id) {
 			Session.set('currentExercise', this.exercise_id);
-			Meteor.call('submitAnswer', answertext, this.set_id, this._id, true, runTests,
-				function(error, result) {
-					// console.log('error:' + error);
-					// console.log('result:' + result);
-				});
+			Meteor.call('submitAnswer', answertext, this.set_id, this._id, true, runTests);
 
 			//else it is a new answer with exercise context
 		} else {
 			Session.set('currentExercise', this._id);
-			Meteor.call('submitAnswer', answertext, this.set_id, this._id, false, runTests,
-				function(error, result) {
-			// console.log('error:' + error);
-			// console.log('result:' + result);
-		});
+			Meteor.call('submitAnswer', answertext, this.set_id, this._id, false, runTests);
 		}
 
 // var user = Meteor.user();
@@ -389,6 +382,10 @@ Template.form_answer.events({
 					// 		});
 // }
 // return false;
+},
+'submit': function(e) {
+	e.preventDefault();
+	return false;
 },
 'click .clickforeditor': function(e) {
 	var $el,
