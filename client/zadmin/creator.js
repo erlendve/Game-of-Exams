@@ -124,35 +124,6 @@ Template.creator.events({
 		editArea('#edit-code-' + tabName, $('#textarea-code-' + tabName));
 		return false;
 	},
-	// 'click #code-text': function(e) {
-	// 	e.preventDefault();
-	// 	console.log(e.currentTarget);
-	// 	$('#code-text').tab('show');
-	// 	editArea('#edit-code-text', $('#textarea-code-text'));
-	// },
-	// 'click #code-before': function(e) {
-	// 	e.preventDefault();
-	// 	$('#code-before').tab('show');
-	// 	editArea('#edit-code-before', $('#textarea-code-before'));
-	// },
-	// 'click #code-after': function(e) {
-	// 	e.preventDefault();
-	// 	$('#code-after').tab('show');
-	// 	editArea('#edit-code-after', $('#textarea-code-after'));
-	// },
-	// 'click #code-tests': function(e) {
-	// 	e.preventDefault();
-	// 	$('#code-tests').tab('show');
-	// 	editArea('#edit-code-tests', $('#textarea-code-tests'));
-	// },'click #code-solution': function(e) {
-	// 	e.preventDefault();
-	// 	$('#code-solution').tab('show');
-	// 	editArea('#edit-code-solution', $('#textarea-code-solution'));
-	// },'click #code-pre': function(e) {
-	// 	e.preventDefault();
-	// 	$('#code-pre').tab('show');
-	// 	editArea('#edit-code-pre', $('#textarea-code-pre'));
-	// },
 	'click .exercise-nav': function(e) {
 		e.preventDefault();
 		Session.set('currentExercise', this._id);
@@ -226,9 +197,10 @@ Template.creator.events({
         	// lang: res['lang'],
         	before: res['before'],
         	after: res['after'],
+        	pre: res['pre'],
         	tests: res['tests']
         }
-
+        
         Exercises.update(that._id, {$set: ex}, function() {
         	notifyStandard('Edited ' + ex['title'], ex['title'] + ' has changed', 'success');
         });

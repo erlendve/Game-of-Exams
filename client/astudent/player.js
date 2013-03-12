@@ -336,6 +336,7 @@ Template.exercise_main.events({
 
 ///////// form_answer /////////
 Template.form_answer.rendered = function() {
+
 	// var cur = Session.get('currentExercise');
 	// if (cur && cur === this.exercise_id || cur == this._id) {
 	// 	console.log(this._id);
@@ -350,6 +351,11 @@ Template.form_answer.events({
 		var values = form.serializeArray();
 		var answertext = values[0].value;
 		var runTests = false;
+		if (answertext.length < 1) {
+			alert("You have not edited any text in the editor. Or the the editor is empty.");
+			$(e.currentTarget).attr('disabled', false);
+			return false;
+		}
 
 		//if it is an existing answer with answer context
 		if(this.exercise_id) {
@@ -362,46 +368,75 @@ Template.form_answer.events({
 			Meteor.call('submitAnswer', answertext, this.set_id, this._id, false, runTests);
 		}
 
-// var user = Meteor.user();
-// //TODO implement this when publishing Players collection?
-// if (!Players.findOne({userId: user._id})) {
-	// 	Players.insert({userId: user._id, username: user.username, points: 0, exercises_done: 0, achievements_done: 0});
-	// }
-	// //TODO do this better so it does an insert if update fails
-	// if (Answers.find({userId: Meteor.userId(), exercise_id: this._id}).count() > 0) {
-		// 	Answers.update({'userId': Meteor.userId(), 'exercise_id': this._id}, {$set : {'answertext': answertext, 'edited': moment().format()}});
-		// 	// Players.update({userId: Meteor.userId()},{$inc: {points: ans.points, exercises_done: 1}});
-		// } else {
-			// 	// Answers.insert({'userId': Meteor.userId(), 'set_id': this.set_id, 'exercise_id': this._id, 'answertext': answertext, 'points': this.points, 'created': moment().format()});
-			// 	// Players.update({userId: Meteor.userId()},{$inc: {points: this.points, exercises_done: 1}});
-			// 	// Players.update({userId: Meteor.userId()}, {$set: {achievements: null, achievements_done: 0}});
-			// 	// notifyStandard(this.points + ' points awarded', 'Congratulations! You got ' + this.points+ ' points for answering <strong>' + this.title + '</strong>', 'success', 'icon-thumbs-up');
-			// 	Meteor.call('submitAnswer', answertext, this.set_id, this._id, 
-				// 		function(error, result) {
-					// 			// console.log('result:' + result);
-					// 		});
-// }
-// return false;
-},
-'submit': function(e) {
-	e.preventDefault();
-	return false;
-},
-'click .clickforeditor': function(e) {
-	var $el,
-	$ed,
-	$container,
-	editor;
+		// var user = Meteor.user();
+		// //TODO implement this when publishing Players collection?
+		// if (!Players.findOne({userId: user._id})) {
+			// 	Players.insert({userId: user._id, username: user.username, points: 0, exercises_done: 0, achievements_done: 0});
+			// }
+			// //TODO do this better so it does an insert if update fails
+			// if (Answers.find({userId: Meteor.userId(), exercise_id: this._id}).count() > 0) {
+				// 	Answers.update({'userId': Meteor.userId(), 'exercise_id': this._id}, {$set : {'answertext': answertext, 'edited': moment().format()}});
+				// 	// Players.update({userId: Meteor.userId()},{$inc: {points: ans.points, exercises_done: 1}});
+				// } else {
+					// 	// Answers.insert({'userId': Meteor.userId(), 'set_id': this.set_id, 'exercise_id': this._id, 'answertext': answertext, 'points': this.points, 'created': moment().format()});
+					// 	// Players.update({userId: Meteor.userId()},{$inc: {points: this.points, exercises_done: 1}});
+					// 	// Players.update({userId: Meteor.userId()}, {$set: {achievements: null, achievements_done: 0}});
+					// 	// notifyStandard(this.points + ' points awarded', 'Congratulations! You got ' + this.points+ ' points for answering <strong>' + this.title + '</strong>', 'success', 'icon-thumbs-up');
+					// 	Meteor.call('submitAnswer', answertext, this.set_id, this._id, 
+						// 		function(error, result) {
+							// 			// console.log('result:' + result);
+							// 		});
+		// }
+		// return false;
+	},
+	'click .btn-primary': function(e) {
+		// $.waypoints('disable')
+		$(e.currentTarget).attr('disabled', true);
+		var form = $('#form_answer_' + this._id);
+		var values = form.serializeArray();
+		var answertext = values[0].value;
+		var runTests = true;
 
-	//hidden textarea
-	$el = $('#answer' + this._id);
-	//where the editor will be placed
-	$ed = $("#editor" + this._id).removeClass('clickforeditor').addClass("editor");
-	editor = ace.edit("editor" + this._id);
-	editor.setTheme("ace/theme/monokai");
-	editor.getSession().setMode("ace/mode/java");
-	editor.getSession().on('change', function () {
-		$el.val(editor.getSession().getValue());
-	}); 
-}
+		//if it is an existing answer with answer context
+		if(this.exercise_id) {
+			Session.set('currentExercise', this.exercise_id);
+			Meteor.call('submitAnswer', answertext, this.set_id, this._id, true, runTests);
+
+			//else it is a new answer with exercise context
+		} else {
+			Session.set('currentExercise', this._id);
+			Meteor.call('submitAnswer', answertext, this.set_id, this._id, false, runTests);
+		}
+	},
+	'submit': function(e) {
+		e.preventDefault();
+		return false;
+	},
+	'click .clickforeditor': function(e) {
+		var $el,
+		$ed,
+		$container,
+		editor;
+
+		//hidden textarea
+		$el = $('#answer' + this._id);
+		//where the editor will be placed
+		$ed = $("#editor" + this._id).removeClass('clickforeditor').addClass("editor");
+		editor = ace.edit("editor" + this._id);
+
+		//fill with prefilled text from exercise if no text in editor
+		if (editor.getValue().length < 1) {
+			var ex = Exercises.findOne(this.exercise_id)
+			if (ex) {
+				editor.setValue(ex.pre);
+				editor.focus();
+				editor.gotoLine(editor.session.getLength()+1);
+			}
+		}
+		editor.setTheme("ace/theme/monokai");
+		editor.getSession().setMode("ace/mode/java");
+		editor.getSession().on('change', function () {
+			$el.val(editor.getSession().getValue());
+		}); 
+	}
 });

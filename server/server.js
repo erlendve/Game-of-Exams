@@ -56,23 +56,52 @@ Meteor.methods({
 				'result': null,
 				'error': null,
 				'loading': true
-			}, function (error, result) {	
+			}, function (error, result) {
 				if (error)
 					return false;
 				if (result) {
+					var exercise = Exercises.findOne(exerciseId);
+					var combined = "";
+					if (exercise) {
+						if (exercise.tests && runTests)
+							combined = combined + exercise.tests;
+
+						if (exercise.before)
+							combined = combined + exercise.before;
+						
+						combined = combined + source;
+					}
 					console.log('create new answer');
-					var res = Meteor.call('submitAndEvaluate', source, result, lang, input);
+					var res = Meteor.call('submitAndEvaluate', combined, result, lang, input);
 				}
 			});
 		} else {
-			//exercisId is actually the id of the answer
-			answerId = Answers.update(exerciseId, {$set: {answertext: source, loading: true}}, function (error, result) {	
+			//exerciseId is actually the id of the answer
+			answerId = Answers.update(exerciseId, {$set: {answertext: source, loading: true}}, function (error, result) {
 				if (error) {
 					console.log('update failed');
 					return new Meteor.Error(500, "Database did not accept updated answer");
 				} else {
+					var exercise = Exercises.findOne(Answers.findOne(exerciseId).exercise_id);
+					var combined = "";
+					if (exercise) {
+						if (exercise.before)
+							combined = combined + exercise.before;
+						
+						combined = combined + "\n" + source;
+						
+						if (exercise.after)
+							combined = combined + "\n" + exercise.after;
+						
+						if (exercise.tests && runTests)
+							combined = combined + "\n" +exercise.tests;
+
+						
+					} else {
+						combined = source;
+					}
 					console.log('update existing answer');
-					Meteor.call('submitAndEvaluate', source, exerciseId, lang, input);
+					Meteor.call('submitAndEvaluate', combined, exerciseId, lang, input);
 				}
 			});
 			return answerId;

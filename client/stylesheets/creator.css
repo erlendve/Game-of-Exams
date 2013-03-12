@@ -18,3 +18,8 @@
 .hiddentextarea {
 	display: none;
 }
+
+.placeeditor {
+	position: relative;
+	height: 500 px;
+}
