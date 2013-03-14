@@ -47,3 +47,9 @@ mongorestore -u client -h skybreak.member1.mongolayer.com:27017 -d devgoe_meteor
 IDEONE:
 user: gameofexams
 pass: ba5ag7rU
+
+erlendve
+oblig4
+
+erlendlv
+gameofexams

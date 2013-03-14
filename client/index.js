@@ -46,3 +46,11 @@ function konamiactivate() {
 
   konami.load();
 }
+
+Template.page.rendered = function() {
+  console.log('page rendered');
+}
+
+Template.page.navbar = function() {
+  console.log('navbar rendered');
+}

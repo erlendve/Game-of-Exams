@@ -212,6 +212,7 @@ Template.player.rendered = function() {
 	// 	}); 
 	// });
 $.waypoints('refresh');
+console.log('player rendered');
 }
 
 Template.player.preserve({

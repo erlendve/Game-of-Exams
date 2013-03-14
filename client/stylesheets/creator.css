@@ -8,7 +8,7 @@
 }
 
 .editor {
-	position: 'relative';
+	position: relative;
 	display: block;
 	width: 100%;
 	height: 450px;
@@ -19,7 +19,8 @@
 	display: none;
 }
 
-.placeeditor {
+#editorextraspace {
 	position: relative;
-	height: 500 px;
+	height: 500px;
+	width: 100%;
 }

@@ -88,7 +88,7 @@ Meteor.methods({
 						if (exercise.before)
 							combined = combined + exercise.before;
 						
-						combined = combined + "\n" + source;
+						combined = combined + source;
 						
 						if (exercise.after)
 							combined = combined + "\n" + exercise.after;

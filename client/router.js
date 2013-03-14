@@ -26,12 +26,12 @@ var GoeRouter = Backbone.Router.extend({
     "main":                                        "examlist",
     "courses":                                     "examlist",
     "exam/:exam_id":                               "exam",
+    "exercise/:id":                                "exercise",
     "admin":                                       "admin", 
     "admin/:id":                                   "editSet",
     "feed":                                        "feed",
     "leaderboard/:*":                              "leaderboard",
-    "profile/:username":                           "profile",
-    "backup":                                      "backup"
+    "profile/:username":                           "profile"
   },
   
   examlist: function () {
@@ -39,6 +39,7 @@ var GoeRouter = Backbone.Router.extend({
   },
 
   admin: function () {
+    $.waypoints('disable')
     Session.set('currentPage', 'admin');
     Session.set('subpage', null);
   },
@@ -68,6 +69,10 @@ var GoeRouter = Backbone.Router.extend({
   profile: function(username) {
     Session.set('currentPage', 'profile');
     Session.set('subpage', username);
+  },
+  exercise: function(id) {
+    Session.set('currentPage', 'focusExercise');
+    Session.set('subpage', id);
   }
 });
 
@@ -95,7 +100,7 @@ Meteor.startup(function () {
   // };
 });
 
-Template.page.displayPage = function() {
+Handlebars.registerHelper("displayPage", function() {
   var page = Session.get('currentPage');
 
   if (Template[page]) {
@@ -103,4 +108,4 @@ Template.page.displayPage = function() {
   } else {
     return Template['page_not_found']();
   }
-}
+});

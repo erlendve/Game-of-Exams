@@ -84,7 +84,7 @@ Meteor.startup(function() {
 					Answers.update({_id: answerId}, {$set : {status: 'Could not connect to ideone.com. Try to resubmit answer in a few seconds', 'loading': true}});
 				}
 			} else {
-				Answers.update({_id: answerId}, {$set : {'result': that.submissionResult, status: 'done', 'loading': false}});
+				Answers.update({_id: answerId}, {$set : {'result': that.submissionResult, status: 'uploading code', 'loading': false}});
 			}
 		}
 
@@ -127,7 +127,7 @@ Meteor.startup(function() {
 
 	Meteor.methods({
 		submitAndEvaluate: function(source, answerId, lang, input) {
-			var mySub = new NewSubmission('erlendve', 'oblig4', source, lang, input, answerId);
+			var mySub = new NewSubmission('erlendlv', 'gameofexams', source, lang, input, answerId);
 		}
 	});
 });
