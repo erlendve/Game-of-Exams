@@ -63,13 +63,20 @@ Meteor.methods({
 					var exercise = Exercises.findOne(exerciseId);
 					var combined = "";
 					if (exercise) {
-						if (exercise.tests && runTests)
-							combined = combined + exercise.tests;
-
 						if (exercise.before)
 							combined = combined + exercise.before;
 						
 						combined = combined + source;
+						
+						if (exercise.after)
+							combined = combined + "\n" + exercise.after;
+						
+						if (exercise.tests && runTests)
+							combined = combined + "\n" +exercise.tests;
+
+						
+					} else {
+						combined = source;
 					}
 					console.log('create new answer');
 					var res = Meteor.call('submitAndEvaluate', combined, result, lang, input);

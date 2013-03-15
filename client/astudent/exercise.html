@@ -1,0 +1,46 @@
+<template name="focusExercise">
+	<div class="container">Hi world!
+
+
+	<textarea id="area">Zzuop dawg</textarea>
+	{{#with exercise}}
+	{{> staticExercise}}
+	{{/with}}
+
+	{{> staticAnswer}}
+	</div>
+</template>
+
+<template name="staticExercise">
+	<p>{{#markdown}}{{text}}{{/markdown}}</p>
+	<div id="staticeditor" class="editor">
+	</div>
+</template>
+
+<template name="staticAnswer">
+	{{#with answer}}
+	<p>{{#markdown}}{{answertext}}{{/markdown}}</p>
+	<button>Click me!</button>
+
+	{{#ifwith result}}
+	<div class="answer-result">
+		<h3 class="animated fadeInLeft">{{langName}} result:</h3>
+		{{#if cmpinfo}}
+		<pre class="animated shake"><i class="icon-warning-sign"> </i>Compilation error:<code class="no-highlight">{{cmpinfo}}</code></pre>
+		{{/if}}
+		{{#if output}}
+		<pre class="animated pulse">Output:<code class="no-highlight">{{output}}</code></pre>
+		{{/if}}
+		{{#if stderr}}
+		<pre class="animated wobble"><i class="icon-remove-sign icon-2x"> </i>Runtime error:<code class="no-highlight">{{stderr}}</code></pre>
+		{{/if}}
+		{{#if signal}}
+		{{/if}}
+	{{/ifwith}}
+	{{/with}}
+	</div>
+</template>
+
+<template name="displayAnswerResult">
+
+</template>

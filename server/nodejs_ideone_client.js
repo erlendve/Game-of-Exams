@@ -78,13 +78,13 @@ Meteor.startup(function() {
 				}
 				
 				if  (that.timeoutCounter < 20) {
-					Answers.update({_id: answerId}, {$set : {status: statustext, 'loading': true}});
+					Answers.update({_id: answerId}, {$set : {status: statustext, 'loading': true}}, function() {});
 					Meteor.setTimeout(that.updateAnswer, 1000);
 				} else {
-					Answers.update({_id: answerId}, {$set : {status: 'Could not connect to ideone.com. Try to resubmit answer in a few seconds', 'loading': true}});
+					Answers.update({_id: answerId}, {$set : {status: 'Could not connect to ideone.com. Try to resubmit answer in a few seconds', 'loading': true}}, function() {});
 				}
 			} else {
-				Answers.update({_id: answerId}, {$set : {'result': that.submissionResult, status: 'uploading code', 'loading': false}});
+				Answers.update({_id: answerId}, {$set : {'result': that.submissionResult, status: 'uploading code', 'loading': false}}, function() {});
 			}
 		}
 
