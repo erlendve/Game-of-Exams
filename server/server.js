@@ -147,23 +147,22 @@ Meteor.methods({
 });
 
 Meteor.startup(function() {
-	// Solutions.remove({});
-	// Players.remove({});
-	// Meteor.users.find().forEach(function(user){
-	// 	if (!Players.findOne(user._id))
-	// 		Players.insert({_id: user._id, username: user.username, points: 0, exercises_done: 0, achievements_done: 0, lastChanged: user.createdAt});
-	// });
+	Solutions.remove({});
+	Players.remove({});
+	Meteor.users.find().forEach(function(user){
+		if (!Players.findOne(user._id))
+			Players.insert({_id: user._id, username: user.username, points: 0, exercises_done: 0, achievements_done: 0, lastChanged: user.createdAt});
+	});
 	var i=0;
 	Answers.find({exercise_id: "b3ee729a-dbd2-4a38-a629-0c0410de9d50"}).forEach(function(ans) {
 		var index = ans.result.output.indexOf('*** Test Collection ***');
 		var testOutput = ans.result.output.substring(index);
-		if (index > 0 && testOutput.indexOf('FAILED') < 0) {
+		if (index >= 0 && testOutput.indexOf('FAILED') < 0) {
 			i++;
 			console.log('\n' + Meteor.users.findOne(ans.userId).username + ' solved the exercise with output:\n ' + testOutput.substring(0, 58));
 			if (!Solutions.findOne({exerciseId: ans.exercise_id, userId: ans.userId})) {
 				Solutions.insert({userId: ans.userId, exerciseId: ans.exercise_id, code: ans.answertext, createdAt: ans.createdAt});
-				var ts = ans.editedAt ? ans.editedAt: ans.createdAt;
-				Players.update(ans.userId, {$inc: {points: ans.points, exercises_done: 1}, $set: {lastChanged: ts}});
+				Players.update(ans.userId, {$inc: {points: ans.points, exercises_done: 1}, $set: {lastChanged: ans.createdAt}});
 			}
 		}
 	});

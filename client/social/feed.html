@@ -6,13 +6,15 @@
         </h1>
       </div>
       {{# each live}}
-      <h3>Someone just answered <p class="text-info my-inline">{{findExercise.title}}</p> with the answer:</h3><br/>
+      <h3>{{getUsername userId}} just answered <p class="text-info my-inline">{{findExercise.title}}</p> with the answer:</h3><br/>
       <div class="hl">
         <!-- The lines under here must be left aligned or else text will get spaces inserted :() -->
-<!-- {{#markdown}} -->
-<pre><code>{{answertext}}</code></pre>
-<!-- {{/markdown}} -->
+<pre><code>{{result.output}}</code></pre>
+
+
       </div>
       {{/each}}
   </div> <!-- /end container -->
 </template>
+
+<!-- {{#markdown}}<pre><code>{{answertext}}</code></pre>{{/markdown}} -->
