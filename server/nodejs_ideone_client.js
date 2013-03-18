@@ -50,7 +50,7 @@ Meteor.startup(function() {
 		}
 	}
 
-	function NewSubmission(user, pass, source, lang, input, answerId) {
+	function NewSubmission(user, pass, source, lang, input, answerId, runTests) {
 		var that = this;
 		this.link = '';
 		this.source = source;
@@ -61,7 +61,6 @@ Meteor.startup(function() {
 		this.submissionResult = null;
 		this.status = -1;
 		this.timeoutCounter = 0;
-
 
 		this.updateAnswer = function() {
 			that.timeoutCounter = that.timeoutCounter+1;
@@ -84,8 +83,36 @@ Meteor.startup(function() {
 					Answers.update({_id: answerId}, {$set : {status: 'Could not connect to ideone.com. Try to resubmit answer in a few seconds', 'loading': true}}, function() {});
 				}
 			} else {
-				Answers.update({_id: answerId}, {$set : {'result': that.submissionResult, status: 'uploading code', 'loading': false}}, function() {});
+				Answers.update({_id: answerId}, {$set : {'result': that.submissionResult, status: 'uploading code', 'loading': false}}, function(error) {
+					if (error) {
+						console.log('could not update answer ' + answerId + ', error when updating answer');
+					} else{
+						if (runTests && that.submissionResult.result == 15) {
+							var index = that.submissionResult.output.indexOf(runTests);
+							if (index < 0)
+								return;
+
+							var testOutput = that.submissionResult.output.substring(index);
+							if (that.parseResult(testOutput)) {
+								var ans = Answers.findOne(answerId);
+								var existingSolution = Solutions.findOne({exerciseId: ans.exercise_id, userId: ans.userId});
+								if (!existingSolution) {
+									Solutions.insert({userId: ans.userId, exerciseId: ans.exercise_id, code: ans.answertext, createdAt: + (new Date)});
+									//Players.insert({_id: ans.userId, points: ans.points, exercises_done: 1});
+									Players.update(ans.userId, {$inc: {points: ans.points, exercises_done: 1}, $set: {lastChanged: + (new Date)}});
+								} else {
+									//TODO what happens when exercise is already solved?
+									console.log('Solution already saved');
+								}
+							}
+						}
+					}						
+				});
 			}
+		}
+
+		this.parseResult = function(testOutput) {
+			return testOutput.indexOf('FAILED') < 0;
 		}
 
 		this.wait = function(){
@@ -126,8 +153,8 @@ Meteor.startup(function() {
 	};
 
 	Meteor.methods({
-		submitAndEvaluate: function(source, answerId, lang, input) {
-			var mySub = new NewSubmission('erlendlv', 'gameofexams', source, lang, input, answerId);
+		submitAndEvaluate: function(source, answerId, lang, input, runTests) {
+			var mySub = new NewSubmission('erlendlv', 'gameofexams', source, lang, input, answerId, runTests);
 		}
 	});
 });

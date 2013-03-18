@@ -46,15 +46,14 @@ Meteor.methods({
 		if (!exists) {
 			answerId = Answers.insert({
 				'userId': this.userId,
-				'set_id': setId,
+				//'set_id': setId,
 				'exercise_id': exerciseId,
 				'answertext': source,
 				'points': exercise.points,
-				'pointsAtSave': 0,
 				'createdAt': +(new Date),
 				'saved': false,
 				'result': null,
-				'error': null,
+				//'error': null,
 				'loading': true
 			}, function (error, result) {
 				if (error)
@@ -79,7 +78,7 @@ Meteor.methods({
 						combined = source;
 					}
 					console.log('create new answer');
-					var res = Meteor.call('submitAndEvaluate', combined, result, lang, input);
+					var res = Meteor.call('submitAndEvaluate', combined, result, lang, input, runTests, function() {});
 				}
 			});
 		} else {
@@ -100,15 +99,18 @@ Meteor.methods({
 						if (exercise.after)
 							combined = combined + "\n" + exercise.after;
 						
-						if (exercise.tests && runTests)
+						if (exercise.tests && runTests) {
+							var rid = Random.id();
+							exercise.tests = exercise.tests.replace(/TESTS_ID/g, rid);
 							combined = combined + "\n" +exercise.tests;
-
+							runTests = rid;
+						}
 						
 					} else {
 						combined = source;
 					}
 					console.log('update existing answer');
-					Meteor.call('submitAndEvaluate', combined, exerciseId, lang, input);
+					Meteor.call('submitAndEvaluate', combined, exerciseId, lang, input, runTests, function() {});
 				}
 			});
 			return answerId;
@@ -139,8 +141,31 @@ Meteor.methods({
 			function(error, result) {
 				console.log(error)
 				console.log(result)
-			}
-			);
+			});
 		return retval;
 	}
+});
+
+Meteor.startup(function() {
+	// Solutions.remove({});
+	// Players.remove({});
+	// Meteor.users.find().forEach(function(user){
+	// 	if (!Players.findOne(user._id))
+	// 		Players.insert({_id: user._id, username: user.username, points: 0, exercises_done: 0, achievements_done: 0, lastChanged: user.createdAt});
+	// });
+	var i=0;
+	Answers.find({exercise_id: "b3ee729a-dbd2-4a38-a629-0c0410de9d50"}).forEach(function(ans) {
+		var index = ans.result.output.indexOf('*** Test Collection ***');
+		var testOutput = ans.result.output.substring(index);
+		if (index > 0 && testOutput.indexOf('FAILED') < 0) {
+			i++;
+			console.log('\n' + Meteor.users.findOne(ans.userId).username + ' solved the exercise with output:\n ' + testOutput.substring(0, 58));
+			if (!Solutions.findOne({exerciseId: ans.exercise_id, userId: ans.userId})) {
+				Solutions.insert({userId: ans.userId, exerciseId: ans.exercise_id, code: ans.answertext, createdAt: ans.createdAt});
+				var ts = ans.editedAt ? ans.editedAt: ans.createdAt;
+				Players.update(ans.userId, {$inc: {points: ans.points, exercises_done: 1}, $set: {lastChanged: ts}});
+			}
+		}
+	});
+	console.log(i + ' users solved Oblig4');
 });

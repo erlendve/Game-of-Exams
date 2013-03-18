@@ -17,6 +17,9 @@ Players = new Meteor.Collection('players');
 
 Languages = new Meteor.Collection('languages');
 
+//Answers for solved exercises
+Solutions = new Meteor.Collection('solutions');
+
 ///////// Allow & deny rules ////////
 Answers.allow({
 	insert: function (userId, doc) {
@@ -72,5 +75,6 @@ if (Meteor.isServer) {
         Courses.allow(green);
         Players.allow(green);
         Answers.allow(green);
+        Solutions.allow(green);
     })();
 }

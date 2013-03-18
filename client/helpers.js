@@ -32,13 +32,8 @@ Handlebars.registerHelper('isAdmin', function() {
 });
 
 Handlebars.registerHelper('myPoints', function() {
-  var res = 0;
-  Answers.find({userId: Meteor.userId()}, {fields: {points: 1}}).forEach(function (ans) {
-    //TODO fix this hack later
-    if (ans.saved)
-      res += ans.pointsAtSave;
-  })
-  return res;
+  var p = Players.findOne(Meteor.userId());
+  return p ? p.points: 0;
 });
 
 Handlebars.registerHelper("debug", function(optionalValue) { 

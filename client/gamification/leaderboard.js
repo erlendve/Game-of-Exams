@@ -11,12 +11,12 @@ Template.leaderboard.rendered = function() {
 // Answers.find().forEach(function(ans) {Players.update({userId: ans.userId},{$inc: {points: ans.points, exercises_done: 1}})});
 
 Template.leaderboard.playerPoints = function() {
-  var players = Players.find({}, {sort: {points: -1}});
+  var players = Players.find({}, {sort: {points: -1, lastChanged: 1}});
   var counter = 1;
   var rankedArr = [];
   players.forEach(function(player) {
     player['rank'] = counter++;
-    if (Meteor.userId() === player['userId'])
+    if (Meteor.userId() === player['_id'])
       player['me'] = true;
     else
       player['me'] = false;
