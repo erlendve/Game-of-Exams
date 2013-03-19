@@ -1,0 +1,4 @@
+.answer-box-feed {
+	max-height: 400px;
+	overflow: auto;
+}
