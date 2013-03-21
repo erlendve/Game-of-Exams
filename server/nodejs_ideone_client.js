@@ -83,36 +83,71 @@ Meteor.startup(function() {
 					Answers.update({_id: answerId}, {$set : {status: 'Could not connect to ideone.com. Try to resubmit answer in a few seconds', 'loading': true}}, function() {});
 				}
 			} else {
-				Answers.update({_id: answerId}, {$set : {'result': that.submissionResult, status: 'uploading code', 'loading': false}}, function(error) {
-					if (error) {
-						console.log('could not update answer ' + answerId + ', error when updating answer');
-					} else{
-						if (runTests && that.submissionResult.result == 15) {
-							var index = that.submissionResult.output.indexOf(runTests);
-							if (index < 0)
-								return;
+				if (runTests && that.submissionResult.result == 15) {
+					var index = that.submissionResult.output.indexOf(runTests);
+					if (index >= 0) {
 
-							var testOutput = that.submissionResult.output.substring(index);
-							if (that.parseResult(testOutput)) {
-								var ans = Answers.findOne(answerId);
-								var existingSolution = Solutions.findOne({exerciseId: ans.exercise_id, userId: ans.userId});
-								if (!existingSolution) {
-									Solutions.insert({userId: ans.userId, exerciseId: ans.exercise_id, code: ans.answertext, createdAt: + (new Date)});
-									//Players.insert({_id: ans.userId, points: ans.points, exercises_done: 1});
-									Players.update(ans.userId, {$inc: {points: ans.points, exercises_done: 1}, $set: {lastChanged: + (new Date)}});
-								} else {
-									//TODO what happens when exercise is already solved?
-									console.log('Solution already saved');
+						var testOutput = that.submissionResult.output.substring(index);
+
+						var ans = Answers.findOne(answerId);
+						////////////   Special case for Oblig4: ////////////
+						if (ans.exercise_id === "b3ee729a-dbd2-4a38-a629-0c0410de9d50") {
+							console.log('Oblig4 for sho!');
+							var existingSolution = Solutions.findOne({exerciseId: ans.exercise_id, userId: ans.userId});
+
+							var pts = 0;
+							pts = testOutput.indexOf('** Testname: leggInn og inneholder - PASSED') > 0 ? pts + 15: pts;
+
+
+							pts = testOutput.indexOf('** Testname: leggInn og hent paa nokkel - PASSED') > 0 ? pts + 15: pts;
+							pts = testOutput.indexOf('** Testname: leggInn() og hent(int nr) paa indeks - PASSED') > 0 ? pts + 15: pts;
+							pts = testOutput.indexOf('** Testname: leggInn() og antall() - PASSED') > 0 ? pts + 15: pts;
+							pts = testOutput.indexOf('** Testname: hentMinste() - PASSED') > 0 ? pts + 15: pts;
+							pts = testOutput.indexOf('** Testname: hentStorste() - PASSED') > 0 ? pts + 15: pts;
+							pts = testOutput.indexOf('** Testname: fjernElement() - PASSED') > 0 ? pts + 15: pts;
+							pts = testOutput.indexOf('** Testname: fjernAlle() - PASSED') > 0 ? pts + 15: pts;
+							pts = testOutput.indexOf('** Testname: tilArray - PASSED') > 0 ? pts + 15: pts;
+							pts = testOutput.indexOf('** Testname: iterator() hasNext() og next() - PASSED') > 0 ? pts + 25: pts;
+							pts = testOutput.indexOf('** Testname: iterate and remove() with iterator - PASSED') > 0 ? pts + 25: pts;
+							pts = testOutput.indexOf('** Testname: ingen duplikate noekler - PASSED') > 0 ? pts + 15: pts;
+							console.log('Solved Oblig4 with ' + pts + ' points');
+							if (!existingSolution) {
+								Solutions.insert({userId: ans.userId, exerciseId: ans.exercise_id, code: ans.answertext, points: pts, createdAt: + (new Date), visibility: 'private'});
+								Players.update(ans.userId, {$inc: {points: pts, exercises_done: 1}, $set: {lastChanged: + (new Date)}});
+							} else {
+								if (existingSolution['points'] < pts) {
+									var diff = pts - existingSolution['points'];
+									Solutions.update(existingSolution._id, {$set: {code: ans.answertext, points: pts, createdAt: + (new Date)}});
+									Players.update(ans.userId, {$inc: {points: diff}, $set: {lastChanged: + (new Date)}});
 								}
 							}
+
+							that.submissionResult.output = that.submissionResult.output.replace(new RegExp(runTests + "\n", "g"), "");
+							Answers.update({_id: answerId}, {$set : {'result': that.submissionResult, status: 'uploading code', 'loading': false}}, function(error) {});
+							return;
 						}
-					}						
-				});
+						////////// End oblig 4 special case ///////
+
+						if (that.parseResult(testOutput)) {
+							var existingSolution = Solutions.findOne({exerciseId: ans.exercise_id, userId: ans.userId});
+
+							if (!existingSolution) {
+								Solutions.insert({userId: ans.userId, exerciseId: ans.exercise_id, code: ans.answertext, createdAt: + (new Date), visibility: 'public'});
+								Players.update(ans.userId, {$inc: {points: ans.points, exercises_done: 1}, $set: {lastChanged: + (new Date)}});
+							} else {
+								//TODO what happens when exercise is already solved?
+								console.log('Solution already saved');
+							}
+						}
+						that.submissionResult.output = that.submissionResult.output.replace(new RegExp(runTests + "\n", "g"), "");
+					}
+				}
+				Answers.update({_id: answerId}, {$set : {'result': that.submissionResult, status: 'uploading code', 'loading': false}}, function(error) {});
 			}
 		}
 
 		this.parseResult = function(testOutput) {
-			return testOutput.indexOf('FAILED') < 0;
+			return testOutput.indexOf('FAILED') < 0 && testOutput.indexOf('SKIPPED') < 0;
 		}
 
 		this.wait = function(){
@@ -154,6 +189,7 @@ Meteor.startup(function() {
 
 	Meteor.methods({
 		submitAndEvaluate: function(source, answerId, lang, input, runTests) {
+			console.log('submit reached nodejs client');
 			var mySub = new NewSubmission('erlendlv', 'gameofexams', source, lang, input, answerId, runTests);
 		}
 	});

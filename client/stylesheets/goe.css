@@ -52,11 +52,6 @@
 	/*border-color: #3A87AD;*/
 }
 
-.under-construction
-{
-	background-image:url('zombie.jpg');
-}
-
 /* Large desktop */
 @media (min-width: 1200px) { 
 	.pagetop {

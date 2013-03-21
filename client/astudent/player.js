@@ -7,24 +7,30 @@ Template.player.helpers({
 		} else 
 		return false;
 	},
-	'examTotalPoints': function() {
-		var i = 0;
-		Exercises.find({set_id: this._id}).forEach( function(exam) {
-			i += exam.points;
-		});
-		return i;
-	}, 
+	'examPoints': function() {
+		var cur = 0;
+		var tot = 0;
+		var myId = Meteor.userId();
+		Exercises.find({set_id: this._id}).forEach( function(ex) {
+			var sol = Solutions.findOne({exerciseId: ex._id, userId: myId});
+			if (sol) {
+				if (sol.points) {
+					cur += sol.points;
+				} else {
+					cur += ex.points;
+				}
+			}
 
-	'examCurrentPoints': function() {
-		var i = 0;
-		Answers.find({userId: Meteor.userId(), set_id: this._id}).forEach( function(ans) {
-			if (ans.saved)
-				i += ans.pointsAtSave;
+			tot += ex.points;
 		});
-		return i;
+		return {current: cur, total: tot};
 	},
 	'exercises': function () {
-		return Exercises.find({set_id: this._id}, {sort: {number: 1, letter: 1}});
+		var myId = Meteor.userId();
+		return Exercises.find({set_id: this._id}, {sort: {number: 1, letter: 1}}).map(function(ex) {
+			ex['solution'] = Solutions.findOne({exerciseId: ex._id, userId: myId});
+			return ex;
+			;});
 	}
 });
 
@@ -361,6 +367,7 @@ Template.form_answer.events({
 		//if it is an existing answer with answer context
 		if(this.exercise_id) {
 			Session.set('currentExercise', this.exercise_id);
+			console.log('submitting answer on already existing answer')
 			Meteor.call('submitAnswer', answertext, this.set_id, this._id, true, runTests);
 
 			//else it is a new answer with exercise context

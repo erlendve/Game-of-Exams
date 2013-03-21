@@ -52,7 +52,7 @@
             <li {{#if currentPage "examlist"}} class="active" {{/if}}><a href="/courses" id="courses" class="goe-navlink">Overview</a></li>
             <!--      <li {{#if currentPage "player"}} class="active" {{/if}}><a href="/exam" class="goe-navlink" id="exam">Exam</a></li> -->
             <li {{#if currentPage "leaderboard"}} class="active" {{/if}}><a href="/leaderboard/#{{currentUser.username}}" id="leaderboard" class="goe-navlink">Leaderboard</a></li>
-            <li {{#if currentPage "feed"}} class="active" {{/if}}><a href="/feed" class="goe-navlink" id="feed">Answer feed</a></li>
+            <!-- <li {{#if currentPage "feed"}} class="active" {{/if}}><a href="/feed" class="goe-navlink" id="feed">Answer feed</a></li> -->
             <li {{#if currentPage "profile"}} class="active" {{/if}}><a href="/profile/{{currentUser.username}}" class="goe-navlink" id="profile">My profile</a></li>
             {{#if isAdmin}}
             <li {{#if currentPage "admin"}} class="active" {{/if}}><a href="/admin" class="goe-navlink" id="admin">Admin</a></li>

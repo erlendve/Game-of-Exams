@@ -22,3 +22,24 @@
 .answer-result code{
 	word-break: normal;
 }
+
+.exercise-title {
+	font-weight: 200;
+	padding-bottom: 20px;
+}
+
+.points-success {
+	border-radius: 5px;
+	color: white;
+	background-color: #468847;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 5px; 
+}
+
+.points-muted {
+	border-radius: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 5px; 
+}

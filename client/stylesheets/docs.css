@@ -843,6 +843,23 @@ form.bs-docs-example {
   background-image: url(glyphicons-halflings-white.png);
   opacity: 1;
 }
+
+/* Icon-ok */
+.bs-docs-sidenav .icon-ok {
+  float: right;
+  margin-top: 2px;
+  margin-right: -6px;
+  color: #468847;
+}
+.bs-docs-sidenav a:hover .icon-ok {
+  opacity: .75;
+}
+.bs-docs-sidenav .active .icon-ok,
+.bs-docs-sidenav .active a:hover .icon-ok {
+  color: white;
+  opacity: 1;
+}
+
 .bs-docs-sidenav.affix {
   top: 40px;
 }
