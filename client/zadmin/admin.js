@@ -74,12 +74,13 @@ Template.admin.events({
 
   'click .publish-exam-toggle': function(e) {
   	var self = this;
-  	Exams.update(this._id,
-  		{$set: {published: !this.published}}, 
+    console.log(this);
+    Exams.update(this._id,
+      {$set: {published: !this.published}}, 
       //callback
       function () {
         //if published is false that means it just changed to unpublished
-        if (!self.published) {
+        if (self.published) {
         	notifyCustom({title: 'Published ' + self.title, text: self.title + ' ' + self.year + ' is now available to all users who subscribes to course ' + self.course 
         		+ '. You should be careful with changes on this set from now on.',
         		type: 'success', icon: 'icon-eye-open'});
@@ -88,9 +89,12 @@ Template.admin.events({
         		+ '. You can publish later if you want.',
         		type: 'info', icon: 'icon-eye-close'});
         }
-      }
-      );
-  	return false;
+        Exercises.find({set_id: self._id}).forEach(function(ex) {
+          Exercises.update(ex._id, {$set: {published: self.published}})
+        });
+      });
+
+    return false;
   },
 
   'click #add_new_course': function(e) {

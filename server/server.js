@@ -1,14 +1,14 @@
 /////// Publish Collections ////////
-Meteor.publish('exercises', function() {
-	return Exercises.find({published: true});
+Meteor.publish('courses', function() {
+	return Courses.find();
 });
 
 Meteor.publish('exams', function() {
-	return Exams.find();
+	return Exams.find({published: true});
 });
 
-Meteor.publish('courses', function() {
-	return Courses.find();
+Meteor.publish('exercises', function() {
+	return Exercises.find({published: true});
 });
 
 Meteor.publish('answers', function() {
@@ -24,10 +24,21 @@ Meteor.publish('languages', function() {
 });
 
 Meteor.publish('solutions', function() {
-	return Solutions.find();
+	return Solutions.find({userId: this.userId});
 });
 
 /////// Extra publish functions for admin ////////
+Meteor.publish('adminSubscription', function() {
+	//TODO fix so admin is not set to be this exact user
+	if (this.userId === "8c6e84b7-2fa9-41de-80d6-35a47b6ac034") {
+		return [
+		Exams.find({}, {sort: {published: 1}}),
+		Exercises.find(),
+		Solutions.find(),
+		Answers.find()
+		];
+	}
+});
 
 /////// Accounts /////////
 Accounts.onCreateUser(function(options, user) {
@@ -161,6 +172,17 @@ Meteor.methods({
 // larseop@ulrik.uio.no
 
 Meteor.startup(function() {
+	//update old exam sets
+	//Exams.update({lang: {$nin: ['java7']}}, {$set: {owner: "8c6e84b7-2fa9-41de-80d6-35a47b6ac034", lang: "java7", createdAt: + (new Date), description: "change description", published: false, exercises: [], category: "main"}}, {multi: true});
+	//Exams.update({year: {$exists: true}}, {$unset: {year: 1}}, {multi: true});
+	
+	//update exam sets without exercise list
+	/*Exams.find({}).forEach(function(set) {
+		var arr = Exercises.find({set_id: set._id}).fetch();
+		console.log('found ' + arr.length + ' exercises for ' + set.title);
+		Exams.update(set._id, {$set: {exercises: arr}});
+	});*/
+
 	/*if (!Solutions.findOne({visibility: 'public'})) {
 		Solutions.update({}, {$set: {visibility: 'public'}}, {multi: true});
 		Solutions.update({exercise_id: "b3ee729a-dbd2-4a38-a629-0c0410de9d50"}, {$set: {visibility: 'private'}}, {multi: true});

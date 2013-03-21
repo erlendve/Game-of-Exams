@@ -15,7 +15,7 @@ Handlebars.registerHelper('md', function (options) {
 });
 
 Handlebars.registerHelper('exams', function(){
-  return Exams.find({courseId: this._id}, {sort: {year: -1}});
+  return Exams.find({courseId: this._id});
 });
 
 Handlebars.registerHelper('courses', function(){
