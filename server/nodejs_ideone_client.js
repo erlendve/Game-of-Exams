@@ -92,7 +92,6 @@ Meteor.startup(function() {
 						var ans = Answers.findOne(answerId);
 						////////////   Special case for Oblig4: ////////////
 						if (ans.exercise_id === "b3ee729a-dbd2-4a38-a629-0c0410de9d50") {
-							console.log('Oblig4 for sho!');
 							var existingSolution = Solutions.findOne({exerciseId: ans.exercise_id, userId: ans.userId});
 
 							var pts = 0;
@@ -110,15 +109,38 @@ Meteor.startup(function() {
 							pts = testOutput.indexOf('** Testname: iterator() hasNext() og next() - PASSED') > 0 ? pts + 25: pts;
 							pts = testOutput.indexOf('** Testname: iterate and remove() with iterator - PASSED') > 0 ? pts + 25: pts;
 							pts = testOutput.indexOf('** Testname: ingen duplikate noekler - PASSED') > 0 ? pts + 15: pts;
-							console.log('Solved Oblig4 with ' + pts + ' points');
+
+							var done = pts === 200 ? 1: 0;
 							if (!existingSolution) {
+								Players.update(ans.userId, {$inc: {points: pts, exercises_done: done}, $set: {lastChanged: + (new Date)}});
+								//will count as a solved exercise if pts === 200
+								if (pts === 200) {
+									pts = null;
+									console.log('Completely solved oblig4')
+								}
+
 								Solutions.insert({userId: ans.userId, exerciseId: ans.exercise_id, code: ans.answertext, points: pts, createdAt: + (new Date), visibility: 'private'});
-								Players.update(ans.userId, {$inc: {points: pts, exercises_done: 1}, $set: {lastChanged: + (new Date)}});
 							} else {
-								if (existingSolution['points'] < pts) {
-									var diff = pts - existingSolution['points'];
-									Solutions.update(existingSolution._id, {$set: {code: ans.answertext, points: pts, createdAt: + (new Date)}});
-									Players.update(ans.userId, {$inc: {points: diff}, $set: {lastChanged: + (new Date)}});
+								if (existingSolution['points'] !== null) {
+									var diff = 0;
+									if (pts === 200) {
+										diff = pts - existingSolution['points'];
+										pts = null;
+										console.log('Completed Oblig4');
+									} else if (existingSolution['points'] < pts) {
+										diff = pts - existingSolution['points'];
+										console.log('Improved Oblig 4')
+									}
+
+									if (diff > 0) {
+										Players.update(ans.userId, {$inc: {points: diff, exercises_done: done}, $set: {lastChanged: + (new Date)}});
+										Solutions.update(existingSolution._id, {$set: {code: ans.answertext, points: pts, createdAt: + (new Date)}});									
+									} else {
+										console.log('Oblig 4 was not improved');
+									}
+
+								} else {
+									console.log('Already solved Oblig4');
 								}
 							}
 
@@ -190,7 +212,7 @@ Meteor.startup(function() {
 	Meteor.methods({
 		submitAndEvaluate: function(source, answerId, lang, input, runTests) {
 			console.log('submit reached nodejs client');
-			var mySub = new NewSubmission('erlendlv', 'gameofexams', source, lang, input, answerId, runTests);
+			var mySub = new NewSubmission('popeye', '123456789', source, lang, input, answerId, runTests);
 		}
 	});
 });

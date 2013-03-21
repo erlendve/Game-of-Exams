@@ -406,14 +406,15 @@ Template.form_answer.events({
 		var runTests = true;
 
 		//if it is an existing answer with answer context
+		console.log('Pressed Test button!');
 		if(this.exercise_id) {
 			Session.set('currentExercise', this.exercise_id);
-			Meteor.call('submitAnswer', answertext, this.set_id, this._id, true, runTests);
+			Meteor.call('submitAnswer', answertext, this.set_id, this._id, true, runTests, function() {});
 
 			//else it is a new answer with exercise context
 		} else {
 			Session.set('currentExercise', this._id);
-			Meteor.call('submitAnswer', answertext, this.set_id, this._id, false, runTests);
+			Meteor.call('submitAnswer', answertext, this.set_id, this._id, false, runTests, function() {});
 		}
 	},
 	'submit': function(e) {
