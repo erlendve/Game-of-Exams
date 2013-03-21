@@ -178,7 +178,7 @@ Meteor.methods({
 
 Meteor.startup(function() {
 	//update old exam sets
-	Exams.update({lang: {$nin: ['java7']}}, {$set: {owner: "8c6e84b7-2fa9-41de-80d6-35a47b6ac034", lang: "java7", createdAt: + (new Date), description: "change description", published: false, exercises: [], category: "main"}}, {multi: true});
+	/*Exams.update({lang: {$nin: ['java7']}}, {$set: {owner: "8c6e84b7-2fa9-41de-80d6-35a47b6ac034", lang: "java7", createdAt: + (new Date), description: "change description", published: false, exercises: [], category: "main"}}, {multi: true});
 	Exams.update({year: {$exists: true}}, {$unset: {year: 1}}, {multi: true});
 	
 	//update exam sets without exercise list
@@ -186,7 +186,7 @@ Meteor.startup(function() {
 		var arr = Exercises.find({set_id: set._id}).fetch();
 		console.log('found ' + arr.length + ' exercises for ' + set.title);
 		Exams.update(set._id, {$set: {exercises: arr}});
-	});
+	});*/
 
 	/*if (!Solutions.findOne({visibility: 'public'})) {
 		Solutions.update({}, {$set: {visibility: 'public'}}, {multi: true});
