@@ -167,7 +167,6 @@ Meteor.startup(function() {
 	}*/
 	//Exercises.update("b3ee729a-dbd2-4a38-a629-0c0410de9d50", {$set: {visibility: 'private'}});
 
-
 	/*var moo = function () {Players.remove({}); return function() {};};
 	moo = moo();
 	if (Players.find().count() === 0) {
