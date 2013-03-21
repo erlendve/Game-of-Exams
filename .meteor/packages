@@ -9,7 +9,6 @@ accounts-ui
 backbone
 jquery
 underscore
-autopublish
 less
 ace
 bafa

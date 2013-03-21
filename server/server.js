@@ -1,3 +1,35 @@
+/////// Publish Collections ////////
+Meteor.publish('exercises', function() {
+	return Exercises.find({published: true});
+});
+
+Meteor.publish('exams', function() {
+	return Exams.find();
+});
+
+Meteor.publish('courses', function() {
+	return Courses.find();
+});
+
+Meteor.publish('answers', function() {
+	return Answers.find({userId: this.userId});
+});
+
+Meteor.publish('players', function() {
+	return Players.find();
+});
+
+Meteor.publish('languages', function() {
+	return Languages.find();
+});
+
+Meteor.publish('solutions', function() {
+	return Solutions.find();
+});
+
+/////// Extra publish functions for admin ////////
+
+/////// Accounts /////////
 Accounts.onCreateUser(function(options, user) {
 	if (options.profile) {
 		user.profile = options.profile;
