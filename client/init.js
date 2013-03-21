@@ -31,7 +31,18 @@ Deps.autorun(function() {
 	Meteor.subscribe("adminSubscription");
 });
 
-//////// Basic meteor.startup code ////////
+
+//Get drafts
+/*
+Deps.autorun(function() {
+	if (Meteor.userId()) {
+		//Meteor.subscribe("gotDrafts", ["74dd08a8-2d4b-4fc7-9de6-a890fdffa22c", "84a9a6d8-52d7-4f5e-9b57-dad3ef5f62ad"]);
+	}
+});
+*/
+
+
+//////// Basic meteor Client startup code ////////
 
 ////////// Accounts UI settings //////////
 Accounts.ui.config({
