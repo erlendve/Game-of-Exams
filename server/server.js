@@ -134,7 +134,6 @@ Meteor.startup(function() {
 		Solutions.update({exercise_id: "b3ee729a-dbd2-4a38-a629-0c0410de9d50"}, {$set: {visibility: 'private'}}, {multi: true});
 	}*/
 	//Exercises.update("b3ee729a-dbd2-4a38-a629-0c0410de9d50", {$set: {visibility: 'private'}});
-	console.log('git changes');
 
 	/*var moo = function () {Players.remove({}); return function() {};};
 	moo = moo();
