@@ -29,6 +29,22 @@ Template.player.helpers({
 		var myId = Meteor.userId();
 		return Exercises.find({set_id: this._id}, {sort: {number: 1, letter: 1}}).map(function(ex) {
 			ex['solution'] = Solutions.findOne({exerciseId: ex._id, userId: myId});
+			if (ex['inherit']) {
+				ex['pre'] = ex['pre'] + '\n\n//Code from previous exercises';
+				var needsToSolve = [];
+				for (var i = 0; i < ex.inherit.length; i++) {
+					var sol = Solutions.findOne({userId: myId, exerciseId: ex.inherit[i]});
+					if (sol) {
+						ex['pre'] = ex['pre'] + '\n' + sol.code;
+					} else {
+						needsToSolve.push(ex.inherit[i]);
+					}
+				}
+				if (needsToSolve.length > 0) {
+					ex.needsToSolve = needsToSolve;
+				}
+			}
+
 			return ex;
 			;});
 	}
@@ -259,6 +275,8 @@ Template.exercise_sidenav.helpers({
 Template.exercise_main.helpers({
 	'answer': function() {
 		var answer = Answers.findOne({userId: Meteor.userId(), exercise_id: this._id});
+
+
 		if (answer) {
 			return answer;
 		} else {

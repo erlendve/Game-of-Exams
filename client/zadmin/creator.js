@@ -186,6 +186,12 @@ Template.creator.events({
 			return;
 		}
 
+		//res['inherit'] =
+		var inh = $('#inherit').editable('getValue');
+		if (inh['inherit']) {
+			res['inherit'] = inh['inherit'];
+		}
+
 		var ex = {
 			number: parseInt(res['number']),
 			letter: res['letter'],
@@ -195,6 +201,8 @@ Template.creator.events({
 			modifiedAt: + (new Date),
 			modifiedBy: Meteor.userId(),
         	// lang: res['lang'],
+        	inherit: res['inherit'],
+        	lang: "java7",
         	before: res['before'],
         	after: res['after'],
         	pre: res['pre'],
@@ -230,4 +238,25 @@ Template.creator.rendered =  function() {
 	var converter = new Showdown.converter();
 	var live = converter.makeHtml($('#textarea-code-text').val());
 	$('#livemarkdown').html(live);
+
+	//fill inheritance checklist
+	var curEx = Exercises.findOne(Session.get('currentExercise'));
+	var selectOptions = [];
+	Exercises.find({set_id: this.data._id}, {sort: {number: 1, letter: 1}}).forEach(function(ex) {
+		if (ex._id !== curEx._id) {
+			// if (ex.number <== curEx.number)
+				// console.log('less');
+			//if (ex['number'] == curEx['number']) {
+			//	if (ex['letter'] <== curEx['letter'])
+			selectOptions.push({value: ex._id, text: ex.title});
+			//}
+		}
+	});
+
+	$('#inherit').editable({
+		value: curEx['inherit'],
+		source: selectOptions
+	});
 }
+
+//TODO fix inheritance stuff for player.js

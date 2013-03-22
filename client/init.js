@@ -32,6 +32,8 @@ Deps.autorun(function() {
 });
 
 
+//TODO fix loading
+
 //Get drafts
 /*
 Deps.autorun(function() {

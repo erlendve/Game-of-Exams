@@ -125,15 +125,16 @@
 		<button type="button" class="btn-inverse editorbutton" data-toggle="collapse" data-target="#collapse{{_id}}">
 			Editor
 		</button>
+		{{debug}}
 		<div id="collapse{{_id}}" class="collapse in">
-			<div id="editor{{_id}}" class="clickforeditor">{{answertext}}</div>
+			<div id="editor{{_id}}" class="clickforeditor">{{#if pre}} {{pre}}{{else}}{{answertext}}{{/if}}</div>
 			<p class="buttonpanel">
 				<button type="submit" class="btn btn-primary pull-right" id="btn-submit-answer-"><i class="icon-upload-alt"></i> Test</button>
 				{{!<button type="submit" class="btn btn-danger pull-right" id="btn-reset-answer"><i class="icon-refresh"></i> Reset</button>!}}
 				<button type="submit" class="btn btn-success pull-right" id="btn-run-answer"><i class="icon-play"></i> Run</button>
 			</p>
 		</div>
-		<textarea name="answertext" class="hiddentextarea" id="answer{{_id}}" wrap="hard">{{answertext}}</textarea>
+		<textarea name="answertext" class="hiddentextarea" id="answer{{_id}}" wrap="hard">{{#if pre}} {{pre}}{{else}}{{answertext}}{{/if}}</textarea>
 
 		{{else}}
 		{{> not_logged_in}}
