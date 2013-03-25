@@ -22,7 +22,10 @@ PASSWORD is to be used at the -p option at step 2. It's valid for one minute
 ---
 
 step 2: backup db to /backups/ (replace -p with the result labeled PASSWORD above)
-in terminal: mongodump -u client -h skybreak.member1.mongolayer.com:27017 -d goe_meteor_com -p 4c0de8ea-ed1c-e707-df40-7e73d2ffd957 -out backups
+in terminal: 
+
+mongodump -u client -h skybreak.member0.mongolayer.com:27017 -d beta_gameofexams_com -p -out ../snapshots-goe/database/week10-2503
+connected to: skybreak.member0.mongolayer.com:27017
 
 ---
 

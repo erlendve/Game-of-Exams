@@ -21,6 +21,9 @@ Template.leaderboard.playerPoints = function() {
     else
       player['me'] = false;
     
+    if (player.points === 0) {
+      player['nopoints'] = true;
+    }
     rankedArr.push(player);
   });
   return rankedArr;

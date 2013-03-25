@@ -1,8 +1,8 @@
 <template name="leaderboard">
   {{debug}}
   <header class="jumbotron subhead">
-      <div class="container">
-        <h1>Leaderboard</h1>
+    <div class="container">
+      <h1>Leaderboard</h1>
     </div>
   </header> <!-- /end jumbotron -->
   <div class="container">
@@ -20,12 +20,12 @@
             </thead>
             <tbody>
               {{#each playerPoints}}
-              <tr {{#if me}} class="info"{{/if}} id="{{username}}">
+              <tr class="{{#if nopoints}}muted{{/if}}{{#if me}} info{{/if}}" id="{{username}}">
                 <td>{{rank}}</td>
-                <td><a href="/profile/{{username}}" class="goe-navlink">{{username}}</a></td>
+                <td><a href="/profile/{{username}}" class="goe-navlink{{#if nopoints}} muted{{/if}}">{{username}}</a></td>
                 <td style="text-align:center">{{points}}</td>
                 <td style="text-align:center">{{exercises_done}}</td>
-               {{!<td style="text-align:center">{{formatTimestamp lastChanged}}</td>}}
+                <td style="text-align:center">{{formatTimestamp lastChanged}}</td>
 
               </tr>
               {{/each}}
