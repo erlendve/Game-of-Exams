@@ -29,7 +29,7 @@ Template.player.helpers({
 		var myId = Meteor.userId();
 		return Exercises.find({set_id: this._id}, {sort: {number: 1, letter: 1}}).map(function(ex) {
 			ex['solution'] = Solutions.findOne({exerciseId: ex._id, userId: myId});
-			if (ex['inherit']) {
+			if (ex['inherit'] && ex['inherit'].length > 0) {
 				ex['pre'] = ex['pre'] + '\n\n//Code from previous exercises';
 				var needsToSolve = [];
 				for (var i = 0; i < ex.inherit.length; i++) {
@@ -327,7 +327,11 @@ Template.exercise_main.helpers({
 	'findUnsolved': function() {
 		var found = [];
 		for (var i = this['needsToSolve'].length - 1; i >= 0; i--) {
-			found.push(Exercises.findOne(this['needsToSolve'][i]));
+			var ex = Exercises.findOne(this['needsToSolve'][i]);
+			if (i === this['needsToSolve'].length - 1) {
+				ex['first'] = true;
+			}
+			found.push(ex);
 		};
 		return found;
 	}

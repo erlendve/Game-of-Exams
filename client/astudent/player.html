@@ -56,6 +56,7 @@
 </template>
 
 <template name="exercise_main">
+	{{debug}}
 	<div id="{{_id}}" class="well exercise">
 		{{#if solution}}
 		{{#unless solution.points}} {{!Oblig 4 special case}}
@@ -71,7 +72,7 @@
 		{{/unless}} {{!end unless oblig4}}
 		{{else}}
 		<h1 class="exercise-title">
-			<span class="muted">{{#unless needsToSolve}}#{{else}}<i class="icon-lock"></i>{{/unless}}</span>{{number}}{{letter}} {{title}} 
+			<span class="muted">{{#unless needsToSolve}}#{{else}}<i class="icon-lock"> </i>{{/unless}}</span>{{number}}{{letter}} {{title}} 
 			<span class="points-muted muted">{{points}} points</span>
 		</h1>
 
@@ -108,8 +109,12 @@
 		</div>
 		{{else}}
 		<hr />
-		<h3 class="lead"><i class="icon-lock"></i> Exercise locked, you need to solve these exercises first:</h3>
+		<h3 class="lead" title="This exercise can not be answered because it inherits code from another exercise"><i class="icon-lock"></i>
+		 This exercise can not be answered before you solve:</h3>
 		{{#each findUnsolved}}
+		{{#if first}}
+		<i class="icon-key"></i>
+		{{/if}}
 		<a href="#{{_id}}" class="linkToUnsolved">{{number}}{{letter}}) {{title}}</a><br />
 		{{/each}}
 

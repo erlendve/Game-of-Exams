@@ -186,10 +186,21 @@ Template.creator.events({
 			return;
 		}
 
-		//res['inherit'] =
 		var inh = $('#inherit').editable('getValue');
+		var sorted = [];
 		if (inh['inherit']) {
-			res['inherit'] = inh['inherit'];
+			var hundreds = [];
+			for (var i = inh['inherit'].length - 1; i >= 0; i--) {
+				var ex = Exercises.findOne(inh['inherit'][i]);
+				var chr = ex.letter.charCodeAt(0)-97;
+				hundreds[ex.number*100 + chr] = inh['inherit'][i];
+			};
+
+			for (var i = hundreds.length - 1; i >= 0; i--) {
+				if (hundreds[i])
+					sorted.push(hundreds[i]);
+			};
+			res['inherit'] = sorted;
 		}
 
 		var ex = {
