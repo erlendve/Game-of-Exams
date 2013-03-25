@@ -43,3 +43,36 @@
 	padding-right: 10px;
 	padding-bottom: 5px; 
 }
+
+/* Icon-ok */
+.bs-docs-sidenav .icon-ok {
+  float: right;
+  margin-top: 2px;
+  margin-right: -6px;
+  color: #468847;
+}
+.bs-docs-sidenav a:hover .icon-ok {
+  opacity: .75;
+}
+.bs-docs-sidenav .active .icon-ok,
+.bs-docs-sidenav .active a:hover .icon-ok {
+  color: white;
+  opacity: 1;
+}
+
+/* Icon-lock */
+.bs-docs-sidenav .icon-lock {
+  float: right;
+  margin-top: 2px;
+  margin-right: -6px;
+  color: #999999;
+  opacity: .5;
+}
+.bs-docs-sidenav a:hover .icon-lock {
+  opacity: .75;
+}
+.bs-docs-sidenav .active .icon-lock,
+.bs-docs-sidenav .active a:hover .icon-lock {
+  color: white;
+  opacity: 1;
+}

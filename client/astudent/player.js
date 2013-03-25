@@ -323,6 +323,13 @@ Template.exercise_main.helpers({
 		}
 		else
 			return false;
+	},
+	'findUnsolved': function() {
+		var found = [];
+		for (var i = this['needsToSolve'].length - 1; i >= 0; i--) {
+			found.push(Exercises.findOne(this['needsToSolve'][i]));
+		};
+		return found;
 	}
 });
 
@@ -356,6 +363,11 @@ Template.exercise_main.events({
 					notifyStandard(p + ' points awarded', 'Aww snap! Expected output is ' + Exercises.findOne(that.exercise_id).eval + '<br />You got: '+ that.result.output +  '</strong>', 'error', 'icon-thumbs-down');
 				}
 			});
+	},
+	'click .linkToUnsolved': function(e) {
+		e.preventDefault();
+		Router.navigate('exam/' + this.set_id + '#' + this._id, false)
+		Router.scrollToSection('#' + this._id, -95, true);
 	}
 });
 

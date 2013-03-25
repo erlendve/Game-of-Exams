@@ -41,10 +41,14 @@
 	<li id="li_{{_id}}">
 		<a href="#{{_id}}" class="exercise-side">
 			{{#if solution}}
-			<i class="icon-ok pull-right"></i>
+			<i class="icon-ok"></i>
 			{{#lettered letter}}&nbsp&nbsp{{letter}}{{else}}{{number}}{{letter}}{{/lettered}}) {{title}}
 			{{else}}
+			{{#unless needsToSolve}}
 			<i class="icon-chevron-right"></i>
+			{{else}}
+			<i class="icon-lock pull-right"></i>
+			{{/unless}}
 			{{#lettered letter}}&nbsp&nbsp{{letter}}{{else}}{{number}}{{letter}}{{/lettered}}) {{title}}
 			{{/if}}
 		</a>
@@ -67,13 +71,15 @@
 		{{/unless}} {{!end unless oblig4}}
 		{{else}}
 		<h1 class="exercise-title">
-			<span class="muted">#</span>{{number}}{{letter}} {{title}} 
+			<span class="muted">{{#unless needsToSolve}}#{{else}}<i class="icon-lock"></i>{{/unless}}</span>{{number}}{{letter}} {{title}} 
 			<span class="points-muted muted">{{points}} points</span>
 		</h1>
 
 		{{/if}}
 		<div class="hl">{{#markdown}}{{text}}{{/markdown}}
 		</div>
+
+		{{#unless needsToSolve}}
 		<div class="answer-div">
 			{{#ifwith answer}}
 			{{#if saved}}
@@ -82,13 +88,16 @@
 			<button type="button" class="btn-edit-answer btn btn-inverse pull-right"><i class="icon-edit"></i> Edit</button>
 			{{else}}
 			{{> form_answer}}
+
 			{{#if loading}}
 			<i class="icon-spinner icon-2x icon-spin"></i>
 			{{status}}
 			{{else}}
+
 			{{#ifwith result}}
 			{{> result}}
 			{{/ifwith}}
+
 			{{/if}}
 			{{/if}} <!-- end if saved -->
 
@@ -97,6 +106,14 @@
 			{{> form_answer}}
 			{{/ifwith}} <!-- end ifwith answer -->
 		</div>
+		{{else}}
+		<hr />
+		<h3 class="lead"><i class="icon-lock"></i> Exercise locked, you need to solve these exercises first:</h3>
+		{{#each findUnsolved}}
+		<a href="#{{_id}}" class="linkToUnsolved">{{number}}{{letter}}) {{title}}</a><br />
+		{{/each}}
+
+		{{/unless}} <!-- unless needsToSolve -->
 	</div>
 </template>
 
@@ -125,7 +142,6 @@
 		<button type="button" class="btn-inverse editorbutton" data-toggle="collapse" data-target="#collapse{{_id}}">
 			Editor
 		</button>
-		{{debug}}
 		<div id="collapse{{_id}}" class="collapse in">
 			<div id="editor{{_id}}" class="clickforeditor">{{#if pre}} {{pre}}{{else}}{{answertext}}{{/if}}</div>
 			<p class="buttonpanel">
