@@ -13,6 +13,7 @@
             <thead>
               <tr>
                 <th>#</th>
+                <th> </th>
                 <th>Username</th>
                 <th style="text-align:center">Points</th>
                 <th style="text-align:center">Exercises</th>
@@ -20,13 +21,22 @@
             </thead>
             <tbody>
               {{#each playerPoints}}
-              <tr class="{{#if nopoints}}muted{{/if}}{{#if me}} info{{/if}}" id="{{username}}">
+              {{#unless nopoints}}
+              <tr {{#if me}} class="info"{{/if}} id="{{username}}">
                 <td>{{rank}}</td>
-                <td><a href="/profile/{{username}}" class="goe-navlink{{#if nopoints}} muted{{/if}}">{{username}}</a></td>
+                <td><img src="{{getGravatar _id 64}}"/ class="img-rounded"></td>
+                <td><a href="/profile/{{username}}" class="goe-navlink">{{username}}</a></td>
                 <td style="text-align:center">{{points}}</td>
                 <td style="text-align:center">{{exercises_done}}</td>
-                <td style="text-align:center">{{formatTimestamp lastChanged}}</td>
-
+                <!-- <td style="text-align:center">{{formatTimestamp lastChanged}}</td> -->
+                {{else}}
+                <tr class="{{#if me}}info{{/if}} muted" id="{{username}}">
+                <td>{{rank}}</td>
+                <td></td>
+                <td><a href="/profile/{{username}}" class="goe-navlink muted">{{username}}</a></td>
+                <td style="text-align:center">{{points}}</td>
+                <td style="text-align:center">{{exercises_done}}</td>
+                {{/unless}}
               </tr>
               {{/each}}
             </tbody>

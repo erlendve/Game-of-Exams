@@ -49,14 +49,19 @@ Handlebars.registerHelper("debug", function(optionalValue) {
 });
 
 Handlebars.registerHelper('my_gravatar', function(size) {
-  var email = 'gravatar@gameofexams.com';
-  if (Meteor.user()) {
-    var emails = Meteor.user().emails;
-    if (emails)
-      email = emails[0].address;
-  }
+  var user = Meteor.user();
+  if (user)
+    return 'http://www.gravatar.com/avatar/' + user.gravatar + '.jpg?s=' + size + '&d=retro';
+  else
+    return 'http://www.gravatar.com/avatar/gravatar@gameofexams.com.jpg?s=' + size + '&d=retro';
+});
 
-  return get_gravatar(email, size);
+Handlebars.registerHelper('getGravatar', function(userId, size) {
+  var user = Meteor.users.findOne(userId);
+  if (user && user.gravatar)
+    return 'http://www.gravatar.com/avatar/' + user.gravatar + '.jpg?s=' + size + '&d=retro';
+  else
+    return 'http://www.gravatar.com/avatar/gravatar@gameofexams.com.jpg?s=' + size + '&d=mm';
 });
 
 Handlebars.registerHelper('ifwith', function(conditional, options) {
