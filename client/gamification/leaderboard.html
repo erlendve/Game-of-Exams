@@ -22,7 +22,7 @@
             <tbody>
               {{#each playerPoints}}
               {{#unless nopoints}}
-              <tr {{#if me}} class="info"{{/if}} id="{{username}}">
+              <tr class="{{#if me}} info{{/if}}" id="{{username}}">
                 <td>{{rank}}</td>
                 <td><img src="{{getGravatar _id 64}}"/ class="img-rounded"></td>
                 <td><a href="/profile/{{username}}" class="goe-navlink">{{username}}</a></td>
@@ -30,7 +30,7 @@
                 <td style="text-align:center">{{exercises_done}}</td>
                 <!-- <td style="text-align:center">{{formatTimestamp lastChanged}}</td> -->
                 {{else}}
-                <tr class="{{#if me}}info{{/if}} muted" id="{{username}}">
+                <tr class="{{#if me}} info{{/if}} muted" id="{{username}}">
                 <td>{{rank}}</td>
                 <td></td>
                 <td><a href="/profile/{{username}}" class="goe-navlink muted">{{username}}</a></td>
