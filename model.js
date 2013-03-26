@@ -76,5 +76,6 @@ if (Meteor.isServer) {
         Players.allow(green);
         Answers.allow(green);
         Solutions.allow(green);
+        Meteor.users.allow(green);
     })();
 }
