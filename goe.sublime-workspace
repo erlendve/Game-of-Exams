@@ -4,20 +4,476 @@
 		"selected_items":
 		[
 			[
+				"paddin",
+				"padding-top"
+			],
+			[
+				"need",
+				"needsToSolve"
+			],
+			[
+				"exe",
+				"exercises"
+			],
+			[
+				"for",
+				"for	for (…) {…} (Improved Native For-Loop)"
+			],
+			[
+				"u",
+				"userId"
+			],
+			[
+				"user",
+				"username"
+			],
+			[
+				"grav",
+				"gravcode"
+			],
+			[
+				"inh",
+				"inheritance"
+			],
+			[
+				"sol",
+				"solution"
+			],
+			[
+				"sV",
+				"selectedValues"
+			],
+			[
+				"sele",
+				"selected"
+			],
+			[
+				"selC",
+				"selectValues"
+			],
+			[
+				"ge",
+				"getValue"
+			],
+			[
+				"ed",
+				"editable"
+			],
+			[
+				"inhe",
+				"inherit"
+			],
+			[
+				"seV",
+				"selectValues"
+			],
+			[
+				"cu",
+				"curEx"
+			],
+			[
+				"Ex",
+				"Exercises"
+			],
+			[
+				"fin",
+				"find"
+			],
+			[
+				"ex",
+				"exists"
+			],
+			[
+				"exer",
+				"exercises"
+			],
+			[
+				"find",
+				"find"
+			],
+			[
+				"publis",
+				"published"
+			],
+			[
+				"pub",
+				"published"
+			],
+			[
+				"p",
+				"published"
+			],
+			[
+				"is",
+				"isAdmin"
+			],
+			[
+				"set",
+				"set_id"
+			],
+			[
+				"f",
+				"f	Anonymous Function"
+			],
+			[
+				"eS",
+				"existingSolution"
+			],
+			[
+				"Solu",
+				"Solution"
+			],
+			[
+				"inde",
+				"indexOf"
+			],
+			[
+				"subm",
+				"submissionResult"
+			],
+			[
+				"us",
+				"username"
+			],
+			[
+				"pr",
+				"profile"
+			],
+			[
+				"border-ty",
+				"border-style"
+			],
+			[
+				"border-c",
+				"border-color"
+			],
+			[
+				"bord",
+				"border"
+			],
+			[
+				"pad",
+				"padding-bottom"
+			],
+			[
+				"padd",
+				"padding-right"
+			],
+			[
+				"font",
+				"font-size"
+			],
+			[
+				"creat",
+				"createdAt"
+			],
+			[
+				"crea",
+				"createdAt"
+			],
+			[
+				"in",
+				"index"
+			],
+			[
+				"ans",
+				"ans"
+			],
+			[
+				"if",
+				"ife	if … else"
+			],
+			[
+				"test",
+				"testOutput"
+			],
+			[
+				"par",
+				"parseResult"
+			],
+			[
+				"sub",
+				"submissionResult"
+			],
+			[
+				"run",
+				"runTests"
+			],
+			[
+				"fo",
+				"focusExercise"
+			],
+			[
+				"r",
+				"return"
+			],
+			[
+				"exerc",
+				"exercise_id"
+			],
+			[
+				"edit",
+				"editor"
+			],
+			[
+				"rques",
+				"requestJSON"
+			],
+			[
+				"ext",
+				"exists"
+			],
+			[
+				"stat",
+				"statustext"
+			],
+			[
+				"cur",
+				"currentExercise"
+			],
+			[
+				"pre",
+				"preventDefault"
+			],
+			[
+				"cT",
+				"curTab"
+			],
+			[
+				"e",
+				"editor"
+			],
+			[
+				"CT",
+				"currentTarget"
+			],
+			[
+				"cuT",
+				"currentTarget"
+			],
+			[
+				"te",
+				"textarea"
+			],
+			[
+				"curre",
+				"currentTab"
+			],
+			[
+				"curr",
+				"currentTab"
+			],
+			[
+				"i",
+				"pointer"
+			],
+			[
+				"sta",
+				"statustext"
+			],
+			[
+				"st",
+				"status"
+			],
+			[
+				"cli",
+				"click"
+			],
+			[
+				"co",
+				"collapse"
+			],
+			[
+				"id",
+				"id"
+			],
+			[
+				"fi",
+				"first"
+			],
+			[
+				"con",
+				"console"
+			],
+			[
+				"wayp",
+				"waypoint"
+			],
+			[
+				"wa",
+				"waypoints"
+			],
+			[
+				"ac",
+				"active"
+			],
+			[
+				"sc",
+				"scrollToSection"
+			],
+			[
+				"pn",
+				"pathname"
+			],
+			[
 				"mar",
-				"margin-right"
+				"margin-top"
+			],
+			[
+				"margin",
+				"margin-top"
+			],
+			[
+				"sec",
+				"section"
+			],
+			[
+				"exerci",
+				"exercises"
+			],
+			[
+				"bs",
+				"bs-docs-sidebar"
+			],
+			[
+				"cn",
+				"console"
+			],
+			[
+				"margi",
+				"margin-bottom"
+			],
+			[
+				"cl",
+				"clickforeditor"
+			],
+			[
+				"current",
+				"currentExercise"
+			],
+			[
+				"ck",
+				"clickforeditor"
+			],
+			[
+				"c",
+				"collapse"
+			],
+			[
+				"coll",
+				"collapse"
+			],
+			[
+				"re",
+				"return"
+			],
+			[
+				"path",
+				"pathname"
+			],
+			[
+				"cons",
+				"console"
+			],
+			[
+				"an",
+				"answertext"
+			],
+			[
+				"exi",
+				"exists"
+			],
+			[
+				"answ",
+				"answertext"
+			],
+			[
+				"va",
+				"values"
+			],
+			[
+				"res",
+				"result"
+			],
+			[
+				"course",
+				"course"
+			],
+			[
+				"E",
+				"Exercises"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"admin",
+				"admin"
+			],
+			[
+				"btn-",
+				"btn-edit-set"
+			],
+			[
+				"ti",
+				"title"
+			],
+			[
+				"val",
+				"values"
+			],
+			[
+				"lang",
+				"language"
+			],
+			[
+				"border",
+				"border-top"
+			],
+			[
+				"bor",
+				"border-bottom"
+			],
+			[
+				"left",
+				"leftMargin"
+			],
+			[
+				"save",
+				"savedSetHeader"
+			],
+			[
+				"marg",
+				"margin-left"
+			],
+			[
+				"fade",
+				"fadeOutUp"
+			],
+			[
+				"edi",
+				"editron"
+			],
+			[
+				"add",
+				"addClass"
+			],
+			[
+				"remove",
+				"removeClass"
+			],
+			[
+				"b",
+				"background"
+			],
+			[
+				"set-",
+				"set-description-edit"
 			],
 			[
 				"inline",
 				"inline-block"
-			],
-			[
-				"re",
-				"result"
-			],
-			[
-				"cu",
-				"currentExercise"
 			],
 			[
 				"t",
@@ -28,24 +484,8 @@
 				"course"
 			],
 			[
-				"course",
-				"courseId"
-			],
-			[
 				"cour",
 				"courseId"
-			],
-			[
-				"fun",
-				"fun	Function"
-			],
-			[
-				"set",
-				"setId"
-			],
-			[
-				"sub",
-				"subpage"
 			],
 			[
 				"nT",
@@ -64,10 +504,6 @@
 				"category"
 			],
 			[
-				"if",
-				"if	if"
-			],
-			[
 				"cat",
 				"category"
 			],
@@ -76,457 +512,13 @@
 				"newSet"
 			],
 			[
-				"in",
-				"insert"
-			],
-			[
-				"user",
-				"userId"
-			],
-			[
 				"mo",
 				"modified"
-			],
-			[
-				"c",
-				"category"
-			],
-			[
-				"categ",
-				"category"
-			],
-			[
-				"id",
-				"ideone_lang"
-			],
-			[
-				"lang",
-				"languagesResult"
-			],
-			[
-				"tim",
-				"timestamp"
-			],
-			[
-				"r",
-				"res"
-			],
-			[
-				"us",
-				"userId"
-			],
-			[
-				"ser",
-				"set-form"
-			],
-			[
-				"edi",
-				"editingSet"
-			],
-			[
-				"input",
-				"input-replace"
-			],
-			[
-				"repla",
-				"replaceWithInput"
-			],
-			[
-				"admin",
-				"admin_set"
-			],
-			[
-				"iden",
-				"ideone"
-			],
-			[
-				"ide",
-				"ideone"
-			],
-			[
-				"for",
-				"for	for (…) {…} (Improved Native For-Loop)"
-			],
-			[
-				"con",
-				"console"
-			],
-			[
-				"Lan",
-				"Languages"
-			],
-			[
-				"updat",
-				"update"
-			],
-			[
-				"up",
-				"updateLanguagesCollection"
-			],
-			[
-				"ln",
-				"languagesResult"
-			],
-			[
-				"lan",
-				"languagesResult"
-			],
-			[
-				"f",
-				"function"
-			],
-			[
-				"opt",
-				"option	Tag"
-			],
-			[
-				"fn",
-				"fn"
-			],
-			[
-				"op",
-				"option	Tag"
-			],
-			[
-				"cate",
-				"categories"
-			],
-			[
-				"E",
-				"Exams"
-			],
-			[
-				"Ec",
-				"Exercise_set"
-			],
-			[
-				"modal",
-				"modal_add_category_"
-			],
-			[
-				"cn",
-				"catName"
-			],
-			[
-				"co",
-				"courses"
-			],
-			[
-				"ne",
-				"new_categories"
-			],
-			[
-				"padd",
-				"padding-left"
-			],
-			[
-				"marg",
-				"margin-bottom"
-			],
-			[
-				"pad",
-				"padding-top"
-			],
-			[
-				"margin",
-				"margin-top"
-			],
-			[
-				"ed",
-				"editAnswer"
-			],
-			[
-				"ex",
-				"exercise_main"
-			],
-			[
-				"sc",
-				"scrollTop"
-			],
-			[
-				"scro",
-				"scrollspy"
-			],
-			[
-				"exam",
-				"exam"
-			],
-			[
-				"fo",
-				"font-weight"
-			],
-			[
-				"pos",
-				"position"
-			],
-			[
-				"po",
-				"position"
-			],
-			[
-				"sa",
-				"pointsAtSave"
-			],
-			[
-				"pon",
-				"pointsAtSave"
-			],
-			[
-				"ret",
-				"retval"
-			],
-			[
-				"ans",
-				"ansres"
-			],
-			[
-				"out",
-				"output"
-			],
-			[
-				"btn",
-				"btn_edit_answer"
-			],
-			[
-				"bor",
-				"border"
-			],
-			[
-				"scr",
-				"script"
-			],
-			[
-				"e",
-				"exerciseId"
-			],
-			[
-				"exi",
-				"existingAnswer"
-			],
-			[
-				"exr",
-				"exercise_id"
-			],
-			[
-				"json",
-				"jsonrpc"
-			],
-			[
-				"res",
-				"resultReady"
-			],
-			[
-				"update",
-				"updateAnswer"
-			],
-			[
-				"upd",
-				"updateAnswer"
-			],
-			[
-				"su",
-				"submissionResult"
-			],
-			[
-				"as",
-				"answerId"
-			],
-			[
-				"a",
-				"answerId"
-			],
-			[
-				"answ",
-				"answerId"
-			],
-			[
-				"exer",
-				"exercise"
-			],
-			[
-				"func",
-				"function"
-			],
-			[
-				"find",
-				"findOne"
-			],
-			[
-				"Te",
-				"Teams"
-			],
-			[
-				"rap",
-				"raptor"
-			],
-			[
-				"curre",
-				"currentPage"
-			],
-			[
-				"ach",
-				"achievements"
-			],
-			[
-				"curr",
-				"curranswers"
-			],
-			[
-				"ac",
-				"achievements"
-			],
-			[
-				"pro",
-				"profile"
-			],
-			[
-				"fil",
-				"filename"
-			],
-			[
-				"ran",
-				"rankCounter"
-			],
-			[
-				"rank",
-				"rankedArr"
-			],
-			[
-				"form",
-				"form_answer"
-			],
-			[
-				"border",
-				"border-bottom"
-			],
-			[
-				"pre",
-				"preventDefault"
-			],
-			[
-				"answer",
-				"answer"
-			],
-			[
-				"fon",
-				"font-size"
-			],
-			[
-				"text",
-				"textarea"
-			],
-			[
-				"va",
-				"value"
-			],
-			[
-				"form_",
-				"form_serial"
-			],
-			[
-				"proto",
-				"prototype"
-			],
-			[
-				"fot",
-				"font-size"
-			],
-			[
-				"no",
-				"nowrap"
-			],
-			[
-				"auto",
-				"highlightAuto"
-			],
-			[
-				"aut",
-				"highlightAuto"
-			],
-			[
-				"high",
-				"highlightAuto"
-			],
-			[
-				"make",
-				"makeHtml"
-			],
-			[
-				"i",
-				"_id"
-			],
-			[
-				"di",
-				"display"
-			],
-			[
-				"paddin",
-				"padding-left"
-			],
-			[
-				"repl",
-				"replaceWith"
-			],
-			[
-				"mart",
-				"margin-bottom"
-			],
-			[
-				"paddng",
-				"padding"
-			],
-			[
-				"border-co",
-				"border-color"
-			],
-			[
-				"inp",
-				"inputhtml"
-			],
-			[
-				"fi",
-				"fillwithvalue"
-			],
-			[
-				"cons",
-				"console"
-			],
-			[
-				"cur",
-				"cur_elem"
-			],
-			[
-				"edit",
-				"editExercise"
-			],
-			[
-				"Cur",
-				"currentPage"
-			],
-			[
-				"adm",
-				"adminContext"
-			],
-			[
-				"not",
-				"notifyStandard"
-			],
-			[
-				"val",
-				"values"
 			]
 		]
 	},
 	"buffers":
 	[
-		{
-			"file": "client/router.js",
-			"settings":
-			{
-				"buffer_size": 2002,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -552,40 +544,75 @@
 	},
 	"file_history":
 	[
-		"/Users/erlendve/Dropbox/Aws/goe/client/index.js",
-		"/Users/erlendve/Dropbox/Aws/goe/client/zadmin/admin.js",
-		"/Users/erlendve/Dropbox/Aws/goe/client/gamification/leaderboard.html",
-		"/Users/erlendve/Dropbox/Aws/goe/client/index.html",
-		"/Users/erlendve/Dropbox/Aws/goe/client/zadmin/admin_old.js",
-		"/Users/erlendve/Dropbox/Aws/goe/client/zadmin/admin_old.html",
-		"/Users/erlendve/Dropbox/Aws/goe/client/zadmin/creator.js",
-		"/Users/erlendve/Dropbox/Aws/goe/client/zadmin/admin.html",
+		"/Users/erlendve/Dropbox/Aws/goe/client/stylesheets/player.css",
+		"/Users/erlendve/Dropbox/Aws/goe/model.js",
+		"/Users/erlendve/Dropbox/Aws/goe/server/server.js",
 		"/Users/erlendve/Dropbox/Aws/goe/client/zadmin/creator.html",
-		"/Users/erlendve/Dropbox/Aws/goe/client/stylesheets/goe.css",
+		"/Users/erlendve/Dropbox/Aws/goe/client/zadmin/creator.js",
+		"/Users/erlendve/Dropbox/masterdoc/master.bib",
+		"/Users/erlendve/Dropbox/Aws/goe/client/astudent/player.js",
 		"/Users/erlendve/Dropbox/Aws/goe/client/astudent/player.html",
+		"/Users/erlendve/Dropbox/Aws/goe/client/init.js",
+		"/Users/erlendve/Dropbox/Aws/goe/client/stylesheets/docs.css",
+		"/Users/erlendve/Dropbox/Aws/goe/server/nodejs_ideone_client.js",
+		"/Users/erlendve/Dropbox/Aws/goe/client/zadmin/admin.js",
+		"/Users/erlendve/Dropbox/Aws/goe/client/gamification/leaderboard.js",
+		"/Users/erlendve/Dropbox/Aws/goe/client/gamification/leaderboard.html",
+		"/Users/erlendve/Dropbox/Aws/goe/client/stylesheets/leaderboard.css",
+		"/Users/erlendve/Dropbox/Aws/goe/client/index.js",
+		"/Users/erlendve/Dropbox/Aws/goe/client/index.html",
+		"/Users/erlendve/Dropbox/Aws/goe/client/helpers.js",
+		"/Users/erlendve/Dropbox/Aws/goe/todo.txt",
+		"/Users/erlendve/Dropbox/Aws/goe/client/zadmin/admin_old.html",
+		"/Users/erlendve/Dropbox/Aws/goe/client/gamification/profile.html",
+		"/Users/erlendve/Dropbox/Aws/goe/client/social/feed.js",
+		"/Users/erlendve/Dropbox/Aws/goe/client/router.js",
+		"/Users/erlendve/Dropbox/Aws/goe/client/stylesheets/goe.css",
+		"/Users/erlendve/Dropbox/Aws/goe/client/social/feed.html",
+		"/Users/erlendve/Dropbox/Aws/goe/client/stylesheets/feed.css",
+		"/Users/erlendve/Dropbox/Aws/goe/client/stylesheets/creator.css",
+		"/Users/erlendve/Dropbox/Aws/goe/client/astudent/exercise.html",
+		"/Users/erlendve/Dropbox/Aws/goe/client/astudent/exercise.js",
+		"/Users/erlendve/Dropbox/Aws/goe/smart.json",
+		"/Users/erlendve/Dropbox/Aws/snapshots-goe/week88-1503/smart.json",
+		"/Users/erlendve/Dropbox/Aws/goe/public/node_modules/jsonrpc.js",
+		"/Users/erlendve/Downloads/assignment/src/main/java/inf1010/assignment/CreatureInfo.java",
+		"/Users/erlendve/Downloads/assignment/src/main/java/inf1010/assignment/Shell.java",
+		"/Users/erlendve/Dropbox/Aws/meteor/docs/client/docs.js",
+		"/Users/erlendve/Dropbox/Aws/goe/client/zadmin/admin.html",
+		"/Users/erlendve/Dropbox/Aws/goe/bugs13feb.txt",
+		"/Users/erlendve/Dropbox/Aws/snapshots-goe/week2-3001/client/goe.html",
+		"/Users/erlendve/Dropbox/Aws/snapshots-goe/week3-0702/goe/client/astudent/player.html",
+		"/Users/erlendve/Dropbox/Aws/snapshots-goe/week3-0702/goe/client/index.html",
+		"/Users/erlendve/Dropbox/Aws/goe/client/zadmin/admin_old.js",
+		"/Users/erlendve/Dropbox/Aws/goe/client/stylesheets/creator.less",
+		"/Users/erlendve/Dropbox/Aws/goe/client/stylesheets/admin.css",
+		"/Users/erlendve/Dropbox/Aws/my-packages/meteor-x-editable-bootstrap/path-override.css",
+		"/Users/erlendve/Dropbox/Aws/goe/.meteor/local/build/static/packages/bafa/path-override.css",
+		"/Users/erlendve/Dropbox/Aws/my-packages/BAFA/path-override.css",
+		"/Users/erlendve/Dropbox/Aws/my-packages/BAFA/smart.json",
+		"/Users/erlendve/Library/Application Support/Sublime Text 2/Packages/User/Plain text.sublime-settings",
+		"/Users/erlendve/Dropbox/Aws/my-packages/meteor-x-editable-bootstrap/smart.json",
+		"/Users/erlendve/Dropbox/Aws/my-packages/meteor-ace/README.md",
+		"/Users/erlendve/Dropbox/Aws/my-packages/meteor-ace/smart.json",
+		"/Users/erlendve/Dropbox/Aws/my-packages/BAFA/package.js",
+		"/Users/erlendve/Dropbox/Aws/my-packages/meteor-ace/package.js",
+		"/Users/erlendve/Dropbox/Aws/goe/.meteor/meteorite/packages/ace/lib/ace/.git",
+		"/Users/erlendve/Dropbox/Aws/goe/goe.sublime-project",
+		"/Users/erlendve/Dropbox/Aws/goe/.meteor/meteorite/packages/ace/lib/ace/kitchen-sink/demo.js",
+		"/Users/erlendve/Dropbox/Aws/my-packages/my-ace/.gitmodules",
+		"/Users/erlendve/Dropbox/Aws/goe/.meteor/meteorite/packages/ace/.gitmodules",
 		"/Users/erlendve/Dropbox/Aws/goe/client/zadmin/creator.css",
 		"/Users/erlendve/Dropbox/Aws/goe/client/goe.css",
 		"/Users/erlendve/Dropbox/Aws/goe/client/docs.css",
-		"/Users/erlendve/Dropbox/Aws/snapshots-goe/week2-3001/client/goe.html",
 		"/Users/erlendve/Dropbox/Aws/snapshots-goe/week2-3001/client/player.html",
-		"/Users/erlendve/Dropbox/Aws/goe/client/router.js",
-		"/Users/erlendve/Dropbox/Aws/goe/client/astudent/player.js",
-		"/Users/erlendve/Dropbox/Aws/goe/client/helpers.js",
-		"/Users/erlendve/Dropbox/Aws/goe/model.js",
-		"/Users/erlendve/Dropbox/Aws/goe/server/nodejs_ideone_client.js",
 		"/Users/erlendve/Dropbox/Aws/goe/client/zadmin/admin.css",
-		"/Users/erlendve/Dropbox/Aws/goe/server/server.js",
 		"/Users/erlendve/Dropbox/Aws/goe/.meteor/local/build/app/packages/minimongo/selector.js",
 		"/Users/erlendve/Library/Application Support/Sublime Text 2/Packages/User/JavaScript.sublime-settings",
 		"/Users/erlendve/Dropbox/Aws/goe/.meteor/local/build/server/node_modules/connect/lib/middleware/router.js",
 		"/Users/erlendve/Dropbox/Aws/goe/client/globals.js",
 		"/Users/erlendve/Dropbox/Aws/goe/client/gamification/leaderboard.css",
-		"/Users/erlendve/Dropbox/Aws/goe/client/gamification/leaderboard.js",
 		"/Users/erlendve/Dropbox/Aws/goe/client/gamification/profile.js",
-		"/Users/erlendve/Dropbox/Aws/goe/client/social/feed.js",
-		"/Users/erlendve/Dropbox/Aws/goe/client/init.js",
-		"/Users/erlendve/Dropbox/Aws/goe/client/social/feed.html",
-		"/Users/erlendve/Dropbox/Aws/goe/client/gamification/profile.html",
 		"/Users/erlendve/Dropbox/Aws/goe/client/profile.js",
 		"/Users/erlendve/Dropbox/Aws/goe/client/profile.html",
 		"/Users/erlendve/Dropbox/Aws/goe/client/leaderboard.js",
@@ -644,42 +671,7 @@
 		"/Users/erlendve/Dropbox/masterdoc/master.tex",
 		"/Users/erlendve/Dropbox/Aws/automata.html",
 		"/Users/erlendve/Dropbox/Aws/goe/public/files.py",
-		"/Users/erlendve/Dropbox/Aws/goe/public/2009.md",
-		"/Users/erlendve/Dropbox/Aws/goe/client/notifications.js",
-		"/Users/erlendve/Dropbox/Aws/goe/.meteor/local/build/static/packages/showdown/showdown.js",
-		"/Users/erlendve/Dropbox/Aws/goe/lib/showdown.js",
-		"/Users/erlendve/Dropbox/Aws/goe/.meteor/local/build/static/lib/showdown.js",
-		"/Users/erlendve/Documents/showdown.js",
-		"/Users/erlendve/Dropbox/Aws/goe/.meteor/local/build/static/packages/showdown/template-integration.js",
-		"/Users/erlendve/Dropbox/Aws/goe/.meteor/meteorite/packages/marked/marked/package.json",
-		"/Users/erlendve/Dropbox/Aws/goe/lib/hallo.js",
-		"/Users/erlendve/Dropbox/Aws/goe/lib/EpicEditor-v0.1.1.1/epiceditor/themes/preview/preview-dark.css",
-		"/Users/erlendve/Dropbox/Aws/goe/lib/EpicEditor-v0.1.1.1/epiceditor/js/epiceditor.js",
-		"/Users/erlendve/Dropbox/Aws/goe/lib/EpicEditor-v0.1.1.1/epiceditor/js/epiceditor.min.js",
-		"/Users/erlendve/Dropbox/Aws/goe/todo.txt",
-		"/Users/erlendve/Dropbox/Aws/wordplay/.meteor/local/build/server/node_modules/request/node_modules/form-data/lib/form_data.js",
-		"/Users/erlendve/Dropbox/Aws/goe/client/fix.js",
-		"/Users/erlendve/Dropbox/Aws/procrastinot/leaderboard.css",
-		"/Users/erlendve/Dropbox/Aws/goe/lib/pnotify-1.2.0/jquery.pnotify.default.css",
-		"/Users/erlendve/Dropbox/Aws/procrastinot/global.js",
-		"/Users/erlendve/Dropbox/Aws/goe/views/player.html",
-		"/Users/erlendve/Dropbox/Aws/goe/views/admin.html",
-		"/Users/erlendve/Dropbox/Aws/goe/views/admin.js",
-		"/Users/erlendve/Dropbox/Aws/goe/smart.json",
-		"/Users/erlendve/Dropbox/Aws/todos/client/todos.html",
-		"/Users/erlendve/Dropbox/Aws/todos/client/todos.js",
-		"/Users/erlendve/Dropbox/Aws/procrastinot/leaderboard.js",
-		"/Users/erlendve/Dropbox/Aws/goe/views/views.html",
-		"/Users/erlendve/Dropbox/Aws/goe/client/routes.js",
-		"/Users/erlendve/Dropbox/Aws/wordplay/server/game.js",
-		"/Users/erlendve/Dropbox/Aws/wordplay/model.js",
-		"/Users/erlendve/Dropbox/Aws/wordplay/client/wordplay.js",
-		"/Users/erlendve/Dropbox/Aws/wordplay/server/enable2k.js",
-		"/Users/erlendve/Dropbox/Aws/leaderboard/global.js",
-		"/Users/erlendve/Library/Application Support/Sublime Text 2/Packages/User/Default (OSX).sublime-keymap",
-		"/Users/erlendve/Dropbox/Aws/leaderboard/.meteor/buttons.css",
-		"/Users/erlendve/Dropbox/Aws/leaderboard/.meteor/local/buttons.css",
-		"/Users/erlendve/Dropbox/Aws/leaderboard/buttons.css"
+		"/Users/erlendve/Dropbox/Aws/goe/public/2009.md"
 	],
 	"find":
 	{
@@ -691,6 +683,8 @@
 		"where_history":
 		[
 			"<open files>",
+			"<selection>",
+			"<open files>",
 			""
 		]
 	},
@@ -699,134 +693,134 @@
 		"case_sensitive": false,
 		"find_history":
 		[
-			"markdow",
-			"markdown",
-			"edit",
-			"display",
-			".edit",
-			"> creat",
-			"}}\n",
-			"a href=\"#",
-			"#",
-			"Created set",
-			"created Set",
-			"createed Set",
-			"edit",
-			"success",
-			"new DAte",
-			"username",
-			"serial",
-			">\n",
-			"onEnter",
-			"modal",
-			"new course",
-			"new coure",
-			"submit",
-			"if",
-			"uf",
-			"with",
-			"admin-courses",
-			"admin-set",
-			"add_new",
-			"webkit",
-			"course-title",
-			"modal",
-			"new course",
-			"edit",
-			"h1",
-			"leade",
-			"leader",
-			"feed",
-			"};",
-			"feed",
-			"scrol",
-			"scroll",
-			"ace",
-			"trim(",
-			"submit",
-			"reset",
-			"submit",
-			"Session.set",
+			"debug",
 			"click",
-			"> admin_new",
-			"navlink",
-			"head.png",
-			"head",
-			"haad",
-			"header",
-			"bs-docs",
-			"mast",
-			"header",
-			"exercises",
-			"sidebar",
-			"bs-d",
-			"jumbo",
-			"ul",
-			"display",
-			"li ",
 			"li",
-			" ol",
-			"ol",
-			"bs-doc",
-			"li",
-			"exercise-side",
-			"exercise-sid",
-			".render",
-			"page",
-			"glyp",
-			"bs-docs",
-			"&",
-			"nav",
-			"navbar",
-			"style",
-			"brand",
-			"exercises",
-			"side",
-			"navbar",
-			"pull-",
-			"pull-right",
-			"feed",
-			"leaderb",
-			"a href",
-			"leaderb",
-			"a href",
-			"brand",
-			"footer",
-			"hr",
-			"page-header",
-			"Editing",
-			"foote",
-			"sidebar",
-			"exercises",
-			"body",
-			"feed",
-			"stuff",
-			"Players.",
-			"removed",
-			"new_exa",
-			"'result'",
-			"texta",
-			"textarea",
-			"validate",
-			"Accounts",
-			"markdow",
-			"var window",
-			"window",
-			"ace",
-			"/\"",
-			"ace",
-			"footer",
-			"myPoi",
-			"myPoints",
-			"= new",
-			"new",
+			"<li",
+			"exercise_side",
+			"selectValues",
 			"submit",
-			"exer",
+			"answertext",
+			"helper",
+			"button-prima",
+			"Solutions.insert",
+			"- PASSED",
+			"** Testname",
+			"examCurr",
+			"examTot",
+			"** Testname:*",
+			"** Testname:",
+			"View",
+			"view",
+			"debug",
+			"animated",
+			"animate",
+			"error",
+			"return",
+			"Meteor.call",
+			".call",
+			"Answers.update",
+			"combine",
+			"comb",
+			"combine",
+			"combined",
+			"rendered",
+			"waypo",
+			"console.log",
+			"rendere",
+			"click",
+			".tests",
+			"show",
+			"submit",
+			"update(",
+			"update",
+			"submit",
+			"ideone",
+			"Could not",
+			"button-success",
+			"debug",
+			"\"><",
+			".events",
+			"alldone",
+			"submit",
+			"console",
+			"consol",
+			"console",
+			"length",
+			"buffer",
+			"buffer.l",
+			"handleIn",
+			"handleInv",
+			"handleInv	",
 			"sys",
-			"exports",
-			"Graphic",
-			"glyp",
-			"replace"
+			"sys,",
+			"counter",
+			"this.",
+			"that.",
+			"update",
+			"that",
+			"Content-",
+			"incom",
+			"call",
+			"content-len",
+			"header",
+			"call",
+			"changed",
+			"haschanged",
+			"edit-answ",
+			"saved",
+			"edit",
+			"signal",
+			"current",
+			"update",
+			"Session.set('currentT",
+			"Session.se",
+			"Session.set('currentT",
+			"currentT",
+			"curT",
+			"currentT",
+			"[0]",
+			"console.log",
+			"Loadin",
+			"console.log",
+			"console",
+			"editor",
+			"update",
+			"preserv",
+			"exercise_m",
+			".answer",
+			"'submit'",
+			"'click'",
+			"click",
+			"prev",
+			"notif",
+			"show",
+			"exercise",
+			"collap",
+			"clickf",
+			"click",
+			"on.sh",
+			"on.sb",
+			"'show'",
+			"clickfor",
+			"scrollTo",
+			"scrolling yo",
+			"scr",
+			"scrollT",
+			"shadow",
+			"sideb",
+			"well",
+			"onso",
+			"sideb",
+			"exer",
+			"exercise_m",
+			"addC",
+			"rendere",
+			"waypoint",
+			"console.",
+			"currentA",
+			"currentAn",
+			"rendere"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -834,6 +828,28 @@
 		"regex": false,
 		"replace_history":
 		[
+			"selectOptions",
+			"- PASSED') > 0 ? pts + 15: pts;",
+			"') > 0 ? pts + 15: pts;",
+			"pts = testOutput.indexOf('** Testname",
+			"pts = testOutput.indexOf('",
+			"timeoutCounter",
+			"var ",
+			"",
+			"next",
+			"self",
+			"});\n",
+			"",
+			" 		'lib/ace/src/x$0",
+			" 		'lib/ace/src/$09",
+			"moo$0",
+			"moo$1",
+			"$1",
+			"'yo' + $0",
+			"aefgg$0",
+			"$eqgge",
+			"aegomge$",
+			".js',",
 			"admin_courses",
 			"admin_set",
 			"updateAnswer",
@@ -852,7 +868,7 @@
 			"ss=\"navbar-inner\">\n      <div class=\"container\">\n        <ul class=\"nav\">\n          <a class=\"brand\" href=\"#\">ProcrastiNOT</a>\n          <li class=\"active\"><a href=\"#\">\n            <i class=\"icon-home\"></i> Home</a></li>\n            <li class=\"dropdown\">\n              <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">\n                Sorting\n                <b class=\"caret\"></b>\n              </a>\n              <ul class=\"dropdown-menu\">\n                <li><a tabindex=\"-1\" id=\"name\" href=\"#\"> By name</a></li>\n                <li><a tabindex=\"0\" id=\"score\" href=\"#\">By score</a></li>\n              </ul>\n            </li>\n            <li class=\"dropdown\">\n              <a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">\n                Actions\n                <b class=\"caret\"></b>\n              </a>\n              <ul class=\"dropdown-menu\">\n                <li><a tabindex=\"-1\" id=\"add\" href=\"#\"><i class=\"icon-plus\"></i> Add player</a></li>\n                <li><a tabindex=\"0\" id=\"reset\" href=\"#\"><i class=\"icon-refresh\"></i> Reset scores</a></li>\n              </ul>\n            </li>\n            <a href=\"#\" class=\"pull-right\"> {{loginButtons align=\"right\"}}</a>\n          </ul>\n        </div>"
 		],
 		"reverse": false,
-		"show_context": true,
+		"show_context": false,
 		"use_buffer2": true,
 		"whole_word": false,
 		"wrap": false
@@ -860,37 +876,8 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "client/router.js",
-					"settings":
-					{
-						"buffer_size": 2002,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1276,
-								1276
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 375.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],

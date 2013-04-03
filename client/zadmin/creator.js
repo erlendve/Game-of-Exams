@@ -171,6 +171,33 @@ Template.creator.events({
 	'click #submit-exercise-cancel': function(e) {
 		alert('cancel does currently not work, click some other exercise to reset');
 	},
+	// 'click #delete-exercise': function(e) {
+	// 	var that = this;
+	// 	var solutionArray = Solutions.find({exerciseId: this._id}).fetch();
+	// 	var answerArray = Answers.find({exercise_id: this._id}).fetch()
+	// 	if (!confirm('This will delete exercise \"' + that.title + '\" and make ' +  solutionArray.length 
+	// 		+ ' user solutions unavailable. The same will happen with ' + answerArray.length + ' number of user answers. Are you sure you want to do this?')) {
+	// 		return false;
+	// 	}
+
+		
+	// 	if (solutionArray.length > 0 && answerArray.length > 0) {
+	// 		if(confirm('Do you want to delete answers and solutions as well?')) {
+	// 			for (var i = solutionArray.length - 1; i >= 0; i--) {
+	// 				Solutions.remove(solutionArray[i]._id);
+	// 			};
+	// 			alert('All solutions to ' + this.title + ' has been deleted');
+
+	// 			for (var i = answerArray.length - 1; i >= 0; i--) {
+	// 				Answers.remove(answerArray[i]._id);
+	// 			};
+	// 			alert('All answers to ' + this.title + ' has been deleted');
+	// 		}			
+	// 	}
+	// 	Exercises.remove(this._id);
+	// 	if (Exercises.findOne)
+	// 	Session.set('curr')
+	// },
 	'submit #form_new_exercise': function(e) {
 		e.preventDefault();
 		var that = this;

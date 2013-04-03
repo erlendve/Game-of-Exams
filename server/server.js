@@ -27,10 +27,10 @@ Meteor.publish('solutions', function() {
 	return Solutions.find({userId: this.userId});
 });
 
-Meteor.publish('gotDrafts', function(sets) {
-	console.log(sets);
-	return Exams.find({_id: { $in: sets }});
-});
+// Meteor.publish('gotDrafts', function(sets) {
+// 	console.log(sets);
+// 	return Exams.find({_id: { $in: sets }});
+// });
 
 Meteor.publish("allUserData", function () {
   return Meteor.users.find({}, {fields: {'gravatar': 1}});
@@ -194,8 +194,6 @@ Meteor.methods({
 		}
 	}
 });
-
-// larseop@ulrik.uio.no
 
 Meteor.startup(function() {
 	// Meteor.users.find().forEach(function(user) {

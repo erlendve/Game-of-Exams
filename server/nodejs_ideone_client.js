@@ -67,7 +67,7 @@ Meteor.startup(function() {
 			var statustext = 'done - the program has finished';
 			if (!that.submissionResult) {
 				if (that.status < 0) {
-					statustext = 'waiting for compilation - the paste awaits compilation in the queue';
+					statustext = 'waiting for compilation - the program is waiting for compilation in the queue';
 				} else if (that.status == 1) {
 					statustext = 'compilation - the program is being compiled';
 				} else if (that.status == 3) {

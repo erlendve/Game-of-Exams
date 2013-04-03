@@ -56,12 +56,11 @@
 </template>
 
 <template name="exercise_main">
-	{{debug}}
 	<div id="{{_id}}" class="well exercise">
 		{{#if solution}}
 		{{#unless solution.points}} {{!Oblig 4 special case}}
 		<h1 class="exercise-title">
-			<span class="text-success"> <i class="icon-ok"></i>{{number}}{{letter}} {{title}} </span>
+			<span class=""> <i class="icon-ok text-success"></i>{{number}}{{letter}} {{title}} </span>
 			<span class="points-success">{{points}} points</span>
 		</h1>
 		{{else}} {{!else unless oblig4}}
@@ -72,8 +71,8 @@
 		{{/unless}} {{!end unless oblig4}}
 		{{else}}
 		<h1 class="exercise-title">
-			<span class="muted">{{#unless needsToSolve}}#{{else}}<i class="icon-lock"> </i>{{/unless}}</span>{{number}}{{letter}} {{title}} 
-			<span class="points-muted muted">{{points}} points</span>
+			<span class="muted">{{#unless needsToSolve}}<span class="text-info">#</span>{{else}}<i class="icon-lock text-warning"> </i>{{/unless}}</span>{{number}}{{letter}} {{title}} 
+			<span class="points-muted{{#unless needsToSolve}} text-info{{else}} text-warning{{/unless}}">{{points}} points</span>
 		</h1>
 
 		{{/if}}
@@ -109,7 +108,7 @@
 		</div>
 		{{else}}
 		<hr />
-		<h3 class="lead" title="This exercise can not be answered because it inherits code from another exercise"><i class="icon-lock"></i>
+		<h3 class="lead text-warning" title="This exercise can not be answered because it inherits code from another exercise"><i class="icon-lock"></i>
 		 This exercise can not be answered before you solve:</h3>
 		{{#each findUnsolved}}
 		{{#if first}}
@@ -150,9 +149,10 @@
 		<div id="collapse{{_id}}" class="collapse in">
 			<div id="editor{{_id}}" class="clickforeditor">{{#if pre}} {{pre}}{{else}}{{answertext}}{{/if}}</div>
 			<p class="buttonpanel">
-				{{!<button type="submit" class="btn btn-danger pull-right" id="btn-reset-answer"><i class="icon-trash"></i> Reset</button>}}
-				<button type="submit" class="btn btn-primary pull-right" id="btn-submit-answer-"><i class="icon-upload-alt"></i> Test</button>
-				<button type="submit" class="btn btn-success pull-right" id="btn-run-answer"><i class="icon-play"></i> Run</button>
+				<button type="submit" class="btn btn-danger pull-left" id="btn-reset-answer"><i class="icon-trash"></i> Reset</button>
+				<button type="submit" class="btn btn-success pull-right" id="btn-submit-answer-"><i class="icon-share-alt"></i> Submit</button>
+				<button type="submit" class="btn btn-primary pull-right" id="btn-run-answer"><i class="icon-play"></i> Run</button>
+				<button type="submit" class="btn btn-inverse pull-right" id="btn-reset-answer"><i class="icon-save"></i> Save</button>
 			</p>
 		</div>
 		<textarea name="answertext" class="hiddentextarea" id="answer{{_id}}" wrap="hard">{{#if pre}} {{pre}}{{else}}{{answertext}}{{/if}}</textarea>
