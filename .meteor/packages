@@ -5,7 +5,6 @@
 
 preserve-inputs
 accounts-password
-accounts-ui
 backbone
 jquery
 underscore
@@ -15,3 +14,4 @@ bafa
 x-editable-bootstrap
 showdown
 jquery-waypoints
+accounts-ui

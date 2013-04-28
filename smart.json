@@ -10,7 +10,8 @@
       "git": "git://github.com/erlendve/meteor-ace.git"
     },
     "x-editable-bootstrap": {
-    	"git": "git://github.com/erlendve/meteor-x-editable-bootstrap.git"
-    }
+      "git": "git://github.com/erlendve/meteor-x-editable-bootstrap.git"
+    },
+    "accounts-ui-bootstrap-dropdown": {}
   }
 }

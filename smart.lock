@@ -17,7 +17,8 @@
       "x-editable-bootstrap": {
         "git": "git://github.com/erlendve/meteor-x-editable-bootstrap.git",
         "branch": "master"
-      }
+      },
+      "accounts-ui-bootstrap-dropdown": {}
     },
     "packages": {
       "bafa": {
@@ -34,6 +35,11 @@
         "git": "git://github.com/erlendve/meteor-x-editable-bootstrap.git",
         "branch": "master",
         "commit": "b04dac30bc81cd2fc19f2ca27a88d81d0d3e70ee"
+      },
+      "accounts-ui-bootstrap-dropdown": {
+        "git": "https://github.com/erobit/meteor-accounts-ui-bootstrap-dropdown.git",
+        "tag": "v0.1.0",
+        "commit": "e66558aaa4dc0d85c6ddb63bd2289b38c2b793f6"
       }
     }
   }
