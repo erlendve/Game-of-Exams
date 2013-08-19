@@ -1,11 +1,3 @@
-1: fix administrator rights. Currently there is a hack in server.js that checks only on username === Administrator
-
-2: Fix Pines notify so it uses the minified version and make it a package instead of being in lib (should be loaded last). Now there is a hack that wraps pines in Meteor.isClient if block, so it loads after jQuery. the minified version is just commented for now. Change that also.
-
-3: Fjerne konamikode og hack for admin login (dblklikk alpha og så konami)
-
-
-
 Useful stuff:
 ======================
 dump database: 
